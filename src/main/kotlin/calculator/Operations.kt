@@ -1,21 +1,21 @@
 package calculator
 
-abstract class AbstractOperation {
-    abstract fun operate(number1: Double, number2: Double): Double
+interface Operation {
+    fun operate(number1: Double, number2: Double): Double
 }
 
-class AddOperation: AbstractOperation() {
+class AddOperation: Operation {
     override fun operate(number1: Double, number2: Double) = number1 + number2
 }
 
-class SubtractOperation: AbstractOperation() {
+class SubtractOperation: Operation {
     override fun operate(number1: Double, number2: Double) = number1 - number2
 }
 
-class MultiplyOperation: AbstractOperation() {
+class MultiplyOperation: Operation {
     override fun operate(number1: Double, number2: Double) = number1 * number2
 }
 
-class DivideOperation: AbstractOperation() {
+class DivideOperation: Operation {
     override fun operate(number1: Double, number2: Double) = number1 / number2
 }
