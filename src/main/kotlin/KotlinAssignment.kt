@@ -1,3 +1,5 @@
+import calculator.*
+
 fun main() {
     println("number1, number2 두 수에 대한 계산을 진행합니다.")
     println("number1 operator number2 형태로 계산합니다. (예: 5 + 3)")
@@ -39,6 +41,16 @@ fun main() {
         break
     }
 
-    val result = Calculator().calculate(number1, number2, operator)
+    val calculator = Calculator()
+    val result = when (operator) {
+        "+" -> calculator.addOperation(AddOperation(), number1, number2)
+        "-" -> calculator.subtractOperation(SubtractOperation(), number1, number2)
+        "*" -> calculator.multiplyOperation(MultiplyOperation(), number1, number2)
+        "/" -> calculator.divideOperation(DivideOperation(), number1, number2)
+        else -> {
+            throw RuntimeException("잘못된 연산자 입력")
+        }
+    }
+
     println("\n결과는 ${result}입니다.")
 }
