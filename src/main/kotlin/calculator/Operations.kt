@@ -4,18 +4,18 @@ interface Operation {
     fun operate(number1: Double, number2: Double): Double
 }
 
-class AddOperation: Operation {
+object AddOperation: Operation {
     override fun operate(number1: Double, number2: Double) = number1 + number2
 }
 
-class SubtractOperation: Operation {
+object SubtractOperation: Operation {
     override fun operate(number1: Double, number2: Double) = number1 - number2
 }
 
-class MultiplyOperation: Operation {
+object MultiplyOperation: Operation {
     override fun operate(number1: Double, number2: Double) = number1 * number2
 }
 
-class DivideOperation: Operation {
+object DivideOperation: Operation {
     override fun operate(number1: Double, number2: Double) = number1 / number2
 }

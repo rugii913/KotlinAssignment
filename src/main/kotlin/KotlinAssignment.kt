@@ -41,12 +41,11 @@ fun main() {
         break
     }
 
-    val calculator = Calculator()
     val result = when (operator) {
-        "+" -> calculator.calculate(AddOperation(), number1, number2)
-        "-" -> calculator.calculate(SubtractOperation(), number1, number2)
-        "*" -> calculator.calculate(MultiplyOperation(), number1, number2)
-        "/" -> calculator.calculate(DivideOperation(), number1, number2)
+        "+" -> Calculator.calculate(AddOperation, number1, number2)
+        "-" -> Calculator.calculate(SubtractOperation, number1, number2)
+        "*" -> Calculator.calculate(MultiplyOperation, number1, number2)
+        "/" -> Calculator.calculate(DivideOperation, number1, number2)
         else -> {
             throw RuntimeException("잘못된 연산자 입력")
         }
