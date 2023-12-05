@@ -20,8 +20,8 @@ class Calculator {
             print("\n연산자 op를 입력해주세요(+, -, /, * 중 선택): ")
             while (true) {
                 operator = readln()
-                if (operator !in arrayOf("+", "-", "*", "/")) {
-                    print("\n잘못된 입력입니다. 연산자(+, -, /, * 중 선택)를 입력해주세요: ")
+                if (operator !in arrayOf("+", "-", "*", "/", "%")) {
+                    print("\n잘못된 입력입니다. 연산자(+, -, *, /, % 중 선택)를 입력해주세요: ")
                     continue
                 }
                 break
@@ -45,6 +45,7 @@ class Calculator {
             "-" -> println("\n결과는 ${number1 - number2}입니다.")
             "*" -> println("\n결과는 ${number1 * number2}입니다.")
             "/" -> println("\n결과는 ${number1 / number2}입니다.")
+            "%" -> println("\n결과는 ${number1 % number2}입니다.")
         }
     }
 }
