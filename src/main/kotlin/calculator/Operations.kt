@@ -1,17 +1,21 @@
 package calculator
 
-class AddOperation {
-    fun operate(number1: Double, number2: Double) = number1 + number2
+abstract class AbstractOperation {
+    abstract fun operate(number1: Double, number2: Double): Double
 }
 
-class SubtractOperation {
-    fun operate(number1: Double, number2: Double) = number1 - number2
+class AddOperation: AbstractOperation() {
+    override fun operate(number1: Double, number2: Double) = number1 + number2
 }
 
-class MultiplyOperation {
-    fun operate(number1: Double, number2: Double) = number1 * number2
+class SubtractOperation: AbstractOperation() {
+    override fun operate(number1: Double, number2: Double) = number1 - number2
 }
 
-class DivideOperation {
-    fun operate(number1: Double, number2: Double) = number1 / number2
+class MultiplyOperation: AbstractOperation() {
+    override fun operate(number1: Double, number2: Double) = number1 * number2
+}
+
+class DivideOperation: AbstractOperation() {
+    override fun operate(number1: Double, number2: Double) = number1 / number2
 }
