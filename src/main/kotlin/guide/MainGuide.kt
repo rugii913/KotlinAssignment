@@ -26,7 +26,7 @@ object MainGuide {
         }
     }
 
-    private fun numberInputFilter(inputString: String): Int? {
+    fun numberInputFilter(inputString: String): Int? {
         val input = inputString.toIntOrNull()
         if (input == null) println(GuideMessages.ALERT_MESSAGE_NOT_A_NUMBER)
 
