@@ -16,5 +16,6 @@ object GuideMessages {
         // menuList.add(Pair(메뉴 메시지, 호출할 함수 참조))
         menuList.add(Pair(MENU_EXIT, MainGuide::exit))
         menuList.add(Pair(MENU_CALCULATOR, CalculatorGuide::guide))
+        menuList.add(Pair(MENU_HOTEL, HotelGuide::guide))
     }
 }
