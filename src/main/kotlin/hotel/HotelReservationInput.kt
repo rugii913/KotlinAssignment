@@ -87,6 +87,8 @@ class HotelReservationInput(
                     println("\n체크아웃 날짜는 체크인 날짜와 같거나 이전일 수 없습니다.")
                     continue
                 }
+
+                this.dateCheckOut = dateCheckOut
                 break
             }
         }

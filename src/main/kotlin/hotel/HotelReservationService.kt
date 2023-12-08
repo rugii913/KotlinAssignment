@@ -2,8 +2,17 @@ package hotel
 
 object HotelReservationService {
     fun reserve() {
-        val newReservation = HotelReservationInput.Builder()
+        var newReservation = HotelReservationInput.Builder()
             .customerName().roomNumber().dateCheckIn().dateCheckOut().build()
+
+        var existsOverlap = HotelReservationRepository.existsOverlappedReservationByRoomNumber(newReservation)
+
+        while (existsOverlap) {
+            newReservation = HotelReservationInput.Builder(customerName = newReservation.customerName, roomNumber = newReservation.roomNumber)
+                .dateCheckIn().dateCheckOut().build()
+
+            existsOverlap = HotelReservationRepository.existsOverlappedReservationByRoomNumber(newReservation)
+        }
 
         HotelReservationRepository.save(newReservation)
 
