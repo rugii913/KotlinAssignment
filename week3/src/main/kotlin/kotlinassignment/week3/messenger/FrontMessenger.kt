@@ -4,8 +4,6 @@ import kotlinassignment.filter.IntInputFilter
 
 class FrontMessenger {
 
-    private val intInputFilter = IntInputFilter()
-
     fun write() {
         println("아래 메뉴판을 보시고 메뉴를 골라 입력해주세요.\n")
         println("[SHAKESHACK MENU]")
@@ -13,8 +11,4 @@ class FrontMessenger {
         println("2. Frozen Custard\t| 매장에서 신선하게 만드는 아이스크림")
         println("0. 종료\t\t\t\t| 프로그램 종료")
     }
-
-    fun read() = print(">>> ").run { readln() }
-
-    fun readInt() = intInputFilter.filterToInt(read())
 }
