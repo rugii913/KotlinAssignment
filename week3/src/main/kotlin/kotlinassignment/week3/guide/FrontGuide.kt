@@ -12,7 +12,7 @@ class FrontGuide: Guide {
         when (selectedNumber) { // TODO readInt()에서 null 처리를 안 하고 있는데 selectedNumber 괜찮은지...
             1 -> continueState.nextGuide = BurgersGuide()
             2 -> continueState.nextGuide = FrozenCustardGuide()
-            0 -> continueState.isContinued = false
+            0 -> continueState.nextGuide = null
         }
     }
 }

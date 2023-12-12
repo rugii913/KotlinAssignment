@@ -8,8 +8,8 @@ object KioskMain {
     fun run() {
         val continueState = ContinueState()
 
-        while (continueState.isContinued) {
-            continueState.nextGuide.guide(continueState)
+        while (continueState.nextGuide != null) {
+            continueState.nextGuide?.guide(continueState)
         }
 
         println("프로그램을 종료합니다.")
