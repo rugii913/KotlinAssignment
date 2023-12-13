@@ -1,6 +1,6 @@
-package kotlinassignment.week3.menuItem
+package kotlinassignment.week3.menu.menuItem
 
-import kotlinassignment.week3.menuGroup.FrozenCustard
+import kotlinassignment.week3.menu.menuGroup.FrozenCustard
 
 class ClassicHandSpunShakes: MenuItem {
     override val menuGroup = FrozenCustard

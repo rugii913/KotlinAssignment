@@ -1,6 +1,6 @@
-package kotlinassignment.week3.menuItem
+package kotlinassignment.week3.menu.menuItem
 
-import kotlinassignment.week3.menuGroup.Burgers
+import kotlinassignment.week3.menu.menuGroup.Burgers
 
 class ShackBurger: MenuItem {
     override val menuGroup = Burgers

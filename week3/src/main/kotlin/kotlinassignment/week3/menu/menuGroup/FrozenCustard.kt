@@ -1,4 +1,4 @@
-package kotlinassignment.week3.menuGroup
+package kotlinassignment.week3.menu.menuGroup
 
 object FrozenCustard: MenuGroup {
     
