@@ -16,21 +16,17 @@ class MenuItemGuide: Guide {
         menuItemMessenger.writeMenuItems(menuItemList, currentMenuGroup)
 
         // 사용자의 입력 처리에 대한 부분
-        val selectedNumber: Int
-        try {
-            selectedNumber = InputMessenger().readInt()
-        } catch (e: NumberFormatException) {
-            menuItemMessenger.writeExceptionWarningIntRequired()
-            return // 다시 같은 메뉴로 돌아오기 위해 nextGuide를 set하지 않음, 다음 명령어들을 실행하지 않기 위해 return
-            // TODO 공통 처리할 수 있는 방법 없을지 고민
-        }
+        val (inputStatus, selectedNumber) = InputMessenger().readInt()
+        if (inputStatus == InputMessenger.InputStatus.ABNORMAL) return // 다시 같은 메뉴로 돌아오기 위해 nextGuide를 set하지 않음, 다음 명령어들을 실행하지 않기 위해 return
 
         if (selectedNumber == 0) {
             continueState.nextGuide = continueState.previousGuide
         } else if (selectedNumber <= menuItemList.size) {
-            println("이번에 선택한 메뉴의 이름은 ${menuItemList[selectedNumber - 1].name}!")
-            println("이번에 선택한 메뉴의 가격은 ${menuItemList[selectedNumber - 1].price}원!")
-            println("끝내려면 0을 입력하기!")
+            println("${menuItemList[selectedNumber - 1].name} | W ${menuItemList[selectedNumber - 1].price} | ${menuItemList[selectedNumber - 1].information}")
+            println("위 메뉴를 장바구니에 추가하시겠습니까?")
+            println("1. 확인\t\t2. 취소")
+            println("${menuItemList[selectedNumber - 1].name}가 장바구니에 추가되었습니다.")
+            continueState.nextGuide = continueState.previousGuide
         } else {
             menuItemMessenger.write(Message.NO_CORRESPONDING_SERVICE_NUMBER)
             // 다시 같은 메뉴로 돌아오기 위해서 nextGuide를 set하지 않는다.
