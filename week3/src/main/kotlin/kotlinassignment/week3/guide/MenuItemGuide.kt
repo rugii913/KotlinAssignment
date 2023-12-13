@@ -3,18 +3,16 @@ package kotlinassignment.week3.guide
 import kotlinassignment.week3.KioskMain
 import kotlinassignment.week3.menu.menuGroup.Burgers
 import kotlinassignment.week3.menu.menuItem.MenuItem
-import kotlinassignment.week3.messenger.BurgersMessenger
-import kotlinassignment.week3.messenger.ContinueState
-import kotlinassignment.week3.messenger.InputMessenger
-import kotlinassignment.week3.messenger.Message
+import kotlinassignment.week3.messenger.*
 
-class BurgersGuide: Guide {
-    private val burgersMessenger = BurgersMessenger()
+class MenuItemGuide: Guide {
+    private val menuItemMessenger = MenuItemMessenger()
 
     override fun guide(continueState: ContinueState) {
         // 메뉴 출력에 대한 부분
-        val burgersList = KioskMain.menu.filterIsInstance<MenuItem>().filter { it.menuGroup == Burgers }
-        burgersMessenger.writeMenu(burgersList)
+        val currentMenuGroup = continueState.nextMenuGroup
+        val menuItemList = KioskMain.menu.filterIsInstance<MenuItem>().filter { it.menuGroup == currentMenuGroup }
+        menuItemMessenger.writeMenuItems(menuItemList, currentMenuGroup)
 
         // 사용자의 입력 처리에 대한 부분
         val selectedNumber = InputMessenger().readInt()
@@ -23,10 +21,10 @@ class BurgersGuide: Guide {
                 continueState.nextGuide = continueState.previousGuide
             }
             null -> {
-                burgersMessenger.write(Message.NOT_INT_INPUT)
+                menuItemMessenger.write(Message.NOT_INT_INPUT)
             }
             else -> {
-                burgersMessenger.write(Message.NO_CORRESPONDING_SERVICE_NUMBER)
+                menuItemMessenger.write(Message.NO_CORRESPONDING_SERVICE_NUMBER)
             }
         }
     }

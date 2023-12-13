@@ -1,6 +1,8 @@
 package kotlinassignment.week3.guide
 
 import kotlinassignment.week3.KioskMain
+import kotlinassignment.week3.menu.menuGroup.Burgers
+import kotlinassignment.week3.menu.menuGroup.FrozenCustard
 import kotlinassignment.week3.menu.menuGroup.MenuGroup
 import kotlinassignment.week3.messenger.ContinueState
 import kotlinassignment.week3.messenger.InputMessenger
@@ -18,8 +20,14 @@ class MenuGroupGuide: Guide {
         // 사용자의 입력 처리에 대한 부분
         val selectedNumber = InputMessenger().readInt()
         when (selectedNumber) {
-            1 -> continueState.nextGuide = BurgersGuide()
-            2 -> continueState.nextGuide = FrozenCustardGuide()
+            1 -> {
+                continueState.nextGuide = MenuItemGuide()
+                continueState.nextMenuGroup = Burgers
+            }
+            2 -> {
+                continueState.nextGuide = MenuItemGuide()
+                continueState.nextMenuGroup = FrozenCustard
+            }
             0 -> {
                 menuGroupMessenger.write(Message.EXIT)
                 continueState.nextGuide = null

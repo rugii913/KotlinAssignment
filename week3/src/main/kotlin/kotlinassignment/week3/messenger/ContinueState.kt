@@ -2,6 +2,7 @@ package kotlinassignment.week3.messenger
 
 import kotlinassignment.week3.guide.Guide
 import kotlinassignment.week3.guide.MenuGroupGuide
+import kotlinassignment.week3.menu.menuGroup.MenuGroup
 
 class ContinueState {
 
@@ -14,4 +15,5 @@ class ContinueState {
      */
     var nextGuide: Guide? = MenuGroupGuide()
     var previousGuide: Guide = MenuGroupGuide()
+    lateinit var nextMenuGroup: MenuGroup
 }
