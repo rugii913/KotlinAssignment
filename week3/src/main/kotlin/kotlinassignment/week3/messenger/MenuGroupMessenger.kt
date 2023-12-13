@@ -1,6 +1,6 @@
 package kotlinassignment.week3.messenger
 
-class FrontMessenger {
+class MenuGroupMessenger {
 
     fun writeMenu() {
         println("\n아래 메뉴판을 보시고 메뉴를 골라 입력해주세요.")
