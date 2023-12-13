@@ -1,7 +1,8 @@
 package kotlinassignment.week3.messenger
 
-import kotlinassignment.week3.guide.FrontGuide
 import kotlinassignment.week3.guide.Guide
+import kotlinassignment.week3.guide.MenuGroupGuide
+import kotlinassignment.week3.menu.menuGroup.MenuGroup
 
 class ContinueState {
 
@@ -12,6 +13,7 @@ class ContinueState {
             - 그러므로 Guide 같은 타입을 알아야 한다면 utility가 될 수 없다.
           - week3 모듈 내에서 어떤 패키지에 넣을지 고민 중, 일단은 messenger 패키지에 넣었으나, 적절하지 않은 것 같다.
      */
-    var nextGuide: Guide? = FrontGuide()
-    var previousGuide: Guide = FrontGuide()
+    var nextGuide: Guide? = MenuGroupGuide()
+    var previousGuide: Guide = MenuGroupGuide()
+    lateinit var nextMenuGroup: MenuGroup
 }
