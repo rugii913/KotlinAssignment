@@ -18,4 +18,8 @@ class MenuGroupMessenger {
     fun write(message: Message) {
         println(message.messegeValue)
     }
+
+    fun writeExceptionWarningIntRequired() {
+        write(Message.EXCEPTION_WARNING_INT_REQUIRED)
+    }
 }
