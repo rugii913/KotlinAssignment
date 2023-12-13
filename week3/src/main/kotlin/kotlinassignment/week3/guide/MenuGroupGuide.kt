@@ -1,6 +1,5 @@
 package kotlinassignment.week3.guide
 
-import kotlinassignment.week3.KioskMain
 import kotlinassignment.week3.menu.MenuGroup
 import kotlinassignment.week3.messenger.ContinueState
 import kotlinassignment.week3.messenger.InputMessenger

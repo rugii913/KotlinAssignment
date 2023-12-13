@@ -27,7 +27,7 @@ object KioskMain {
         menu.add(Floats())
         //
         menu.add(Lemonade())
-        menu.add((FreshBrewedIcedTea()))
+        menu.add(FreshBrewedIcedTea())
         menu.add(FountainSoda())
     }
 }
