@@ -1,7 +1,5 @@
 package kotlinassignment.week3
 
-import kotlinassignment.week3.guide.FrontGuide
-import kotlinassignment.week3.guide.Guide
 import kotlinassignment.week3.messenger.ContinueState
 
 object KioskMain {
