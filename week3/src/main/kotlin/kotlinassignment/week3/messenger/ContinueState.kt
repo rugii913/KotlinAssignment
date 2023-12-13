@@ -2,7 +2,7 @@ package kotlinassignment.week3.messenger
 
 import kotlinassignment.week3.guide.Guide
 import kotlinassignment.week3.guide.MenuGroupGuide
-import kotlinassignment.week3.menu.menuGroup.MenuGroup
+import kotlinassignment.week3.menu.MenuGroup
 
 class ContinueState {
 

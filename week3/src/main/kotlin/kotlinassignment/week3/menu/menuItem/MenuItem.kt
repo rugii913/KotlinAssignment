@@ -1,6 +1,6 @@
 package kotlinassignment.week3.menu.menuItem
 
-import kotlinassignment.week3.menu.menuGroup.MenuGroup
+import kotlinassignment.week3.menu.MenuGroup
 
 interface MenuItem {
 

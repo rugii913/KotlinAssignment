@@ -1,14 +1,10 @@
 package kotlinassignment.week3
 
-import kotlinassignment.week3.menu.Menu
-import kotlinassignment.week3.menu.menuGroup.Burgers
-import kotlinassignment.week3.menu.menuGroup.Drinks
-import kotlinassignment.week3.menu.menuGroup.FrozenCustard
 import kotlinassignment.week3.menu.menuItem.*
 import kotlinassignment.week3.messenger.ContinueState
 
 object KioskMain {
-    val menu: ArrayList<Menu> = ArrayList()
+    val menu: ArrayList<MenuItem> = ArrayList()
 
     fun run() {
         val continueState = ContinueState()
@@ -22,10 +18,6 @@ object KioskMain {
     }
 
     private fun initializeMenu() {
-        menu.add(Burgers)
-        menu.add(FrozenCustard)
-        menu.add(Drinks)
-        //
         menu.add(ShackBurger())
         menu.add(SmokeShack())
         menu.add(ShroomBurger())
