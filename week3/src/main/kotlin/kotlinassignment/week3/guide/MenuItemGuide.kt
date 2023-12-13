@@ -1,6 +1,6 @@
 package kotlinassignment.week3.guide
 
-import kotlinassignment.week3.KioskMain
+import kotlinassignment.week3.menu.menuItem.MenuItemRepository
 import kotlinassignment.week3.messenger.ContinueState
 import kotlinassignment.week3.messenger.InputMessenger
 import kotlinassignment.week3.messenger.MenuItemMessenger
@@ -8,11 +8,12 @@ import kotlinassignment.week3.messenger.Message
 
 class MenuItemGuide: Guide {
     private val menuItemMessenger = MenuItemMessenger()
+    private val menuItemRepository = MenuItemRepository()
 
     override fun guide(continueState: ContinueState) {
         // 메뉴 출력에 대한 부분
         val currentMenuGroup = continueState.nextMenuGroup
-        val menuItemList = KioskMain.menu.filter { it.menuGroup == currentMenuGroup }
+        val menuItemList = menuItemRepository.findByMenuGroup(currentMenuGroup)
         menuItemMessenger.writeMenuItems(menuItemList, currentMenuGroup)
 
         // 사용자의 입력 처리에 대한 부분
