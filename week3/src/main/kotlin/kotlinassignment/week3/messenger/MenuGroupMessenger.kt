@@ -5,13 +5,13 @@ import kotlinassignment.week3.menu.Menu
 class MenuGroupMessenger {
 
     fun writeMenu(menuList: List<Menu>) {
-        write(Message.MENU_GROUP_INTRODUCE)
+        write(Message.MENU_MAIN_INTRODUCE)
 
         for (index in menuList.indices) {
             println("${index + 1}. ${String.format("%-20s", menuList[index].name)} | ${menuList[index].information}")
         }
 
-        println(Message.MENU_EXIT.messegeValue)
+        write(Message.MENU_EXIT)
     }
 
     fun write(message: Message) {

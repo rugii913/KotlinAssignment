@@ -1,11 +1,17 @@
 package kotlinassignment.week3.messenger
 
+import kotlinassignment.week3.menu.menuItem.MenuItem
+
 class FrozenCustardMessenger {
 
-    fun writeMenu() {
-        println("\n[FrozenCustard MENU]")
-        println("1. 준비 중입니다. - 매장에서 만든 아이스크림")
-        println("0. 뒤로가기\t\t\t| 뒤로가기")
+    fun writeMenu(menuList: List<MenuItem>) {
+        write(Message.MENU_GROUP_FROZEN_CUSTARD_INTRODUCE)
+
+        for (index in menuList.indices) {
+            println("${index + 1}. ${String.format("%-24s", menuList[index].name)} | W ${menuList[index].price} | ${menuList[index].information}")
+        }
+
+        write(Message.MENU_BACK)
     }
 
     fun write(message: Message) {
