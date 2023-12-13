@@ -1,12 +1,11 @@
 package kotlinassignment.week3.menu.menuItem
 
-import kotlinassignment.week3.menu.Menu
-import kotlinassignment.week3.menu.menuGroup.MenuGroup
+import kotlinassignment.week3.menu.MenuGroup
 
-interface MenuItem: Menu {
+interface MenuItem {
 
-    val menuGroup: MenuGroup
-    override val name: String
+    val name: String
     val price: Int
-    override val information: String
+    val information: String
+    val menuGroup: MenuGroup
 }
