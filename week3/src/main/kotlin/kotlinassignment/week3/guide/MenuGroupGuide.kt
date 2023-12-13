@@ -2,6 +2,7 @@ package kotlinassignment.week3.guide
 
 import kotlinassignment.week3.KioskMain
 import kotlinassignment.week3.menu.menuGroup.Burgers
+import kotlinassignment.week3.menu.menuGroup.Drinks
 import kotlinassignment.week3.menu.menuGroup.FrozenCustard
 import kotlinassignment.week3.menu.menuGroup.MenuGroup
 import kotlinassignment.week3.messenger.ContinueState
@@ -27,6 +28,10 @@ class MenuGroupGuide: Guide {
             2 -> {
                 continueState.nextGuide = MenuItemGuide()
                 continueState.nextMenuGroup = FrozenCustard
+            }
+            3 -> {
+                continueState.nextGuide = MenuItemGuide()
+                continueState.nextMenuGroup = Drinks
             }
             0 -> {
                 menuGroupMessenger.write(Message.EXIT)

@@ -1,6 +1,7 @@
 package kotlinassignment.week3.messenger
 
 import kotlinassignment.week3.menu.menuGroup.Burgers
+import kotlinassignment.week3.menu.menuGroup.Drinks
 import kotlinassignment.week3.menu.menuGroup.FrozenCustard
 import kotlinassignment.week3.menu.menuGroup.MenuGroup
 import kotlinassignment.week3.menu.menuItem.MenuItem
@@ -13,6 +14,7 @@ class MenuItemMessenger {
             // TODO 매끄럽지 않은 처리, 여기서 구현체를 알 필요가 있을까?
             Burgers -> write(Message.MENU_GROUP_BURGERS_INTRODUCE)
             FrozenCustard -> write(Message.MENU_GROUP_FROZEN_CUSTARD_INTRODUCE)
+            Drinks -> write(Message.MENU_GROUP_DRINKS_INTRODUCE)
         }
 
         for (index in menuList.indices) {
