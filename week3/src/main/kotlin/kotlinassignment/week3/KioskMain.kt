@@ -1,14 +1,14 @@
 package kotlinassignment.week3
 
-import kotlinassignment.week3.guide.ContinueState
+import kotlinassignment.week3.flowState.FlowState
 
 object KioskMain {
 
     fun run() {
-        val continueState = ContinueState()
+        val flowState = FlowState()
 
-        while (continueState.nextGuide != null) {
-            continueState.nextGuide?.guide(continueState)
+        while (flowState.nextGuide != null) {
+            flowState.nextGuide?.guide(flowState)
         }
     }
 }
