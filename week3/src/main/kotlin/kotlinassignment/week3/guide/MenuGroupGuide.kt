@@ -24,6 +24,15 @@ class MenuGroupGuide: Guide {
                 flowState.nextGuide = MenuItemGuide()
                 flowState.nextMenuGroup = menuGroupEntries[selectedNumber - 1]
             }
+            // TODO 더 깔끔하게 만들기
+            menuGroupEntries.size + 1 -> {
+                // 장바구니 내용 출력 // TODO 입력에 따른 새로운 출력처리를 해야하므로 OrderGuide로 분리해야함
+                flowState.outputMessenger.writeCartItemList(flowState.cart)
+            }
+            menuGroupEntries.size + 2 -> {
+                flowState.cart.clear()
+                flowState.outputMessenger.writeCartClearMessage()
+            }
             else -> flowState.outputMessenger.write(Message.NO_CORRESPONDING_SERVICE_NUMBER) // 다시 menuGroupGuide의 guide를 호출해야하므로 nextGuide를 set하지 않는다.
         }
     }

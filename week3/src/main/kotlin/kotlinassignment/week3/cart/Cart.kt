@@ -9,6 +9,10 @@ class Cart {
         cartItemList.add(menuItem)
     }
 
+    fun getAll(): MutableList<MenuItem> {
+        return cartItemList
+    }
+
     fun clear() {
         cartItemList.clear()
     }
