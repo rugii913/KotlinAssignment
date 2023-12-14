@@ -5,6 +5,7 @@ import kotlinassignment.week3.flowState.FlowState
 import kotlinassignment.week3.messenger.InputMessenger
 import kotlinassignment.week3.messenger.Message
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 class OrderGuide: Guide {
@@ -42,11 +43,21 @@ class OrderGuide: Guide {
 
                 val (paymentStatus, balance) = SomeExternalInterfaceRepresentingPayments.pay(totalPrice)
 
-                if (paymentStatus == SomeExternalInterfaceRepresentingPayments.PaymentStatus.SUCCESS) {
-                    flowState.cart.clear()
-                    println("\n결제를 완료했습니다. (${LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss"))})")
-                } else {
-                    println("\n현재 잔액은 ${balance}원으로 ${totalPrice - balance}원이 부족해서 주문할 수 없습니다.")
+                when (paymentStatus) {
+                    SomeExternalInterfaceRepresentingPayments.PaymentStatus.SUCCESS -> {
+                        flowState.cart.clear()
+                        println("\n결제를 완료했어요. (${LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss"))})")
+                    }
+                    SomeExternalInterfaceRepresentingPayments.PaymentStatus.EXCEPTION_INSUFFICIENT_FUNDS -> {
+                        println("\n현재 잔액은 ${balance}원으로 ${totalPrice - balance}원이 부족해서 주문할 수 없어요.")
+                    }
+                    SomeExternalInterfaceRepresentingPayments.PaymentStatus.EXCEPTION_NOT_AVAILABLE_TIME -> {
+                        val inspectionStartTime =  SomeExternalInterfaceRepresentingPayments.inspectionStartTime
+                        val inspectionEndTime = SomeExternalInterfaceRepresentingPayments.inspectionEndTime
+
+                        println("\n현재 시각은 ${LocalTime.now().format(DateTimeFormatter.ofPattern("HH시 mm분"))}이에요.")
+                        println("\n은행 점검 시간($inspectionStartTime ~ ${inspectionEndTime}) 중이라 결제할 수 없어요.")
+                    }
                 }
                 flowState.nextGuide = flowState.menuGroupGuide
             }
