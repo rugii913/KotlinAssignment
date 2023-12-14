@@ -1,5 +1,6 @@
 package kotlinassignment.week3.guide
 
+import kotlinassignment.utilities.SomeExternalInterfaceRepresentingPayments
 import kotlinassignment.week3.flowState.FlowState
 import kotlinassignment.week3.messenger.InputMessenger
 import kotlinassignment.week3.messenger.Message
@@ -33,17 +34,27 @@ class OrderGuide: Guide {
 
         when (selectedNumber) {
             1 -> {
-                println("결제를 완료했습니다. (${LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss"))})")
+                if (cartItemList.size == 0) { // TODO 여기서 분기 처리 하지 말고 더 나은 방법이 있을 것 같다.
+                    println("\n장바구니에 아무 것도 없는 경우 주문할 수 없어요.")
+                    flowState.nextGuide = flowState.menuGroupGuide
+                    return
+                }
+
+                val (paymentStatus, balance) = SomeExternalInterfaceRepresentingPayments.pay(totalPrice)
+
+                if (paymentStatus == SomeExternalInterfaceRepresentingPayments.PaymentStatus.SUCCESS) {
+                    flowState.cart.clear()
+                    println("\n결제를 완료했습니다. (${LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss"))})")
+                } else {
+                    println("\n현재 잔액은 ${balance}원으로 ${totalPrice - balance}원이 부족해서 주문할 수 없습니다.")
+                }
                 flowState.nextGuide = flowState.menuGroupGuide
-                return
             }
             2 -> {
                 flowState.nextGuide = flowState.menuGroupGuide
-                return
             }
             else -> { // TODO 입력값이 1, 2가 아닐 때와 문자 입력값이 들어왔을 때를 한꺼번에 처리할 수 있는 방법?
-                flowState.outputMessenger.write(Message.NO_CORRESPONDING_SERVICE_NUMBER)
-                return // KioskMain까지 나갔다가 while 후에 OrderGuide로 돌아온다.
+                flowState.outputMessenger.write(Message.NO_CORRESPONDING_SERVICE_NUMBER) // KioskMain까지 나갔다가 while 후에 OrderGuide로 돌아온다.
             }
         }
     }
