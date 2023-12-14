@@ -1,5 +1,6 @@
 package kotlinassignment.week3.flowState
 
+import kotlinassignment.week3.cart.Cart
 import kotlinassignment.week3.guide.Guide
 import kotlinassignment.week3.guide.MenuGroupGuide
 import kotlinassignment.week3.menu.MenuGroup
@@ -10,8 +11,10 @@ class FlowState {
 
     val outputMessenger = OutputMessenger()
     val inputMessenger = InputMessenger(outputMessenger)
+    val menuGroupGuide = MenuGroupGuide()
+    val cart = Cart()
 
-    var nextGuide: Guide? = MenuGroupGuide()
-    var previousGuide: Guide = MenuGroupGuide()
+    var nextGuide: Guide? = menuGroupGuide
+    var previousGuide: Guide = menuGroupGuide
     lateinit var nextMenuGroup: MenuGroup
 }
