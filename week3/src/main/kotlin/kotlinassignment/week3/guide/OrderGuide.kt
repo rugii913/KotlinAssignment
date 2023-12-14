@@ -4,11 +4,13 @@ import kotlinassignment.utilities.SomeExternalInterfaceRepresentingPayments
 import kotlinassignment.week3.flowState.FlowState
 import kotlinassignment.week3.messenger.InputMessenger
 import kotlinassignment.week3.messenger.Message
+import kotlinassignment.week3.order.Order
+import kotlinassignment.week3.order.OrderRepository
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
-class OrderGuide: Guide {
+class OrderGuide(val orderRepository: OrderRepository): Guide {
 
     override fun guide(flowState: FlowState) {
         // 메뉴 출력에 대한 부분 // TODO 메시지 출력은 OutputMessenger로
@@ -45,6 +47,7 @@ class OrderGuide: Guide {
 
                 when (paymentStatus) {
                     SomeExternalInterfaceRepresentingPayments.PaymentStatus.SUCCESS -> {
+                        orderRepository.save(Order(cartItemList))
                         flowState.cart.clear()
                         println("\n결제를 완료했어요. (${LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss"))})")
                     }
