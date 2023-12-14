@@ -27,7 +27,7 @@ class MenuGroupGuide: Guide {
             // TODO 더 깔끔하게 만들기
             menuGroupEntries.size + 1 -> {
                 // 장바구니 내용 출력 // TODO 입력에 따른 새로운 출력처리를 해야하므로 OrderGuide로 분리해야함
-                flowState.outputMessenger.writeCartItemList(flowState.cart)
+                flowState.nextGuide = flowState.orderGuide
             }
             menuGroupEntries.size + 2 -> {
                 flowState.cart.clear()
