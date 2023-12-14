@@ -1,9 +1,10 @@
 package kotlinassignment.week3.messenger
 
 import kotlinassignment.week3.menu.MenuGroup
+import kotlinassignment.week3.menu.menuItem.MenuItem
 import kotlin.enums.EnumEntries
 
-class MenuGroupMessenger {
+class OutputMessenger {
 
     fun writeMenuGroup(menuGroupEntries: EnumEntries<MenuGroup>) {
         write(Message.MENU_MAIN_INTRODUCE)
@@ -13,6 +14,16 @@ class MenuGroupMessenger {
         }
 
         write(Message.MENU_EXIT)
+    }
+
+    fun writeMenuItems(menuList: List<MenuItem>, menuGroup: MenuGroup) {
+        println("\n[${menuGroup.name} MENU]")
+
+        for (index in menuList.indices) {
+            println("${index + 1}. ${String.format("%-28s", menuList[index].name)} | W ${menuList[index].price} | ${menuList[index].information}")
+        }
+
+        write(Message.MENU_BACK)
     }
 
     fun write(message: Message) {

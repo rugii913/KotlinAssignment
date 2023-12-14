@@ -5,7 +5,7 @@ import kotlinassignment.filter.IntInputFilter
 class InputMessenger {
 
     private val intInputFilter = IntInputFilter()
-    private val menuItemMessenger = MenuItemMessenger()
+    private val outputMessenger = OutputMessenger()
 
     fun readInt(): Pair<InputStatus, Int> = print(">>> ").run {
         val selectedNumber: Int
@@ -13,7 +13,7 @@ class InputMessenger {
         try {
             selectedNumber = intInputFilter.filterToInt(readln())
         } catch (e: NumberFormatException) {
-            menuItemMessenger.writeExceptionWarningIntRequired()
+            outputMessenger.writeExceptionWarningIntRequired()
             return Pair(InputStatus.ABNORMAL, Int.MIN_VALUE)
         }
 
