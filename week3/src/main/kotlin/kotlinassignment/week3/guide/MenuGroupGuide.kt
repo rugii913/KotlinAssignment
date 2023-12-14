@@ -10,8 +10,9 @@ class MenuGroupGuide: Guide {
     override fun guide(flowState: FlowState) {
         // 메뉴 출력에 대한 부분
         val menuGroupEntries = MenuGroup.entries
-        flowState.outputMessenger.writeMenuGroup(menuGroupEntries)
-        
+        flowState.outputMessenger.writeMenuGroup(menuGroupEntries) // 메뉴 그룹 출력
+        flowState.outputMessenger.writeOrderMenu(menuGroupEntries.size + 1) // 주문 관련 출력
+
         // 사용자의 입력 처리에 대한 부분
         val (inputStatus, selectedNumber) = flowState.inputMessenger.readInt()
         if (inputStatus == InputMessenger.InputStatus.ABNORMAL) return // 다시 menuGroupGuide의 guide를 호출해야하므로 nextGuide를 set하지 않음, 다음 명령어들을 실행하지 않기 위해 return

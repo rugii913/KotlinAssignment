@@ -26,6 +26,12 @@ class OutputMessenger {
         write(Message.MENU_BACK)
     }
 
+    fun writeOrderMenu(startNumber: Int) {
+        println("\n[ORDER MENU]")
+        println("$startNumber. ${String.format("%-20s", "Order")} | 장바구니를 확인 후 주문합니다.")
+        println("${startNumber + 1}. ${String.format("%-20s", "Cancel")} | 진행 중인 주문을 취소합니다.")
+    }
+
     fun write(message: Message) {
         println(message.messegeValue)
     }
