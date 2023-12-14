@@ -2,10 +2,9 @@ package kotlinassignment.week3.messenger
 
 import kotlinassignment.filter.IntInputFilter
 
-class InputMessenger {
+class InputMessenger(private val outputMessenger: OutputMessenger) {
 
     private val intInputFilter = IntInputFilter()
-    private val outputMessenger = OutputMessenger()
 
     fun readInt(): Pair<InputStatus, Int> = print(">>> ").run {
         val selectedNumber: Int

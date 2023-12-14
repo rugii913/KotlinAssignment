@@ -8,8 +8,8 @@ import kotlinassignment.week3.messenger.OutputMessenger
 
 class FlowState {
 
-    val inputMessenger = InputMessenger()
     val outputMessenger = OutputMessenger()
+    val inputMessenger = InputMessenger(outputMessenger)
 
     var nextGuide: Guide? = MenuGroupGuide()
     var previousGuide: Guide = MenuGroupGuide()
