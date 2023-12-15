@@ -16,7 +16,7 @@ class OrderGuide(val orderRepository: OrderRepository): Guide {
         val cartItemList = flowState.cart.getAll()
         val totalPrice = cartItemList.sumOf { it.price }
 
-        flowState.outputMessenger.writeOrderList(cartItemList, totalPrice)
+        flowState.outputMessenger.writeOrderList(cartItemList, totalPrice) // TODO 양자택일 선택지 출력 메서드 따로 있는 편이 나을 듯 - 입력이랑 묶어서
 
         // 사용자의 입력 처리에 대한 부분
         val (inputStatus, selectedNumber) = flowState.inputMessenger.readInt(2)
