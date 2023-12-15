@@ -19,7 +19,7 @@ object KioskMain {
 
         while (flowState.nextGuide != null) {
             flowState.nextGuide?.guide(flowState)
-            runBlocking { delay(1000) }
+            runBlocking { delay(3000) }
         }
     }
 }
