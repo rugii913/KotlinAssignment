@@ -32,6 +32,16 @@ class OutputMessenger {
         println("${startNumber + 1}. ${String.format("%-20s", "Cancel")} | 진행 중인 주문을 취소합니다.")
     }
 
+    fun writeCartConfirmMessage(menuItem: MenuItem) {
+        println("\n${menuItem.name} | W ${menuItem.price} | ${menuItem.information}")
+        println("\n위 메뉴를 장바구니에 추가하시겠습니까?")
+        println("\n1. 확인\t\t2. 취소")
+    }
+
+    fun writeCartAddMessage(menuItemName: String) {
+        println("\n${menuItemName}가 장바구니에 추가되었습니다.")
+    }
+
     fun writeCartClearMessage() {
         println("\n장바구니의 모든 항목이 삭제되었습니다.")
     }
