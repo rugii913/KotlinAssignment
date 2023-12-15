@@ -5,9 +5,9 @@ import kotlin.random.Random
 
 object SomeExternalInterfaceRepresentingPayments {
 
-    private var balance = Random.nextInt(8, 12) * 1000
+    private var balance = Random.nextInt(50, 100) * 1000
     val inspectionStartTime = LocalTime.of(0, 5)
-    val inspectionEndTime = LocalTime.of(21, 20)
+    val inspectionEndTime = LocalTime.of(0, 20)
 
     fun pay(paymentPrice: Int): Pair<PaymentStatus, Int> {
 

@@ -13,13 +13,13 @@ object KioskMain {
         GlobalScope.launch {
             while (true) {
                 println("\n현재 대기 주문수: ${(flowState.orderGuide as OrderGuide).orderRepository.count()}")
-                delay(5000)
+                delay(10000)
             }
         }
 
         while (flowState.nextGuide != null) {
             flowState.nextGuide?.guide(flowState)
-            runBlocking { delay(3000) }
+            runBlocking { delay(1000) }
         }
     }
 }
