@@ -31,7 +31,7 @@ class OrderGuide(val orderRepository: OrderRepository): Guide {
         // 사용자의 입력 처리에 대한 부분
         val (inputStatus, selectedNumber) = flowState.inputMessenger.readInt()
 
-        if (inputStatus == InputMessenger.InputStatus.ABNORMAL) { // 현재 예외 처리 방식에서는 숫자 입력 필요한 곳에 문자 들어온 경우
+        if (inputStatus == InputMessenger.InputStatus.FAIL_INT_REQUIRED) { // 현재 예외 처리 방식에서는 숫자 입력 필요한 곳에 문자 들어온 경우
             return // KioskMain로 나가서 while 돌고 targetMenuItem 유지한 채로 다시 이 OrderGuide로 돌아온다.
         }
 
@@ -68,7 +68,7 @@ class OrderGuide(val orderRepository: OrderRepository): Guide {
                 flowState.nextGuide = flowState.menuGroupGuide
             }
             else -> { // TODO 입력값이 1, 2가 아닐 때와 문자 입력값이 들어왔을 때를 한꺼번에 처리할 수 있는 방법?
-                flowState.outputMessenger.write(Message.NO_CORRESPONDING_SERVICE_NUMBER) // KioskMain까지 나갔다가 while 후에 OrderGuide로 돌아온다.
+                flowState.outputMessenger.write(Message.WARNING_INT_OUT_OF_RANGE) // KioskMain까지 나갔다가 while 후에 OrderGuide로 돌아온다.
             }
         }
     }

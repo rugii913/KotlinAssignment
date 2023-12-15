@@ -1,7 +1,6 @@
 package kotlinassignment.week3.guide
 
 import kotlinassignment.week3.flowState.FlowState
-import kotlinassignment.week3.menu.MenuGroup
 import kotlinassignment.week3.messenger.InputMessenger
 import kotlinassignment.week3.messenger.Message
 
@@ -17,7 +16,7 @@ class CartGuide: Guide {
         // 사용자의 입력 처리에 대한 부분
         val (inputStatus, selectedNumber) = flowState.inputMessenger.readInt()
 
-        if (inputStatus == InputMessenger.InputStatus.ABNORMAL) { // 현재 예외 처리 방식에서는 숫자 입력 필요한 곳에 문자 들어온 경우
+        if (inputStatus == InputMessenger.InputStatus.FAIL_INT_REQUIRED) { // 현재 예외 처리 방식에서는 숫자 입력 필요한 곳에 문자 들어온 경우
             return // KioskMain로 나가서 while 돌고 targetMenuItem 유지한 채로 다시 이 CartGuide로 돌아온다.
         }
 
@@ -32,7 +31,7 @@ class CartGuide: Guide {
                 return
             }
             else -> { // TODO 입력값이 1, 2가 아닐 때와 문자 입력값이 들어왔을 때를 한꺼번에 처리할 수 있는 방법?
-                flowState.outputMessenger.write(Message.NO_CORRESPONDING_SERVICE_NUMBER)
+                flowState.outputMessenger.write(Message.WARNING_INT_OUT_OF_RANGE)
                 return // KioskMain까지 나갔다가 while 후에 targetMenuItem 유지한 채로 다시 이 CartGuide로 돌아온다.
             }
         }

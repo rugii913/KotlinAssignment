@@ -40,6 +40,10 @@ class OutputMessenger {
         println(message.messegeValue)
     }
 
+    fun writeWarningIntOutOfRange() {
+        write(Message.WARNING_INT_OUT_OF_RANGE)
+    }
+
     fun writeExceptionWarningIntRequired() {
         write(Message.EXCEPTION_WARNING_INT_REQUIRED)
     }
