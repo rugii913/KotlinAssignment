@@ -12,7 +12,7 @@ object KioskMain {
 
         GlobalScope.launch {
             while (true) {
-                println("\n현재 대기 주문수: ${(flowState.orderGuide as OrderGuide).orderRepository.count()}")
+                println("\n현재 대기 주문수: ${(flowState.orderGuide as OrderGuide).orderService.orderRepository.count()}")
                 delay(10000)
             }
         }

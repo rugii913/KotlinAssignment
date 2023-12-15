@@ -7,6 +7,7 @@ import kotlinassignment.week3.menu.MenuItem
 import kotlinassignment.week3.messenger.InputMessenger
 import kotlinassignment.week3.messenger.OutputMessenger
 import kotlinassignment.week3.order.OrderRepository
+import kotlinassignment.week3.order.OrderService
 
 class FlowState {
 
@@ -15,7 +16,7 @@ class FlowState {
     val menuGroupGuide: Guide = MenuGroupGuide()
     val menuItemGuide: Guide = MenuItemGuide()
     val cartGuide: Guide = CartGuide()
-    val orderGuide: Guide = OrderGuide(OrderRepository())
+    val orderGuide: Guide = OrderGuide(OrderService(OrderRepository()))
     val cart = Cart()
 
     var nextGuide: Guide? = menuGroupGuide
