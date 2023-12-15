@@ -1,4 +1,4 @@
-package kotlinassignment.week3.menu.menuItem
+package kotlinassignment.week3.menu
 
 import kotlinassignment.week3.menu.MenuGroup
 

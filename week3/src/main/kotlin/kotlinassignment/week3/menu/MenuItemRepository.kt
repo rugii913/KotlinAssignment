@@ -1,6 +1,4 @@
-package kotlinassignment.week3.menu.menuItem
-
-import kotlinassignment.week3.menu.MenuGroup
+package kotlinassignment.week3.menu
 
 class MenuItemRepository {
 

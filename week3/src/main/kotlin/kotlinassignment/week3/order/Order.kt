@@ -1,6 +1,6 @@
 package kotlinassignment.week3.order
 
-import kotlinassignment.week3.menu.menuItem.MenuItem
+import kotlinassignment.week3.menu.MenuItem
 
 class Order(cartItemList: MutableList<MenuItem>) {
 

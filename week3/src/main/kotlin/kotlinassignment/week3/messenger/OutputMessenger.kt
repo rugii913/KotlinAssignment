@@ -1,7 +1,7 @@
 package kotlinassignment.week3.messenger
 
 import kotlinassignment.week3.menu.MenuGroup
-import kotlinassignment.week3.menu.menuItem.MenuItem
+import kotlinassignment.week3.menu.MenuItem
 import kotlin.enums.EnumEntries
 
 class OutputMessenger {

@@ -3,7 +3,7 @@ package kotlinassignment.week3.flowState
 import kotlinassignment.week3.cart.Cart
 import kotlinassignment.week3.guide.*
 import kotlinassignment.week3.menu.MenuGroup
-import kotlinassignment.week3.menu.menuItem.MenuItem
+import kotlinassignment.week3.menu.MenuItem
 import kotlinassignment.week3.messenger.InputMessenger
 import kotlinassignment.week3.messenger.OutputMessenger
 import kotlinassignment.week3.order.OrderRepository

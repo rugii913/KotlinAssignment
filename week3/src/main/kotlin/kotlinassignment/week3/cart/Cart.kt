@@ -1,6 +1,6 @@
 package kotlinassignment.week3.cart
 
-import kotlinassignment.week3.menu.menuItem.MenuItem
+import kotlinassignment.week3.menu.MenuItem
 
 class Cart {
     private val cartItemList = mutableListOf<MenuItem>()

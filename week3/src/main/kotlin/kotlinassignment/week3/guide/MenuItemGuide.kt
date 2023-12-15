@@ -1,7 +1,7 @@
 package kotlinassignment.week3.guide
 
 import kotlinassignment.week3.flowState.FlowState
-import kotlinassignment.week3.menu.menuItem.MenuItemRepository
+import kotlinassignment.week3.menu.MenuItemRepository
 import kotlinassignment.week3.messenger.InputMessenger
 import kotlinassignment.week3.messenger.Message
 
