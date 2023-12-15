@@ -59,6 +59,10 @@ class OutputMessenger {
         println("1. 주문   2. 메뉴로 돌아가기")
     }
 
+    fun writeWarningOrderRequestForEmptyOrderList() {
+        println("\n장바구니에 아무 것도 없으면 주문할 수 없어요.")
+    }
+
     fun write(message: Message) {
         println(message.messegeValue)
     }

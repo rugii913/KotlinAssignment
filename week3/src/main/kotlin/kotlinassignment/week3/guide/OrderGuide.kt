@@ -26,11 +26,8 @@ class OrderGuide(val orderRepository: OrderRepository): Guide {
         } else if (selectedNumber == 2) {
             flowState.nextGuide = flowState.menuGroupGuide
             return // 입력이 2인 경우 menuGroupGuide로 보낸다.
-        }
-
-
-        if (cartItemList.size == 0) { // TODO 여기서 분기 처리 하지 말고 더 나은 방법이 있을 것 같다.
-            println("\n장바구니에 아무 것도 없는 경우 주문할 수 없어요.")
+        } else if (cartItemList.size == 0) {
+            flowState.outputMessenger.writeWarningOrderRequestForEmptyOrderList()
             flowState.nextGuide = flowState.menuGroupGuide
             return
         }
