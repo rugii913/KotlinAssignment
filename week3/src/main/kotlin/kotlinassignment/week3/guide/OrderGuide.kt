@@ -3,7 +3,6 @@ package kotlinassignment.week3.guide
 import kotlinassignment.utilities.SomeExternalInterfaceRepresentingPayments
 import kotlinassignment.week3.flowState.FlowState
 import kotlinassignment.week3.messenger.InputMessenger
-import kotlinassignment.week3.messenger.Message
 import kotlinassignment.week3.order.Order
 import kotlinassignment.week3.order.OrderRepository
 import java.time.LocalDateTime
@@ -13,20 +12,11 @@ import java.time.format.DateTimeFormatter
 class OrderGuide(val orderRepository: OrderRepository): Guide {
 
     override fun guide(flowState: FlowState) {
-        // 메뉴 출력에 대한 부분 // TODO 메시지 출력은 OutputMessenger로
+        // 메뉴 출력에 대한 부분 // TODO Order 관련 메뉴 출력은 OutputMessenger로 옮겼으나, 입력들어온 후 출력에 대해서 정리 필요
         val cartItemList = flowState.cart.getAll()
-
-        println("\n아래와 같이 주문 하시겠습니까?")
-        println("\n[Orders]")
-        for (menuItem in cartItemList) {
-            println("${String.format("%-28s", menuItem.name)} | W ${menuItem.price} | ${menuItem.information}")
-        }
-
-        println("\n[Total]")
         val totalPrice = cartItemList.sumOf { it.price }
-        println("W $totalPrice")
 
-        println("1. 주문   2. 메뉴로 돌아가기")
+        flowState.outputMessenger.writeOrderList(cartItemList, totalPrice)
 
         // 사용자의 입력 처리에 대한 부분
         val (inputStatus, selectedNumber) = flowState.inputMessenger.readInt(2)

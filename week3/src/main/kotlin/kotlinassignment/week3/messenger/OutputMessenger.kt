@@ -46,6 +46,19 @@ class OutputMessenger {
         println("\n장바구니의 모든 항목이 삭제되었습니다.")
     }
 
+    fun writeOrderList(cartItemList: MutableList<MenuItem>, totalPrice: Int) {
+        println("\n아래와 같이 주문 하시겠습니까?")
+        println("\n[Orders]")
+        for (menuItem in cartItemList) {
+            println("${String.format("%-28s", menuItem.name)} | W ${menuItem.price} | ${menuItem.information}")
+        }
+
+        println("\n[Total]")
+        println("W $totalPrice")
+
+        println("1. 주문   2. 메뉴로 돌아가기")
+    }
+
     fun write(message: Message) {
         println(message.messegeValue)
     }
