@@ -1,7 +1,6 @@
 package kotlinassignment.week3
 
 import kotlinassignment.week3.flowState.FlowState
-import kotlinassignment.week3.guide.OrderGuide
 import kotlinx.coroutines.*
 
 object KioskMain {
@@ -12,14 +11,14 @@ object KioskMain {
 
         GlobalScope.launch {
             while (true) {
-                println("\n현재 대기 주문수: ${(flowState.orderGuide as OrderGuide).orderRepository.count()}")
-                delay(5000)
+                println("\n현재 대기 주문수: ${flowState.orderRepository.count()}")
+                delay(10000)
             }
         }
 
         while (flowState.nextGuide != null) {
             flowState.nextGuide?.guide(flowState)
-            runBlocking { delay(3000) }
+            runBlocking { delay(1000) }
         }
     }
 }
