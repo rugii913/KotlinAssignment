@@ -4,14 +4,17 @@ import kotlinassignment.week3.flowState.FlowState
 import kotlinassignment.week3.messenger.InputMessenger
 import kotlinassignment.week3.order.OrderService
 
-class OrderGuide(val orderService: OrderService): Guide {
+class OrderGuide(private val orderService: OrderService) : Guide {
 
     override fun guide(flowState: FlowState) {
-        // 메뉴 출력에 대한 부분 // TODO Order 관련 메뉴 출력은 OutputMessenger로 옮겼으나, 입력들어온 후 출력에 대해서 정리 필요
+        // 메뉴 출력에 대한 부분
         val cartItemList = flowState.cart.getAll()
         val totalPrice = cartItemList.sumOf { it.price }
 
-        flowState.outputMessenger.writeOrderList(cartItemList, totalPrice) // TODO 양자택일 선택지 출력 메서드 따로 있는 편이 나을 듯 - 입력이랑 묶어서
+        flowState.outputMessenger.writeOrderList(
+            cartItemList,
+            totalPrice
+        ) // TODO 양자택일 선택지 출력 메서드 따로 있는 편이 나을 듯 - 입력이랑 묶어서
 
         // 사용자의 입력 처리에 대한 부분
         val (inputStatus, selectedNumber) = flowState.inputMessenger.readInt(2)

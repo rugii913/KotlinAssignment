@@ -1,7 +1,6 @@
 package kotlinassignment.week3
 
 import kotlinassignment.week3.flowState.FlowState
-import kotlinassignment.week3.guide.OrderGuide
 import kotlinx.coroutines.*
 
 object KioskMain {
@@ -12,7 +11,7 @@ object KioskMain {
 
         GlobalScope.launch {
             while (true) {
-                println("\n현재 대기 주문수: ${(flowState.orderGuide as OrderGuide).orderService.orderRepository.count()}")
+                println("\n현재 대기 주문수: ${flowState.orderRepository.count()}")
                 delay(10000)
             }
         }

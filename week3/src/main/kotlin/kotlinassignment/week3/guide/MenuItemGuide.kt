@@ -4,9 +4,7 @@ import kotlinassignment.week3.flowState.FlowState
 import kotlinassignment.week3.menu.MenuItemRepository
 import kotlinassignment.week3.messenger.InputMessenger
 
-class MenuItemGuide: Guide {
-
-    private val menuItemRepository = MenuItemRepository()
+class MenuItemGuide(private val menuItemRepository: MenuItemRepository) : Guide {
 
     override fun guide(flowState: FlowState) {
         // 메뉴 출력에 대한 부분

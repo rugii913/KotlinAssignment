@@ -5,7 +5,7 @@ import kotlinassignment.week3.menu.MenuGroup
 import kotlinassignment.week3.messenger.InputMessenger
 import kotlinassignment.week3.messenger.Message
 
-class MenuGroupGuide: Guide {
+class MenuGroupGuide : Guide {
 
     override fun guide(flowState: FlowState) {
         // 메뉴 출력에 대한 부분
@@ -21,14 +21,15 @@ class MenuGroupGuide: Guide {
         when (selectedNumber) {
             0 -> flowState.outputMessenger.write(Message.EXIT).also { flowState.nextGuide = null }
             in 1..menuGroupEntries.size -> {
-                flowState.nextGuide = MenuItemGuide()
+                flowState.nextGuide = flowState.menuItemGuide
                 flowState.nextMenuGroup = menuGroupEntries[selectedNumber - 1]
             }
             // TODO 더 깔끔하게 만들기
             menuGroupEntries.size + 1 -> {
-                // 장바구니 내용 출력 // TODO 입력에 따른 새로운 출력처리를 해야하므로 OrderGuide로 분리해야함
+                // 장바구니 내용 출력
                 flowState.nextGuide = flowState.orderGuide
             }
+
             menuGroupEntries.size + 2 -> {
                 flowState.cart.clear()
                 flowState.outputMessenger.writeCartClearMessage()

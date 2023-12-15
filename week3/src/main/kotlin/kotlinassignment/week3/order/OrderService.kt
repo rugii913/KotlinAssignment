@@ -3,7 +3,7 @@ package kotlinassignment.week3.order
 import kotlinassignment.utilities.SomeExternalInterfaceRepresentingPayments
 import kotlinassignment.week3.cart.Cart
 
-class OrderService(val orderRepository: OrderRepository) {
+class OrderService(private val orderRepository: OrderRepository) {
 
     fun requestOrder(cart: Cart, totalPrice: Int): Pair<SomeExternalInterfaceRepresentingPayments.PaymentStatus, Int> {
         val responsePair = SomeExternalInterfaceRepresentingPayments.pay(totalPrice)
