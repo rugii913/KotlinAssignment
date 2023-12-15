@@ -23,15 +23,19 @@ class OutputMessenger {
     fun writeMenuItems(menuList: List<MenuItem>, menuGroup: MenuGroup) {
         println("\n[${menuGroup.name} MENU]")
 
-        for (index in menuList.indices) {
-            println(
-                "${index + 1}. ${
-                    String.format(
-                        "%-28s",
-                        menuList[index].name
-                    )
-                } | W ${menuList[index].price} | ${menuList[index].information}"
-            )
+        if (menuList.isEmpty()) {
+            println("메뉴 개편 중이라 지금은 주문할 수 없어요 😭😭😭")
+        } else {
+            for (index in menuList.indices) {
+                println(
+                    "${index + 1}. ${
+                        String.format(
+                            "%-28s",
+                            menuList[index].name
+                        )
+                    } | W ${menuList[index].price} | ${menuList[index].information}"
+                )
+            }
         }
 
         write(Message.MENU_BACK)
