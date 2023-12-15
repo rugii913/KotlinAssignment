@@ -1,12 +1,20 @@
 package kotlinassignment.utilities
 
+import java.time.LocalTime
 import kotlin.random.Random
 
 object SomeExternalInterfaceRepresentingPayments {
 
-    private var balance = Random.nextInt(1, 10) * 1000
+    private var balance = Random.nextInt(8, 12) * 1000
+    val inspectionStartTime = LocalTime.of(0, 5)
+    val inspectionEndTime = LocalTime.of(21, 20)
 
     fun pay(paymentPrice: Int): Pair<PaymentStatus, Int> {
+
+        if (!isAvailableTime(LocalTime.now())) {
+            return Pair(PaymentStatus.EXCEPTION_NOT_AVAILABLE_TIME, balance)
+        }
+
         return if (balance < paymentPrice) {
             Pair(PaymentStatus.EXCEPTION_INSUFFICIENT_FUNDS, balance)
         } else {
@@ -15,7 +23,11 @@ object SomeExternalInterfaceRepresentingPayments {
         }
     }
 
+    private fun isAvailableTime(currentTime: LocalTime): Boolean {
+        return currentTime < inspectionStartTime || currentTime > inspectionEndTime
+    }
+
     enum class PaymentStatus {
-        SUCCESS, EXCEPTION_INSUFFICIENT_FUNDS
+        SUCCESS, EXCEPTION_INSUFFICIENT_FUNDS, EXCEPTION_NOT_AVAILABLE_TIME
     }
 }
