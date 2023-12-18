@@ -1,9 +1,9 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("kotlinassignment.kotlin-application-conventions")
     id("org.springframework.boot") version "3.1.6"
     id("io.spring.dependency-management") version "1.1.4"
+    kotlin("jvm") version "1.8.22"
     kotlin("plugin.spring") version "1.8.22"
 }
 
@@ -32,11 +32,6 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
-application {
-    // Define the main class for the application.
-    mainClass.set("com.teamsparta.courseregistration.CourseRegistrationApplicationKt")
-}
-
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs += "-Xjsr305=strict"
@@ -51,5 +46,3 @@ tasks.withType<Test> {
 tasks.bootBuildImage {
     builder.set("paketobuildpacks/builder-jammy-base:latest")
 }
-
-tasks.register("prepareKotlinBuildScriptModel") {}
