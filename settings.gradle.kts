@@ -11,4 +11,4 @@ plugins {
 }
 
 rootProject.name = "KotlinAssignment"
-include("week2", "week3", "list", "utilities")
+include("week2", "week3", "week4", "list", "utilities", "courseRegistration")
