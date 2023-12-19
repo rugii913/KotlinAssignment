@@ -1,23 +1,31 @@
 package com.teamsparta.courseregistration.domain.lecture.controller
 
+import com.teamsparta.courseregistration.domain.course.service.CourseService
 import com.teamsparta.courseregistration.domain.lecture.dto.AddLectureRequest
 import com.teamsparta.courseregistration.domain.lecture.dto.LectureResponse
 import com.teamsparta.courseregistration.domain.lecture.dto.UpdateLectureRequest
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RequestMapping("/courses/{courseId}/lectures")
 @RestController
-class LectureController {
+class LectureController(
+    private val courseService: CourseService
+) {
 
     @GetMapping
     fun getLectureList(@PathVariable courseId: Long): ResponseEntity<List<LectureResponse>> {
-        TODO()
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(courseService.getLectureList(courseId))
     }
 
     @GetMapping("/{lectureId}")
-    fun getLecture(@PathVariable courseId: String, @PathVariable lectureId: Long): ResponseEntity<LectureResponse> {
-        TODO()
+    fun getLecture(@PathVariable courseId: Long, @PathVariable lectureId: Long): ResponseEntity<LectureResponse> {
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(courseService.getLecture(courseId, lectureId))
     }
 
     @PostMapping
@@ -25,7 +33,9 @@ class LectureController {
         @PathVariable courseId: Long,
         @RequestBody addLectureRequest: AddLectureRequest,
     ): ResponseEntity<LectureResponse> {
-        TODO()
+        return ResponseEntity
+            .status(HttpStatus.CREATED)
+            .body(courseService.addLecture(courseId, addLectureRequest))
     }
 
     @PutMapping("/{lectureId}")
@@ -34,7 +44,9 @@ class LectureController {
         @PathVariable lectureId: Long,
         @RequestBody updateLectureRequest: UpdateLectureRequest
     ): ResponseEntity<LectureResponse> {
-        TODO()
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(courseService.updateLecture(courseId, lectureId, updateLectureRequest))
     }
 
     @DeleteMapping("/{lectureId}")
@@ -42,6 +54,9 @@ class LectureController {
         @PathVariable courseId: Long,
         @PathVariable lectureId: Long,
     ): ResponseEntity<Unit> {
-        TODO()
+        courseService.removeLecture(courseId, lectureId)
+        return ResponseEntity
+            .status(HttpStatus.NO_CONTENT)
+            .build()
     }
 }
