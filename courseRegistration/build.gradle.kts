@@ -33,6 +33,12 @@ dependencies {
 
     // springdoc-openapi (참고 https://springdoc.org) - Swagger 사용하기 위함, localhost:8080/swagger-ui/index.html
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
+
+    // data-jpa - DB 통신 위한 라이브러리 - transaction 포함
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    // H2 database
+    implementation("com.h2database:h2")
 }
 
 tasks.withType<KotlinCompile> {
