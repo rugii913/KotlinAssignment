@@ -38,7 +38,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
     // H2 database
-    implementation("com.h2database:h2")
+    // implementation("com.h2database:h2")
+
+    // PostgreSQL
+    runtimeOnly("org.postgresql:postgresql")
 }
 
 tasks.withType<KotlinCompile> {
