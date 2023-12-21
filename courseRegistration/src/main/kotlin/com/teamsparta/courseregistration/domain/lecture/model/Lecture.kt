@@ -14,9 +14,9 @@ class Lecture(
     @Column(name = "video_url")
     var videoUrl: String,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_id")
-    val course: Course
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "course_id")
+//    val course: Course
 ) {
 
     @Id

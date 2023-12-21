@@ -24,9 +24,9 @@ class Course(
     @Column(name = "num_applicants")
     var numApplicants: Int = 0,
 
-//    @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
-//    @JoinColumn(name = "course_id")
-//    var lectures: MutableList<Lecture> = mutableListOf(),
+    @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
+    @JoinColumn(name = "course_id")
+    var lectures: MutableList<Lecture> = mutableListOf(),
 
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
     val courseApplications: MutableList<CourseApplication> = mutableListOf()
@@ -52,13 +52,13 @@ class Course(
         numApplicants += 1
     }
 
-//    fun addLecture(lecture: Lecture) {
-//        lectures.add(lecture)
-//    }
-//
-//    fun removeLecture(lecture: Lecture) {
-//        lectures.remove(lecture)
-//    }
+    fun addLecture(lecture: Lecture) {
+        lectures.add(lecture)
+    }
+
+    fun removeLecture(lecture: Lecture) {
+        lectures.remove(lecture)
+    }
 
     fun addCourseApplication(courseApplication: CourseApplication) {
 
