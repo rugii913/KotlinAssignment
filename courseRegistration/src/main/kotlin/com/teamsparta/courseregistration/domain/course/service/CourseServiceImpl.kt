@@ -77,9 +77,7 @@ class CourseServiceImpl(
     }
 
     override fun getLecture(courseId: Long, lectureId: Long): LectureResponse {
-//        val lecture = lectureRepository.findByCourseIdAndId(courseId, lectureId)
-//            ?: throw ModelNotFoundException("Lecture", lectureId)
-        val lecture = lectureRepository.findByIdOrNull(lectureId)
+        val lecture = lectureRepository.findByCourseIdAndId(courseId, lectureId)
             ?: throw ModelNotFoundException("Lecture", lectureId)
 
         return lecture.toResponse()
@@ -92,7 +90,7 @@ class CourseServiceImpl(
         val lecture = Lecture(
             title = request.title,
             videoUrl = request.videoUrl,
-//            course = course
+            course = course
         )
 
         // 단순하게 lectureRepository.save(lecture)도 가능하다.
@@ -106,8 +104,7 @@ class CourseServiceImpl(
 
     @Transactional
     override fun updateLecture(courseId: Long, lectureId: Long, request: UpdateLectureRequest): LectureResponse {
-//        val lecture = lectureRepository.findByCourseIdAndId(courseId, lectureId) ?: throw ModelNotFoundException("Lecture", lectureId)
-        val lecture = lectureRepository.findByIdOrNull(lectureId) ?: throw ModelNotFoundException("Lecture", lectureId) // 원래 적혀있던 게 잘못된 코드였음...
+        val lecture = lectureRepository.findByIdOrNull(lectureId) ?: throw ModelNotFoundException("Lecture", lectureId)
 
         val (title, videoUrl) = request
         lecture.title = title
