@@ -1,6 +1,7 @@
 package com.teamsparta.courseregistration.domain.user.model
 
 import com.teamsparta.courseregistration.domain.couseapplication.model.CourseApplication
+import com.teamsparta.courseregistration.domain.user.dto.UserResponse
 import jakarta.persistence.*
 
 @Entity
@@ -26,4 +27,13 @@ class User(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
+}
+
+fun User.toResponse(): UserResponse {
+    return UserResponse(
+        id = id!!,
+        email = email,
+        nickname = profile.nickname,
+        role = role.name
+    )
 }
