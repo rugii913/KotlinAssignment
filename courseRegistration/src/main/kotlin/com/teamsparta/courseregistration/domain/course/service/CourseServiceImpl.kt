@@ -72,8 +72,9 @@ class CourseServiceImpl(
     }
 
     override fun getLectureList(courseId: Long): List<LectureResponse> {
-        val course = courseRepository.findByIdOrNull(courseId) ?: throw ModelNotFoundException("Course", courseId)
-        return course.lectures.map { it.toResponse() }
+//        val course = courseRepository.findByIdOrNull(courseId) ?: throw ModelNotFoundException("Course", courseId)
+//        return course.lectures.map { it.toResponse() }
+        return lectureRepository.findAllByCourseId(courseId).map { it.toResponse() }
     }
 
     override fun getLecture(courseId: Long, lectureId: Long): LectureResponse {
@@ -92,16 +93,17 @@ class CourseServiceImpl(
         val lecture = Lecture(
             title = request.title,
             videoUrl = request.videoUrl,
-//            course = course
+            course = course
         )
 
-        // 단순하게 lectureRepository.save(lecture)도 가능하다.
-        // 다만, DDD 기반으로 생각했을 때 aggregate의 root인 Course를 통해서 lecture의 life cycle(persistence context 상)를 관리하게 하자는 생각이다.
-        // Course에 Lecture 추가
-        course.addLecture(lecture)
-        // Lecture에 영속성을 전파 - course를 save해도 자식인 lecture까지
-        courseRepository.save(course)
-        return lecture.toResponse()
+//        // 단순하게 lectureRepository.save(lecture)도 가능하다.
+//        // 다만, DDD 기반으로 생각했을 때 aggregate의 root인 Course를 통해서 lecture의 life cycle(persistence context 상)를 관리하게 하자는 생각이다.
+//        // Course에 Lecture 추가
+//        course.addLecture(lecture)
+//        // Lecture에 영속성을 전파 - course를 save해도 자식인 lecture까지
+//        courseRepository.save(course)
+//        return lecture.toResponse()
+        return lectureRepository.save(lecture).toResponse()
     }
 
     @Transactional
@@ -123,7 +125,8 @@ class CourseServiceImpl(
         
         // 실제 query가 나가는 것을 살펴보면 비효율적임, 한 번 lectures를 가져와야함, 다만 영속성 전파되는 것을 보여주기 위해 넣은 부분
         // Lecture에 영속성을 전파
-        course.removeLecture(lecture)
+//        course.removeLecture(lecture)
+        lectureRepository.delete(lecture)
         courseRepository.save(course) 
         // 위 두 줄 없애고 lectureRepository.delete(lecture) 이렇게 하는 게 더 효율적이긴 하다
     }
