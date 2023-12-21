@@ -24,7 +24,8 @@ class Course(
     @Column(name = "num_applicants")
     var numApplicants: Int = 0,
 
-    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
+    @JoinColumn(name = "course_id")
     var lectures: MutableList<Lecture> = mutableListOf(),
 
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
