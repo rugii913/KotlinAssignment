@@ -104,7 +104,9 @@ class CourseServiceImpl(
 
     @Transactional
     override fun updateLecture(courseId: Long, lectureId: Long, request: UpdateLectureRequest): LectureResponse {
-        val lecture = lectureRepository.findByIdOrNull(lectureId) ?: throw ModelNotFoundException("Lecture", lectureId)
+        // commit d84f53에서 잘못된 코드라 적었는데, 그냥 val lecture = lectureRepository.findByIdOrNull(lectureId)로 해도 별 문제는 없을 것 같다.
+        // lectureId만으로 충분히 구분됨
+        val lecture = lectureRepository.findByCourseIdAndId(courseId, lectureId) ?: throw ModelNotFoundException("Lecture", lectureId)
 
         val (title, videoUrl) = request
         lecture.title = title
