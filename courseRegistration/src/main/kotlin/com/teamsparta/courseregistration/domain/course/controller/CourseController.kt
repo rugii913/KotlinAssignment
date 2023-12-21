@@ -28,7 +28,7 @@ class CourseController(
             .body(courseService.getCourseById(courseId))
     }
 
-    @PostMapping("/courses")
+    @PostMapping
     fun createCourse(@RequestBody createCourseRequest: CreateCourseRequest): ResponseEntity<CourseResponse> {
         return ResponseEntity
             .status(HttpStatus.CREATED)
