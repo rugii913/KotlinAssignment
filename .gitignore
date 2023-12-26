@@ -3,3 +3,9 @@
 
 # Ignore Gradle build output directory
 build
+
+### 실행 환경
+envs-constants.yml
+
+### IntelliJ로 DB에 연결하면서 생성된 설정 정보인 듯하다.
+.idea/dataSources.xml
