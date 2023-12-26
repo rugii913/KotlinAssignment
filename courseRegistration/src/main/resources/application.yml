@@ -1,0 +1,19 @@
+spring:
+  config:
+    import: classpath:envs-constants.yml
+  jpa:
+    properties:
+      hibernate:
+        # show_sql: true # 표준 출력이 아니라 로거로 확인하려면 여기가 아니라 아래 logging에 설정해야 한다.
+        format_sql: true #sql format 예쁘게
+        highlight_sql: true #sql 색칠해서
+        use_sql_comments: true #주석으로 부가정보 더 표시
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug # 표준 출력이 아니라 로거로 확인하려면 위 spring jpa properties가 아니라 여기 logging에 설정해야 한다.
+        orm:
+          jdbc:
+            bind: trace #sql ? binding parameter까지 전부 확인하기
