@@ -34,11 +34,14 @@
 #### event storming <span>$\color{#dd6565}\-\ 초안(2023.12.27. 작성)$</span>
 <img src="week4/documents/to-do-app-event-storming-draft.png" alt="to-do-application event storming draft" width="512"/>
 
-#### use case diagram <span>$\color{#dd6565}\-\ TODO$</span>
+#### use case diagram <span>$\color{#dd6565}\-\ 초안(2023.12.27. 작성)$</span>
+<img src="week4/documents/to-do-app-usecase-draft.png" alt="to-do-application event storming draft" width="512"/>
 
-#### entity relationship diagram <span>$\color{#dd6565}\-\ TODO$</span>
+#### entity relationship diagram <span>$\color{#dd6565}\-\ 초안(2023.12.27. 작성)$</span>
+<img src="week4/documents/to-do-app-erd-draft.png" alt="to-do-application event storming draft" width="512"/>
 
-#### API 명세 <span>$\color{#dd6565}\-\ TODO$</span>
+#### API 명세 <span>$\color{#dd6565}\-\ 초안(2023.12.27. 작성)$</span>
+<img src="week4/documents/to-do-app-api-design-draft.png" alt="to-do-application event storming draft" width="512"/>
 
 #### API 및 비즈니스 로직 구현 → week4 모듈 코드 <span>$\color{#dd6565}\-\ TODO$</span>
 
