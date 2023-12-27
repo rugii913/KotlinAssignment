@@ -6,12 +6,13 @@
 ## 주특기 숙련 개인 과제 - to do 앱 백엔드 서버 만들기
 ### TODO
 - ~요구사항 정리~
-- 유스케이스 다이어그램(Use Case Diagram) 작성
-- ERD(Entity Relationship Diagram) 작성
+- ~event storming~
+- 유스케이스 다이어그램(use case diagram) 작성
+- ERD(entity relationship diagram) 작성
 - API 명세 작성
 - 구현
   - Spring Boot 기반 REST API 구현
-  - Entity 사이 연관관계를 이해하며 할 일, 댓글 구현
+  - entity 사이 연관관계를 이해하며 할 일, 댓글 구현
   - 할 일을 완료 처리하며 상태 관리
 
 #### 요구사항 <span>$\color{#dd6565}\-\ 초안(2023.12.26. 작성)$</span>
@@ -30,9 +31,12 @@
 - 선택한 할 일 삭제 기능
   - 선택한 게시글을 삭제할 수 있음
 
-#### Use Case Diagram <span>$\color{#dd6565}\-\ TODO$</span>
+#### event storming <span>$\color{#dd6565}\-\ 초안(2023.12.27. 작성)$</span>
+<img src="week4/documents/to-do-app-event-storming-draft.png" alt="to-do-application event storming draft" width="512"/>
 
-#### Entity Relationship Diagram <span>$\color{#dd6565}\-\ TODO$</span>
+#### use case diagram <span>$\color{#dd6565}\-\ TODO$</span>
+
+#### entity relationship diagram <span>$\color{#dd6565}\-\ TODO$</span>
 
 #### API 명세 <span>$\color{#dd6565}\-\ TODO$</span>
 
