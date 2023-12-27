@@ -7,10 +7,10 @@
 ### TODO
 - ~요구사항 정리~
 - ~event storming~
-- 유스케이스 다이어그램(use case diagram) 작성
-- ERD(entity relationship diagram) 작성
-- API 명세 작성
-- 구현
+- ~유스케이스 다이어그램(use case diagram) 작성~
+- ~ERD(entity relationship diagram) 작성~
+- ~API 명세 작성~
+- 요구사항 구현
   - Spring Boot 기반 REST API 구현
   - entity 사이 연관관계를 이해하며 할 일, 댓글 구현
   - 할 일을 완료 처리하며 상태 관리
