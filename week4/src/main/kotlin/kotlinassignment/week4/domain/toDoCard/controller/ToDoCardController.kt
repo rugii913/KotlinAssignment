@@ -8,6 +8,7 @@ import kotlinassignment.week4.domain.toDoCard.model.ToDoCard
 import kotlinassignment.week4.domain.toDoCard.model.toResponse
 import kotlinassignment.week4.domain.toDoCard.repository.ToDoCardRepository
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -19,7 +20,7 @@ class ToDoCardController(
     @GetMapping
     fun getToDoCardList(): ResponseEntity<List<ToDoCardResponse>> {
         return ResponseEntity
-            .status(200)
+            .status(HttpStatus.OK)
             .body(toDoCardRepository.findAll().map(ToDoCard::toResponse))
     }
 
@@ -28,7 +29,7 @@ class ToDoCardController(
         val toDoCard = toDoCardRepository.findByIdOrNull(toDoCardId) ?: throw ModelNotFoundException("ToDoCard", toDoCardId)
 
         return ResponseEntity
-            .status(200)
+            .status(HttpStatus.OK)
             .body(toDoCard.toResponse())
     }
 
@@ -43,7 +44,7 @@ class ToDoCardController(
         )
 
         return ResponseEntity
-            .status(200)
+            .status(HttpStatus.CREATED)
             .body(toDoCardRepository.save(toDoCard).toResponse())
     }
 
@@ -59,7 +60,7 @@ class ToDoCardController(
         toDoCard.description = todoCardUpdateRequest.description
 
         return ResponseEntity
-            .status(200)
+            .status(HttpStatus.OK)
             .body(toDoCardRepository.save(toDoCard).toResponse())
     }
 
@@ -70,7 +71,7 @@ class ToDoCardController(
         val toDoCard = toDoCardRepository.findByIdOrNull(toDoCardId) ?: throw ModelNotFoundException("ToDoCard", toDoCardId)
 
         return ResponseEntity
-            .status(200)
+            .status(HttpStatus.NO_CONTENT)
             .body(toDoCardRepository.delete(toDoCard))
     }
 }
