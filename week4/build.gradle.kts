@@ -5,6 +5,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.4"
     kotlin("jvm") version "1.8.22"
     kotlin("plugin.spring") version "1.8.22"
+    kotlin("plugin.noarg") version "1.8.22"
 }
 
 group = "kotlinassignment"
@@ -13,6 +14,15 @@ version = "0.0.1-SNAPSHOT"
 java {
     sourceCompatibility = JavaVersion.VERSION_17
 }
+
+noArg {
+    annotation("jakarta.persistence.Entity")
+}
+
+allOpen {
+    annotation("jakarta.persistence.Entity")
+}
+
 
 configurations {
     compileOnly {
@@ -35,6 +45,12 @@ dependencies {
 
     // springdoc-openapi (참고 https://springdoc.org) - Swagger 사용
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
+
+    // spring data jpa
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    // H2 database
+     implementation("com.h2database:h2")
 }
 
 tasks.withType<KotlinCompile> {
