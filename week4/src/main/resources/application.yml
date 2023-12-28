@@ -10,6 +10,7 @@ spring:
     # defer-datasource-initialization: true # Hibernate 초기화 이후 data.sql 실행 (x)
     # Hibernate 초기화 방식 → 스크립트(schema.sql)를 통한 초기화 방식으로 변경
     # 참고: https://wildeveloperetrain.tistory.com/228 - hibernate에 의한 초기화와 스크립트 기반 초기화를 동시에 사용하는 것은 권장되지 않는다.
+    open-in-view: true # 참고 OSIV https://livelyoneweek.tistory.com/57, https://velog.io/@dnwlsrla40/JPA-Open-In-View
 
 logging:
   level:
