@@ -35,6 +35,12 @@ dependencies {
 
     // springdoc-openapi (참고 https://springdoc.org) - Swagger 사용
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
+
+    // spring data jpa
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    // H2 database
+     implementation("com.h2database:h2")
 }
 
 tasks.withType<KotlinCompile> {
