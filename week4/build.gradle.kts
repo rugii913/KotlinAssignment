@@ -46,6 +46,9 @@ dependencies {
     // springdoc-openapi (참고 https://springdoc.org) - Swagger 사용
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
 
+    // bean validation
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+
     // spring data jpa
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
