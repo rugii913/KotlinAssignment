@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 data class ToDoCardResponse(
     val id: Long,
     val title: String,
-    val description: String,
+    val description: String?,
     val userName: String,
     val createdDateTime: LocalDateTime,
 )
