@@ -1,15 +1,21 @@
 spring:
   jpa:
+    hibernate:
+      ddl-auto: none
     properties:
       hibernate:
         format_sql: true #sql format 예쁘게
         highlight_sql: true #sql 색칠해서
         use_sql_comments: true #주석으로 부가정보 더 표시
+    # defer-datasource-initialization: true # Hibernate 초기화 이후 data.sql 실행 (x)
+    # Hibernate 초기화 방식 → 스크립트(schema.sql)를 통한 초기화 방식으로 변경
+    # 참고: https://wildeveloperetrain.tistory.com/228 - hibernate에 의한 초기화와 스크립트 기반 초기화를 동시에 사용하는 것은 권장되지 않는다.
+
 logging:
   level:
     org:
       hibernate:
-        SQL: debug # 표준 출력이 아니라 로거로 확인하려면 위 spring jpa properties가 아니라 여기 logging에 설정해야 한다.
+        SQL: debug # 표준 출력이 아니라 로거로 확인하려면 위 spring jpa 쪽 show-sql이 아니라 여기 logging에 설정해야 한다.
         orm:
           jdbc:
             bind: trace #sql ? binding parameter까지 전부 확인하기
@@ -26,3 +32,9 @@ spring:
     url: jdbc:h2:mem:test
     username: sa
     password:
+  sql:
+    init:
+      mode: embedded # default가 embedded
+  h2:
+    console:
+      enabled: true # 참고 https://blog.advenoh.pe.kr/spring/H2-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EC%82%AC%EC%9A%A9%EB%B2%95-%EB%B0%8F-Intellij%EC%97%90%EC%84%9C-Database-%EC%97%B0%EB%8F%99/
