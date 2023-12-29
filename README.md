@@ -4,26 +4,26 @@
 - 주특기 숙련 개인 과제: week4 모듈
 
 ## 주특기 숙련 개인 과제 - to do 앱 백엔드 서버 만들기
-### step1, step2 요구사항 <span>$\color{#dd6565}\-\ 2023.12.29. 변경$</span>
-- 할 일 카드 목록 조회, 할 일 카드 단건 조회, 할 일 카드 작성, 할 일 카드 수정, 할 일 카드 삭제, 할 일 카드 완료
-- 댓글 조회, 댓글 작성, 댓글 수정, 댓글 삭제
-<img src="week4/documents/to-do-app-requirements-specification-v2.png" width="512" alt="to-do-application requirements specification"/>
-
 ### event storming <span>$\color{#dd6565}\-\ 2023.12.29. 변경$</span>
 <img src="week4/documents/to-do-app-event-storming-v2.png" alt="to-do-application event storming" width="512"/>
 
-### use case diagram <span>$\color{#dd6565}\-\ 2023.12.29. 변경$</span>
-<img src="week4/documents/to-do-app-usecase-v2.png" alt="to-do-application usecase" width="512"/>
+### step1, step2 요구사항 <span>$\color{#dd6565}\-\ 2023.12.29. 변경$</span>
+- 할 일 카드 목록 조회, 할 일 카드 단건 조회, 할 일 카드 작성, 할 일 카드 수정, 할 일 카드 삭제, 할 일 카드 완료
+- 댓글 조회, 댓글 작성, 댓글 수정, 댓글 삭제
 
-### entity relationship diagram <span>$\color{#dd6565}\-\ 2023.12.27. 작성$</span>
-<img src="week4/documents/to-do-app-erd-draft.png" alt="to-do-application erd" width="512"/>
+<img src="week4/documents/to-do-app-requirements-specification-v2.png" width="512" alt="to-do-application requirements specification"/>
 
-### API 명세 <span>$\color{#dd6565}\-\ 2023.12.29. 변경$</span>
-[Swagger 생성 파일로 보기](./week4/documents/swagger-to-do-app-API.html)
-<img src="week4/documents/to-do-app-api-design-draft.png" alt="to-do-application api-specification" width="512"/>
+### usecase diagram <span>$\color{#dd6565}\-\ 2023.12.29. 변경$</span>
+<img src="week4/documents/to-do-app-usecase-diagram-v2.png" alt="to-do-application usecase diagram" width="512"/>
+
+### API 명세 <span>$\color{#dd6565}\-\ 2023.12.30. 변경$</span>
+<img src="week4/documents/to-do-app-api-specification-v2.png" alt="to-do-application api-specification" width="512"/>
+
+### entity relationship diagram <span>$\color{#dd6565}\-\ 2023.12.30. 변경$</span>
+<img src="week4/documents/to-do-app-erd-v2.png" alt="to-do-application erd" width="512"/>
 
 ### API 및 비즈니스 로직 구현 → week4 모듈 코드
-- 2023.12.28. step1 구현
+- 2023.12.29. step1 구현
   - [PR](https://github.com/rugii913/KotlinAssignment/pulls?q=to-do-app+is%3Apr+is%3Aclosed) 및
 [프로젝트](https://github.com/users/rugii913/projects/8) 참고 
 
