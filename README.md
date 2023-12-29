@@ -4,38 +4,26 @@
 - 주특기 숙련 개인 과제: week4 모듈
 
 ## 주특기 숙련 개인 과제 - to do 앱 백엔드 서버 만들기
-### step1 요구사항 <span>$\color{#dd6565}\-\ 2023.12.26. 작성$</span>
-- 할 일 카드 작성 기능
-  - 각 카드 당 할 일 제목, 할 일 내용, 작성일, 작성자 이름을 저장
-  - 저장한 후에는 저장된 내용을 반환받아 확인할 수 있게 함
-- 할 일 카드 목록 전체 조회 기능
-  - 등록된 할 일 카드 전체를 조회\(작성일 기준 내림차순으로 정렬\)
-  - 전체 조회 시 각 카드별로 작성자 이름 및 카드에 속한 할 일 제목 확인 가능
-- 선택한 할 일\(특정 할 일\) 조회 기능
-  - 선택한 할 일 카드 한 건 조회
-  - 해당 카드의 할 일 제목, 할 일 내용, 작성일, 작성자 이름 정보 확인 가능
-- 선택한 할 일 카드 수정 기능
-  - 선택한 할 일의 할 일 제목, 작성자 이름, 작성 내용을 수정 가능
-  - 수정한 후에는 수정된 내용을 반환받아 확인할 수 있게 함
-- 선택한 할 일 삭제 기능
-  - 선택한 게시글을 삭제할 수 있음
+### event storming <span>$\color{#dd6565}\-\ 2023.12.29. 변경$</span>
+<img src="week4/documents/to-do-app-event-storming-v2.png" alt="to-do-application event storming" width="512"/>
 
-### event storming <span>$\color{#dd6565}\-\ 2023.12.27. 작성$</span>
-<img src="week4/documents/to-do-app-event-storming-draft.png" alt="to-do-application event storming draft" width="512"/>
+### step1, step2 요구사항 <span>$\color{#dd6565}\-\ 2023.12.29. 변경$</span>
+- 할 일 카드 목록 조회, 할 일 카드 단건 조회, 할 일 카드 작성, 할 일 카드 수정, 할 일 카드 삭제, 할 일 카드 완료
+- 댓글 조회, 댓글 작성, 댓글 수정, 댓글 삭제
 
-### use case diagram <span>$\color{#dd6565}\-\ 2023.12.27. 작성$</span>
-<img src="week4/documents/to-do-app-usecase-draft.png" alt="to-do-application event storming draft" width="512"/>
+<img src="week4/documents/to-do-app-requirements-specification-v2.png" width="512" alt="to-do-application requirements specification"/>
 
-### entity relationship diagram <span>$\color{#dd6565}\-\ 2023.12.27. 작성$</span>
-<img src="week4/documents/to-do-app-erd-draft.png" alt="to-do-application event storming draft" width="512"/>
+### usecase diagram <span>$\color{#dd6565}\-\ 2023.12.29. 변경$</span>
+<img src="week4/documents/to-do-app-usecase-diagram-v2.png" alt="to-do-application usecase diagram" width="512"/>
 
-### API 명세 <span>$\color{#dd6565}\-\ 2023.12.29. 변경$</span>
-[Swagger 생성 파일로 보기](./week4/documents/swagger-to-do-app-API.html)
+### API 명세 <span>$\color{#dd6565}\-\ 2023.12.30. 변경$</span>
+<img src="week4/documents/to-do-app-api-specification-v2.png" alt="to-do-application api-specification" width="512"/>
 
-<img src="week4/documents/to-do-app-api-design-draft.png" alt="to-do-application event storming draft" width="512"/>
+### entity relationship diagram <span>$\color{#dd6565}\-\ 2023.12.30. 변경$</span>
+<img src="week4/documents/to-do-app-erd-v2.png" alt="to-do-application erd" width="512"/>
 
 ### API 및 비즈니스 로직 구현 → week4 모듈 코드
-- 2023.12.28. step1 구현
+- 2023.12.29. step1 구현
   - [PR](https://github.com/rugii913/KotlinAssignment/pulls?q=to-do-app+is%3Apr+is%3Aclosed) 및
 [프로젝트](https://github.com/users/rugii913/projects/8) 참고 
 
