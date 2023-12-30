@@ -9,6 +9,7 @@ data class ToDoCardResponseWithComments(
     val description: String?,
     val userName: String,
     val createdDateTime: LocalDateTime,
+    val isComplete: Boolean,
     // val comments: List<Comment>, // entity 그대로 사용하면 순환 참조 https://dev-coco.tistory.com/133
     val comments: List<CommentResponse>,
 )

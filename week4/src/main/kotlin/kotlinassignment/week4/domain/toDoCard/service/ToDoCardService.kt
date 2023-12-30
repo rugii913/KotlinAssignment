@@ -1,10 +1,7 @@
 package kotlinassignment.week4.domain.toDoCard.service
 
 import kotlinassignment.week4.domain.exception.ModelNotFoundException
-import kotlinassignment.week4.domain.toDoCard.dto.ToDoCardCreateRequest
-import kotlinassignment.week4.domain.toDoCard.dto.ToDoCardResponse
-import kotlinassignment.week4.domain.toDoCard.dto.ToDoCardResponseWithComments
-import kotlinassignment.week4.domain.toDoCard.dto.ToDoCardUpdateRequest
+import kotlinassignment.week4.domain.toDoCard.dto.*
 import kotlinassignment.week4.domain.toDoCard.model.ToDoCard
 import kotlinassignment.week4.domain.toDoCard.model.toResponse
 import kotlinassignment.week4.domain.toDoCard.model.toResponseWithComments
@@ -62,5 +59,13 @@ class ToDoCardService(
         val toDoCard = toDoCardRepository.findByIdOrNull(toDoCardId) ?: throw ModelNotFoundException("ToDoCard", toDoCardId!!)
 
         return toDoCardRepository.delete(toDoCard)
+    }
+
+    @Transactional
+    fun completeToDoCard(toDoCardId: Long?, request: ToDoCardIsCompletePatchRequest): ToDoCardResponse {
+        val toDoCard = toDoCardRepository.findByIdOrNull(toDoCardId) ?: throw ModelNotFoundException("ToDoCard", toDoCardId!!)
+        toDoCard.isComplete = request.isComplete !!
+
+        return toDoCard.toResponse()
     }
 }

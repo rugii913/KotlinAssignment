@@ -7,6 +7,7 @@ create table to_do_card
     description       varchar(255),
     user_name         varchar(255) not null,
     created_date_time timestamp(6) not null,
+    is_complete        boolean default false,
     primary key (id)
 );
 create table comment
