@@ -28,3 +28,13 @@ class Comment(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
 }
+
+fun Comment.toResponse(): CommentResponse {
+    return CommentResponse(
+        id = this.id!!,
+        content = this.content,
+        userName = this.userName,
+        createdDateTime = this.createdDateTime,
+        toDoCardId = this.toDoCard.id!!,
+    )
+}

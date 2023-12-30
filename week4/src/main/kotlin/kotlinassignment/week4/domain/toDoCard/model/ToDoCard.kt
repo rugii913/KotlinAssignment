@@ -2,6 +2,7 @@ package kotlinassignment.week4.domain.toDoCard.model
 
 import jakarta.persistence.*
 import kotlinassignment.week4.domain.comment.model.Comment
+import kotlinassignment.week4.domain.comment.model.toResponse
 import kotlinassignment.week4.domain.toDoCard.dto.ToDoCardResponse
 import kotlinassignment.week4.domain.toDoCard.dto.ToDoCardResponseWithComments
 import java.time.LocalDateTime
@@ -19,6 +20,9 @@ class ToDoCard(
 
     @Column(nullable = false)
     val createdDateTime: LocalDateTime,
+
+    @OneToMany(mappedBy = "toDoCard", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
+    val comments: MutableList<Comment> = mutableListOf(),
 ) {
 
     @Id
