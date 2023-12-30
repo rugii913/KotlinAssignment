@@ -8,4 +8,5 @@ data class ToDoCardResponse(
     val description: String?,
     val userName: String,
     val createdDateTime: LocalDateTime,
+    val isComplete: Boolean,
 )

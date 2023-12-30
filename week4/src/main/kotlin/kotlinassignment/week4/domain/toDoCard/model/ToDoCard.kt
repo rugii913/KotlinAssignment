@@ -40,6 +40,7 @@ fun ToDoCard.toResponse(): ToDoCardResponse {
         description = this.description,
         userName = this.userName,
         createdDateTime = this.createdDateTime,
+        isComplete = this.isComplete,
     )
 }
 
@@ -50,6 +51,7 @@ fun ToDoCard.toResponseWithComments(): ToDoCardResponseWithComments {
         description = this.description,
         userName = this.userName,
         createdDateTime = this.createdDateTime,
-        comments = this.comments.map { it.toResponse() }
+        comments = this.comments.map { it.toResponse() },
+        isComplete = this.isComplete,
     )
 }
