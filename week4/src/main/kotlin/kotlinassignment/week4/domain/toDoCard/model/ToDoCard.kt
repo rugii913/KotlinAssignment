@@ -28,6 +28,9 @@ class ToDoCard(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
+
+    @Column(columnDefinition = "boolean default false") // https://m.blog.naver.com/younjh5369/222763814571 // https://www.baeldung.com/jpa-default-column-values
+    var isComplete: Boolean = false
 }
 
 fun ToDoCard.toResponse(): ToDoCardResponse {
