@@ -2,10 +2,7 @@ package kotlinassignment.week4.domain.toDoCard.controller
 
 import jakarta.validation.Valid
 import jakarta.validation.constraints.NotNull
-import kotlinassignment.week4.domain.toDoCard.dto.ToDoCardCreateRequest
-import kotlinassignment.week4.domain.toDoCard.dto.ToDoCardResponse
-import kotlinassignment.week4.domain.toDoCard.dto.ToDoCardResponseWithComments
-import kotlinassignment.week4.domain.toDoCard.dto.ToDoCardUpdateRequest
+import kotlinassignment.week4.domain.toDoCard.dto.*
 import kotlinassignment.week4.domain.toDoCard.service.ToDoCardService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -69,5 +66,17 @@ class ToDoCardController(
         return ResponseEntity
             .status(HttpStatus.NO_CONTENT)
             .build()
+    }
+
+    @PatchMapping("/{toDoCardId}", "/")
+    fun completeToDoCard(
+        @PathVariable @NotNull(message = "id는 필수값입니다.") toDoCardId: Long?,
+        @Valid @RequestBody request: ToDoCardIsCompletePatchRequest
+    ): ResponseEntity<ToDoCardResponse> {
+        val toDoCardResponse = toDoCardService.completeToDoCard(toDoCardId, request)
+
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(toDoCardResponse)
     }
 }
