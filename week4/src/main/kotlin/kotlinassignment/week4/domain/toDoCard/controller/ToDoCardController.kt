@@ -4,6 +4,7 @@ import jakarta.validation.Valid
 import jakarta.validation.constraints.NotNull
 import kotlinassignment.week4.domain.toDoCard.dto.ToDoCardCreateRequest
 import kotlinassignment.week4.domain.toDoCard.dto.ToDoCardResponse
+import kotlinassignment.week4.domain.toDoCard.dto.ToDoCardResponseWithComments
 import kotlinassignment.week4.domain.toDoCard.dto.ToDoCardUpdateRequest
 import kotlinassignment.week4.domain.toDoCard.service.ToDoCardService
 import org.springframework.http.HttpStatus
@@ -32,12 +33,12 @@ class ToDoCardController(
     }
 
     @GetMapping("/{toDoCardId}", "/")
-    fun getToDoCard(@PathVariable @NotNull(message = "id는 필수값입니다.") toDoCardId: Long?): ResponseEntity<ToDoCardResponse> {
-        val toDoCardResponse = toDoCardService.getToDoCardById(toDoCardId)
+    fun getToDoCard(@PathVariable @NotNull(message = "id는 필수값입니다.") toDoCardId: Long?): ResponseEntity<ToDoCardResponseWithComments> {
+        val toDoCardResponseWithComments = toDoCardService.getToDoCardById(toDoCardId)
 
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(toDoCardResponse)
+            .body(toDoCardResponseWithComments)
     }
 
     @PostMapping

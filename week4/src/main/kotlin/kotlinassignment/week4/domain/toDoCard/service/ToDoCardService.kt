@@ -3,9 +3,11 @@ package kotlinassignment.week4.domain.toDoCard.service
 import kotlinassignment.week4.domain.exception.ModelNotFoundException
 import kotlinassignment.week4.domain.toDoCard.dto.ToDoCardCreateRequest
 import kotlinassignment.week4.domain.toDoCard.dto.ToDoCardResponse
+import kotlinassignment.week4.domain.toDoCard.dto.ToDoCardResponseWithComments
 import kotlinassignment.week4.domain.toDoCard.dto.ToDoCardUpdateRequest
 import kotlinassignment.week4.domain.toDoCard.model.ToDoCard
 import kotlinassignment.week4.domain.toDoCard.model.toResponse
+import kotlinassignment.week4.domain.toDoCard.model.toResponseWithComments
 import kotlinassignment.week4.domain.toDoCard.repository.ToDoCardRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -23,10 +25,10 @@ class ToDoCardService(
         return toDoCardRepository.findAll().map(ToDoCard::toResponse)
     }
 
-    fun getToDoCardById(toDoCardId: Long?): ToDoCardResponse {
+    fun getToDoCardById(toDoCardId: Long?): ToDoCardResponseWithComments {
         val toDoCard = toDoCardRepository.findByIdOrNull(toDoCardId) ?: throw ModelNotFoundException("ToDoCard", toDoCardId!!)
 
-        return toDoCard.toResponse()
+        return toDoCard.toResponseWithComments()
     }
 
     @Transactional
