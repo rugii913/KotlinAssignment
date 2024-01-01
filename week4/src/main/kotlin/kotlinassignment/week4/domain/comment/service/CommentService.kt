@@ -9,7 +9,9 @@ import kotlinassignment.week4.domain.comment.model.fromRequestToComment
 import kotlinassignment.week4.domain.comment.model.toResponse
 import kotlinassignment.week4.domain.comment.model.updateFrom
 import kotlinassignment.week4.domain.comment.repository.CommentRepository
+import kotlinassignment.week4.domain.exception.IncorrectRelatedEntityIdException
 import kotlinassignment.week4.domain.exception.ModelNotFoundException
+import kotlinassignment.week4.domain.exception.PasswordMismatchException
 import kotlinassignment.week4.domain.toDoCard.model.addComment
 import kotlinassignment.week4.domain.toDoCard.repository.ToDoCardRepository
 import org.springframework.data.repository.findByIdOrNull
@@ -43,7 +45,7 @@ class CommentService(
         val targetComment = getCommentIfUserNameAndPasswordMatches(commentId, request.userName, request.password)
 
         if (targetComment.toDoCard.id != toDoCardId) {
-            TODO("새로운 에러 클래스 만들어서 던지게 하기 - path variable로 받은 toDoCardId와 Comment가 참조하는 ToDoCard의 id가 일치하지 않는 경우")
+            throw IncorrectRelatedEntityIdException("Comment", commentId, "ToDoCard", toDoCardId)
         }
 
         targetComment.updateFrom(request)
@@ -60,7 +62,7 @@ class CommentService(
         val targetComment = getCommentIfUserNameAndPasswordMatches(commentId, request.userName, request.password)
 
         if (targetComment.toDoCard.id != toDoCardId) {
-            TODO("새로운 에러 클래스 만들어서 던지게 하기 - path variable로 받은 toDoCardId와 Comment가 참조하는 ToDoCard의 id가 일치하지 않는 경우")
+            throw IncorrectRelatedEntityIdException("Comment", commentId, "ToDoCard", toDoCardId)
         }
 
         commentRepository.deleteById(commentId)
@@ -69,6 +71,6 @@ class CommentService(
     private fun getCommentIfUserNameAndPasswordMatches(commentId: Long, userNameRequested: String, passwordRequested: String): Comment { // readOnly = true, propagation = PROPAGATION.REQUIRED
         // 암호화 될 password는 서버까지 끌고 오지 않고, DB 서버 내에서 비교 후 일치하면 처리되도록 할 것
         return commentRepository.findByIdAndUserNameAndPassword(commentId, userNameRequested, passwordRequested)
-            ?: TODO("새로운 에러 클래스 만들어서 던지게 하기 - comment request로 받은 userName-password와 DB 해당 comment의 user_name-password")
+            ?: throw PasswordMismatchException("Comment", commentId)
     }
 }

@@ -52,4 +52,18 @@ class GlobalExceptionHandler {
             .status(HttpStatus.BAD_REQUEST)
             .body(ErrorResponse(message = e.message))
     }
+
+    @ExceptionHandler(PasswordMismatchException::class)
+    fun handlePasswordMismatchException(e: PasswordMismatchException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity
+            .status(HttpStatus.FORBIDDEN)
+            .body(ErrorResponse(message = e.message))
+    }
+
+    @ExceptionHandler(IncorrectRelatedEntityIdException::class)
+    fun handlePasswordMismatchException(e: IncorrectRelatedEntityIdException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(ErrorResponse(message = e.message))
+    }
 }
