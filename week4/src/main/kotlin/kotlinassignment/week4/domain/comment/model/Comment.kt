@@ -21,7 +21,7 @@ class Comment(
     @Column(nullable = false)
     val createdDateTime: LocalDateTime,
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY) // FetchType.Lazy 지정하지 않을 경우 CommentService의 수정, 삭제 메서드에서 불필요하게 ToDoCard select 쿼리가 한 번 더 나감
     @JoinColumn(name = "to_do_card_id", nullable = false)
     val toDoCard: ToDoCard,
 ) {

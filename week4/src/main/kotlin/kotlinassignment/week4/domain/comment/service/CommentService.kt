@@ -44,7 +44,7 @@ class CommentService(
         if (!commentRepository.existsById(commentId)) throw ModelNotFoundException("Comment", commentId)
         val targetComment = getCommentIfUserNameAndPasswordMatches(commentId, request.userName, request.password)
 
-        if (targetComment.toDoCard.id != toDoCardId) {
+        if (targetComment.toDoCard.id != toDoCardId) { // Comment의 toDoCard 참조 FetchType.Lazy 지정하지 않을 경우 불필요하게 ToDoCard select 쿼리가 한 번 더 나감
             throw IncorrectRelatedEntityIdException("Comment", commentId, "ToDoCard", toDoCardId)
         }
 
@@ -61,7 +61,7 @@ class CommentService(
         if (!commentRepository.existsById(commentId)) throw ModelNotFoundException("Comment", commentId)
         val targetComment = getCommentIfUserNameAndPasswordMatches(commentId, request.userName, request.password)
 
-        if (targetComment.toDoCard.id != toDoCardId) {
+        if (targetComment.toDoCard.id != toDoCardId) { // Comment의 toDoCard 참조 FetchType.Lazy 지정하지 않을 경우 불필요하게 ToDoCard select 쿼리가 한 번 더 나감
             throw IncorrectRelatedEntityIdException("Comment", commentId, "ToDoCard", toDoCardId)
         }
 
