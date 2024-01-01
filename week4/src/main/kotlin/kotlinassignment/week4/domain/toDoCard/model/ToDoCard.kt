@@ -55,3 +55,7 @@ fun ToDoCard.toResponseWithComments(): ToDoCardResponseWithComments {
         isComplete = this.isComplete,
     )
 }
+
+fun ToDoCard.addComment(comment: Comment) {
+    this.comments.add(comment)
+}

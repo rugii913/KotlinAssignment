@@ -1,7 +1,9 @@
 package kotlinassignment.week4.domain.comment.model
 
 import jakarta.persistence.*
+import kotlinassignment.week4.domain.comment.dto.CommentCreateRequest
 import kotlinassignment.week4.domain.comment.dto.CommentResponse
+import kotlinassignment.week4.domain.comment.dto.CommentUpdateRequest
 import kotlinassignment.week4.domain.toDoCard.model.ToDoCard
 import java.time.LocalDateTime
 
@@ -37,4 +39,18 @@ fun Comment.toResponse(): CommentResponse {
         createdDateTime = this.createdDateTime,
         toDoCardId = this.toDoCard.id!!,
     )
+}
+
+fun fromRequestToComment(request: CommentCreateRequest, targetToDoCard: ToDoCard): Comment {
+    return Comment(
+        content = request.content,
+        userName = request.userName,
+        password = request.password,
+        createdDateTime = request.createdDateTime,
+        toDoCard = targetToDoCard,
+    )
+}
+
+fun Comment.updateFrom(request: CommentUpdateRequest) {
+    this.content = request.content
 }
