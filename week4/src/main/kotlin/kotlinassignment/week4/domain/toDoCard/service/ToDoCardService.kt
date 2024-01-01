@@ -19,7 +19,7 @@ class ToDoCardService(
     // TODO: path variable에 mapping 되는 파라미터의 타입도 마찬가지
 
     fun getAllToDoCards(): List<ToDoCardResponse> {
-        return toDoCardRepository.findAll().map(ToDoCard::toResponse)
+        return toDoCardRepository.findAllByOrderByCreatedDateTimeDescIdDesc().map(ToDoCard::toResponse)
     }
 
     fun getToDoCardById(toDoCardId: Long?): ToDoCardResponseWithComments {

@@ -51,7 +51,8 @@ fun ToDoCard.toResponseWithComments(): ToDoCardResponseWithComments {
         description = this.description,
         userName = this.userName,
         createdDateTime = this.createdDateTime,
-        comments = this.comments.map { it.toResponse() },
+        comments = this.comments.map { it.toResponse() }.sortedByDescending { it.createdDateTime }, 
+        // TODO: DB에서 가져온 다음에 정렬하지 않고 DB에서 select 할 때 정렬되도록 할 것 - 나중에 페이징 처리와도 연관
         isComplete = this.isComplete,
     )
 }
