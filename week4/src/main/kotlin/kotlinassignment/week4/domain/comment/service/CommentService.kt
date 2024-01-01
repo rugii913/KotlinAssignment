@@ -36,22 +36,6 @@ class CommentService(
 
     @Transactional
     fun updateComment(toDoCardId: Long, commentId: Long, request: CommentUpdateRequest): CommentResponse {
-        // 방법 1 - select를 두 번 날리는 방법, commentRepository에는 접근하지 않고 ToDoCard를 다루면서 그 안의 Comment를 처리
-        /*
-        val targetToDoCard =
-            toDoCardIdRepository.findByIdOrNull(toDoCardId) ?: throw ModelNotFoundException("ToDoCard", toDoCardId)
-
-        val comment =
-            targetToDoCard.comments.firstOrNull { it.id == commentId }
-                ?: throw ModelNotFoundException("Comment", commentId)
-
-        comment.updateFrom(request)
-        toDoCardIdRepository.save(targetToDoCard)
-
-        return comment.toResponse()
-         */
-
-        // 방법 2 - commentRepository에 접근, to_do_card 테이블과 comment 테이블 join
         val targetComment =
             commentRepository.findByIdOrNull(commentId) ?: throw ModelNotFoundException("Comment", commentId)
         if (targetComment.toDoCard.id != toDoCardId) {
@@ -66,20 +50,6 @@ class CommentService(
 
     @Transactional
     fun deleteComment(toDoCardId: Long, commentId: Long, request: CommentDeleteRequest): Unit {
-        // 방법 1 - select를 두 번 날리는 방법, commentRepository에는 접근하지 않고 ToDoCard를 다루면서 그 안의 Comment를 처리
-        /*
-        val targetToDoCard =
-            toDoCardIdRepository.findByIdOrNull(toDoCardId)
-                ?: TODO("새로운 에러 클래스 만들어서 던지게 하기 - path variable로 받은 toDoCardId와 Comment가 참조하는 ToDoCard의 id가 일치하지 않는 경우")
-
-        val comment =
-            targetToDoCard.comments.firstOrNull { it.id == commentId } ?: throw ModelNotFoundException("Comment", commentId)
-
-        targetToDoCard.comments.remove(comment)
-        toDoCardIdRepository.save(targetToDoCard)
-        */
-
-        // 방법 2 - commentRepository에 접근, to_do_card 테이블과 comment 테이블 join
         val targetComment =
             commentRepository.findByIdOrNull(commentId) ?: throw ModelNotFoundException("Comment", commentId)
         if (targetComment.toDoCard.id != toDoCardId) {
