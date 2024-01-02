@@ -5,7 +5,7 @@ class MenuItemRepository {
     private val menuItemList: ArrayList<MenuItem> = ArrayList()
 
     init {
-        // TODO 자동으로 객체들을 추가하는 개선 방법 생각할 것
+        // ? 자동으로 객체들을 추가하는 개선 방법 생각할 것
         menuItemList.add(
             MenuItem(
                 "ShackBurger", 6_900, "토마토, 양상추, 쉑소스가 토핑된 치즈버거", MenuGroup.Burgers

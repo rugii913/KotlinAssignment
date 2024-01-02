@@ -18,8 +18,8 @@ import org.springframework.transaction.annotation.Transactional
 class ToDoCardService(
     private val toDoCardRepository: ToDoCardRepository, private val commentRepository: CommentRepository,
 ) {
-    // TODO: request dto의 필드들의 타입을 null 가능 타입으로 바꿨는데, dto를 entity로 변환하는 과정에서 !!를 사용하게 되어 보기 좋지 않다.
-    // TODO: path variable에 mapping 되는 파라미터의 타입도 마찬가지
+    // ?? request dto의 필드들의 타입을 null 가능 타입으로 바꿨는데, dto를 entity로 변환하는 과정에서 !!를 사용하게 되어 보기 좋지 않다.
+    // ?? path variable에 mapping 되는 파라미터의 타입도 마찬가지
 
     fun getAllToDoCards(): List<ToDoCardResponse> {
         return toDoCardRepository.findAllByOrderByCreatedDateTimeDescIdDesc().map(ToDoCard::toResponse)
@@ -28,11 +28,11 @@ class ToDoCardService(
     fun getToDoCardById(toDoCardId: Long?): ToDoCardResponseWithComments {
         val toDoCard = toDoCardRepository.findByIdOrNull(toDoCardId) ?: throw ModelNotFoundException("ToDoCard", toDoCardId!!)
 
-        /**
-        TODO: ToDoCard가 참조하고 있는 comments를 사용하지 않고, comment repository 쪽에서 따로 Page 처리된 Comment들을 가져옴
+        /*
+         ?? ToDoCard가 참조하고 있는 comments를 사용하지 않고, comment repository 쪽에서 따로 Page 처리된 Comment들을 가져옴
          ToDoCard에서 직접 comments를 꺼내올 때도 paging 처리되게 하려면 어떻게 해야하는지 알아보기
          */
-        val pageRequest = PageRequest.of(0, 100) // TODO: 이 부분은 임시로 값을 넣어놨음, 추후 제대로 처리할 것
+        val pageRequest = PageRequest.of(0, 100) // ?? 이 부분은 임시로 값을 넣어놨음, 추후 제대로 처리할 것
         val commentPage =
             commentRepository.findByToDoCardOrderByCreatedDateTimeDesc(toDoCard, pageRequest)
 

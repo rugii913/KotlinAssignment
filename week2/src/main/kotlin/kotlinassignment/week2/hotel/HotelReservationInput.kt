@@ -12,7 +12,7 @@ class HotelReservationInput(
 ) {
     val id: Int = HotelReservationRepository.previousId.incrementAndGet()
 
-    // TODO: Builder 패턴, apply 알아보기
+    // ? Builder 패턴, apply 알아보기
     data class Builder (
         var customerName: String = "",
         var roomNumber: Int = -1,
@@ -63,7 +63,7 @@ class HotelReservationInput(
                 |>>> """.trimMargin())
 
                 val inputString = readln()
-                val dateCheckIn = LocalDate.parse(inputString, DateTimeFormatter.BASIC_ISO_DATE) // DateTimeFormatter 기억, 직접 숫자로 처리하고 있었음 - TODO: 예외 처리 - 8자리 넘어가는 경우, 숫자 아닌 문자열 등
+                val dateCheckIn = LocalDate.parse(inputString, DateTimeFormatter.BASIC_ISO_DATE) // DateTimeFormatter 기억, 직접 숫자로 처리하고 있었음 - ? 예외 처리 - 8자리 넘어가는 경우, 숫자 아닌 문자열 등
                 if (dateCheckIn < LocalDate.now()) { // Kotlin 연산자 오버로딩 https://www.devkuma.com/docs/kotlin/operator-overloading/
                     println("\n체크인 날짜로 이미 지난 날짜를 선택할 수 없습니다.")
                     continue
@@ -82,7 +82,7 @@ class HotelReservationInput(
                 |>>> """.trimMargin())
                 val inputString = readln()
 
-                val dateCheckOut = LocalDate.parse(inputString, DateTimeFormatter.BASIC_ISO_DATE) // TODO: 예외 처리 - 8자리 넘어가는 경우 등, 숫자 아닌 문자열 등
+                val dateCheckOut = LocalDate.parse(inputString, DateTimeFormatter.BASIC_ISO_DATE) // ? 예외 처리 - 8자리 넘어가는 경우 등, 숫자 아닌 문자열 등
                 if (dateCheckOut <= dateCheckIn) {
                     println("\n체크아웃 날짜는 체크인 날짜와 같거나 이전일 수 없습니다.")
                     continue
@@ -97,7 +97,7 @@ class HotelReservationInput(
     }
 
     /*
-    - TODO: while 내에서 input 체크하는 부분을 아예 메서드로 분리하고 싶어서 고민 중 
+    - ? while 내에서 input 체크하는 부분을 아예 메서드로 분리하고 싶어서 고민 중
     fun checkInputDataByWhileStatement(inputTrial: Function<Any>) { // Function? Supplier
         while (true) {
             // input provocation message
