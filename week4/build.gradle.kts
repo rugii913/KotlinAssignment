@@ -54,6 +54,15 @@ dependencies {
 
     // H2 database
      implementation("com.h2database:h2")
+
+    // Kotest
+    testImplementation("io.kotest:kotest-runner-junit5:5.7.2")
+    testImplementation("io.kotest:kotest-assertions-core:5.7.2")
+    testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
+    // MockK
+    testImplementation("io.mockk:mockk:1.13.8")
+    // SpringMockK(Ninja-Squad)
+    testImplementation("com.ninja-squad:springmockk:4.0.2")
 }
 
 tasks.withType<KotlinCompile> {
