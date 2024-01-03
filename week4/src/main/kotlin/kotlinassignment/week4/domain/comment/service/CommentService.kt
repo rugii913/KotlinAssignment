@@ -18,7 +18,6 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
-@Transactional(readOnly = true)
 @Service
 class CommentService(
     private val toDoCardIdRepository: ToDoCardRepository,
@@ -68,7 +67,8 @@ class CommentService(
         commentRepository.deleteById(commentId)
     }
 
-    private fun getCommentIfUserNameAndPasswordMatches(commentId: Long, userNameRequested: String, passwordRequested: String): Comment { // readOnly = true, propagation = PROPAGATION.REQUIRED
+    private fun getCommentIfUserNameAndPasswordMatches(commentId: Long, userNameRequested: String, passwordRequested: String): Comment {
+        // ?? propagation = PROPAGATION.REQUIRED로 될까? 이렇게 따로 추출한 메서드는 transaction 처리 어떻게 되는지 알아보기
         // 암호화 될 password는 서버까지 끌고 오지 않고, DB 서버 내에서 비교 후 일치하면 처리되도록 할 것
         return commentRepository.findByIdAndUserNameAndPassword(commentId, userNameRequested, passwordRequested)
             ?: throw PasswordMismatchException("Comment", commentId)

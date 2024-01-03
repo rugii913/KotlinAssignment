@@ -29,8 +29,8 @@ class ToDoCardController(
             .body(toDoCardResponsesList)
     }
 
-    @GetMapping("/{toDoCardId}", "/")
-    fun getToDoCard(@PathVariable @NotNull(message = "id는 필수값입니다.") toDoCardId: Long?): ResponseEntity<ToDoCardResponseWithComments> {
+    @GetMapping("/{toDoCardId}")
+    fun getToDoCard(@PathVariable toDoCardId: Long): ResponseEntity<ToDoCardResponseWithComments> {
         val toDoCardResponseWithComments = toDoCardService.getToDoCardById(toDoCardId)
 
         return ResponseEntity
@@ -47,9 +47,9 @@ class ToDoCardController(
             .body(toDoCardResponse)
     }
 
-    @PutMapping("/{toDoCardId}", "/")
+    @PutMapping("/{toDoCardId}")
     fun updateToDoCard(
-        @PathVariable @NotNull(message = "id는 필수값입니다.") toDoCardId: Long?,
+        @PathVariable toDoCardId: Long,
         @Valid @RequestBody request: ToDoCardUpdateRequest
     ): ResponseEntity<ToDoCardResponse> {
         val toDoCardResponse = toDoCardService.updateToDoCard(toDoCardId, request)
@@ -59,8 +59,8 @@ class ToDoCardController(
             .body(toDoCardResponse)
     }
 
-    @DeleteMapping("/{toDoCardId}", "/")
-    fun deleteToDoCard(@PathVariable @NotNull(message = "id는 필수값입니다.") toDoCardId: Long?): ResponseEntity<Unit> {
+    @DeleteMapping("/{toDoCardId}")
+    fun deleteToDoCard(@PathVariable toDoCardId: Long): ResponseEntity<Unit> {
         toDoCardService.deleteToDoCard(toDoCardId)
 
         return ResponseEntity
@@ -68,9 +68,9 @@ class ToDoCardController(
             .build()
     }
 
-    @PatchMapping("/{toDoCardId}", "/")
+    @PatchMapping("/{toDoCardId}")
     fun completeToDoCard(
-        @PathVariable @NotNull(message = "id는 필수값입니다.") toDoCardId: Long?,
+        @PathVariable toDoCardId: Long,
         @Valid @RequestBody request: ToDoCardIsCompletePatchRequest
     ): ResponseEntity<ToDoCardResponse> {
         val toDoCardResponse = toDoCardService.completeToDoCard(toDoCardId, request)
