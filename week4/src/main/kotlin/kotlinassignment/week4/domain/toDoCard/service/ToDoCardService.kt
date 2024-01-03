@@ -75,7 +75,7 @@ class ToDoCardService(
     @Transactional
     fun completeToDoCard(toDoCardId: Long?, request: ToDoCardIsCompletePatchRequest): ToDoCardResponse {
         val toDoCard = toDoCardRepository.findByIdOrNull(toDoCardId) ?: throw ModelNotFoundException("ToDoCard", toDoCardId!!)
-        toDoCard.isComplete = request.isComplete !!
+        toDoCard.isComplete = request.isComplete
 
         return toDoCard.toResponse()
     }

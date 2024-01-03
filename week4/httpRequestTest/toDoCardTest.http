@@ -1,1 +1,15 @@
-PATCH http://localhost:8080/todocards/
+PATCH http://localhost:8080/todocards/1
+Accept: */*
+Content-Type: application/json
+
+{
+
+}
+###
+PATCH http://localhost:8080/todocards/1
+Accept: */*
+Content-Type: application/json
+
+{
+
+###
