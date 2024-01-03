@@ -15,10 +15,9 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ToDoCardService(
-    private val toDoCardRepository: ToDoCardRepository, private val commentRepository: CommentRepository,
+    private val toDoCardRepository: ToDoCardRepository,
+    private val commentRepository: CommentRepository,
 ) {
-    // ?? request dto의 필드들의 타입을 null 가능 타입으로 바꿨는데, dto를 entity로 변환하는 과정에서 !!를 사용하게 되어 보기 좋지 않다.
-    // ?? path variable에 mapping 되는 파라미터의 타입도 마찬가지
 
     fun getAllToDoCards(): List<ToDoCardResponse> {
         return toDoCardRepository.findAllByOrderByCreatedDateTimeDescIdDesc().map(ToDoCard::toResponse)
