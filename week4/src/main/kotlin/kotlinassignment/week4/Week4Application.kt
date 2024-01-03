@@ -24,4 +24,6 @@ fun main(args: Array<String>) {
  *  - ToDoCardIsCompletePatchRequest.kt
  *    - 20줄 작동 방식 알아보기 - 생각보다 작동 방식이 어려운 듯함
  *      private이 빠지면 Jackson 매핑 에러가 발생하고, val isComplete = _isComplete!!으로 받아오려고 하면 validation이 안 됨
+ *  - CommentService.kt
+ *    - 71줄 propagation = PROPAGATION.REQUIRED로 될까? 이렇게 따로 추출한 메서드는 transaction 처리 어떻게 되는지 알아보기
  */

@@ -13,7 +13,6 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
-@Transactional(readOnly = true)
 @Service
 class ToDoCardService(
     private val toDoCardRepository: ToDoCardRepository, private val commentRepository: CommentRepository,
