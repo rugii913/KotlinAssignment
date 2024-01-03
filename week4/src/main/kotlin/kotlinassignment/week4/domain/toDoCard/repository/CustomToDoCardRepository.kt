@@ -1,0 +1,3 @@
+package kotlinassignment.week4.domain.toDoCard.repository
+
+interface CustomToDoCardRepository
