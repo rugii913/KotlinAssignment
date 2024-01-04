@@ -1,3 +1,11 @@
 package kotlinassignment.week4.domain.toDoCard.repository
 
-interface CustomToDoCardRepository
+import kotlinassignment.week4.domain.toDoCard.model.ToDoCard
+
+interface CustomToDoCardRepository {
+
+    fun findAllFilterByUserNameAndOrderBySortOrder(
+        userName: String?,
+        sortOrder: String,
+    ): List<ToDoCard>
+}

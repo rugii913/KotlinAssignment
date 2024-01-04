@@ -19,8 +19,10 @@ class ToDoCardService(
     private val commentRepository: CommentRepository,
 ) {
 
-    fun getAllToDoCards(): List<ToDoCardResponse> {
-        return toDoCardRepository.findAllByOrderByCreatedDateTimeDescIdDesc().map(ToDoCard::toResponse)
+    fun getAllToDoCards(userName: String?, sortOrder: String): List<ToDoCardResponse> {
+        return toDoCardRepository
+            .findAllFilterByUserNameAndOrderBySortOrder(userName, sortOrder)
+            .map(ToDoCard::toResponse)
     }
 
     fun getToDoCardById(toDoCardId: Long?): ToDoCardResponseWithComments {
