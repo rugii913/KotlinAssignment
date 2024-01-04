@@ -68,9 +68,14 @@ dependencies {
     // SpringMockK(Ninja-Squad)
     testImplementation("com.ninja-squad:springmockk:4.0.2")
 
-    // qeuryDSL
+    // queryDSL
     implementation("com.querydsl:querydsl-jpa:$queryDslVersion:jakarta")
     kapt("com.querydsl:querydsl-apt:$queryDslVersion:jakarta")
+
+    // jjwt(json web token)
+    implementation("io.jsonwebtoken:jjwt-api:0.12.3")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.3")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.3")
 }
 
 tasks.withType<KotlinCompile> {
