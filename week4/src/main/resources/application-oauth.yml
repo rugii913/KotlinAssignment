@@ -1,0 +1,10 @@
+oauth2:
+  provider-properties-map:
+    KAKAO:
+      base-uri: TODO
+      client-id: TODO
+      redirect-uri: http://localhost:8080/oauth2/callback/kakao
+    NAVER:
+      base-uri: TODO
+      client-id: TODO
+      redirect-uri: http://localhost:8080/oauth2/callback/naver
