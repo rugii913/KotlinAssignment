@@ -13,8 +13,8 @@ class ToDoCard(
     @Column(nullable = false)
     var title: String,
 
-    @Column
-    var description: String? = null,
+    @Column(nullable = false)
+    var description: String,
 
     @Column(nullable = false)
     val userName: String,
