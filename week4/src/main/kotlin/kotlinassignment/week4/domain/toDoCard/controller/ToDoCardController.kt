@@ -1,9 +1,9 @@
 package kotlinassignment.week4.domain.toDoCard.controller
 
 import jakarta.validation.Valid
-import jakarta.validation.constraints.NotNull
 import kotlinassignment.week4.domain.toDoCard.dto.*
 import kotlinassignment.week4.domain.toDoCard.service.ToDoCardService
+import kotlinassignment.week4.util.SortOrder
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
@@ -21,8 +21,11 @@ class ToDoCardController(
     // required = false 방법은 작동하지 않았음
 
     @GetMapping
-    fun getToDoCardList(): ResponseEntity<List<ToDoCardResponse>> {
-        val toDoCardResponsesList = toDoCardService.getAllToDoCards()
+    fun getToDoCardList(
+        @RequestParam(required = false) userName: String?,
+        @RequestParam(required = false, name = "sort", defaultValue = "DESC") sortOrder: SortOrder,
+    ): ResponseEntity<List<ToDoCardResponse>> {
+        val toDoCardResponsesList = toDoCardService.getAllToDoCards(userName, sortOrder.name)
 
         return ResponseEntity
             .status(HttpStatus.OK)
