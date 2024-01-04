@@ -1,4 +1,9 @@
 spring:
+  profiles:
+    group:
+      local: oauth
+      # cf. include는 on-profile과 공존할 수 없음 InactiveConfigDataAccessException - https://multifrontgarden.tistory.com/277
+      # profile별로 include가 달라야 한다면 spring.profiles.group 속성으로 묶어서 사용
   jpa:
     hibernate:
       ddl-auto: none
@@ -20,6 +25,10 @@ logging:
         orm:
           jdbc:
             bind: trace #sql ? binding parameter까지 전부 확인하기
+      springframework:
+        boot:
+          autoconfigure:
+            logging: debug
 
 ---
 
