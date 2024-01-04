@@ -3,10 +3,9 @@ package kotlinassignment.week4.domain.toDoCard.service
 import kotlinassignment.week4.domain.comment.model.toResponse
 import kotlinassignment.week4.domain.comment.repository.CommentRepository
 import kotlinassignment.week4.domain.exception.ModelNotFoundException
+import kotlinassignment.week4.domain.exception.StringLengthOutOfRangeException
 import kotlinassignment.week4.domain.toDoCard.dto.*
-import kotlinassignment.week4.domain.toDoCard.model.ToDoCard
-import kotlinassignment.week4.domain.toDoCard.model.toResponse
-import kotlinassignment.week4.domain.toDoCard.model.toResponseWithComments
+import kotlinassignment.week4.domain.toDoCard.model.*
 import kotlinassignment.week4.domain.toDoCard.repository.ToDoCardRepository
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
@@ -41,6 +40,7 @@ class ToDoCardService(
 
     @Transactional
     fun createToDoCard(request: ToDoCardCreateRequest): ToDoCardResponse {
+
         val toDoCard = ToDoCard(
             title = request.title,
             description = request.description,

@@ -4,17 +4,15 @@ import jakarta.persistence.*
 import kotlinassignment.week4.domain.comment.dto.CommentResponse
 import kotlinassignment.week4.domain.comment.model.Comment
 import kotlinassignment.week4.domain.comment.model.toResponse
+import kotlinassignment.week4.domain.exception.StringLengthOutOfRangeException
 import kotlinassignment.week4.domain.toDoCard.dto.ToDoCardResponse
 import kotlinassignment.week4.domain.toDoCard.dto.ToDoCardResponseWithComments
 import java.time.LocalDateTime
 
 @Entity
 class ToDoCard(
-    @Column(nullable = false)
-    var title: String,
-
-    @Column
-    var description: String? = null,
+    title: String,
+    description: String,
 
     @Column(nullable = false)
     val userName: String,
@@ -30,9 +28,32 @@ class ToDoCard(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
 
+    @Column(nullable = false)
+    var title = getStringAfterLengthValidation(title, "title", minLength = TITLE_MIN_LENGTH, maxLength = TITLE_MAX_LENGTH)
+        set(value) {
+            field = getStringAfterLengthValidation(value, "title", minLength = TITLE_MIN_LENGTH, maxLength = TITLE_MAX_LENGTH)
+        }
+
+    @Column(nullable = false)
+    var description = getStringAfterLengthValidation(description, "description", minLength = DESCRIPTION_MIN_LENGTH, maxLength = DESCRIPTION_MAX_LENGTH)
+        set(value) {
+            field = getStringAfterLengthValidation(value, "description", minLength = DESCRIPTION_MIN_LENGTH, maxLength = DESCRIPTION_MAX_LENGTH)
+        }
+
     @Column(columnDefinition = "boolean default false") // https://m.blog.naver.com/younjh5369/222763814571 // https://www.baeldung.com/jpa-default-column-values
     var isComplete: Boolean = false
+
+    private fun getStringAfterLengthValidation(target: String, propertyName: String, minLength: Long, maxLength: Long): String {
+        if (target.length in minLength..maxLength)
+            return target
+        else throw StringLengthOutOfRangeException(propertyName, minLength = minLength, maxLength = maxLength)
+    }
 }
+
+const val TITLE_MIN_LENGTH: Long = 1
+const val TITLE_MAX_LENGTH: Long = 200
+const val DESCRIPTION_MIN_LENGTH: Long = 1
+const val DESCRIPTION_MAX_LENGTH: Long = 1_000
 
 fun ToDoCard.toResponse(): ToDoCardResponse {
     return ToDoCardResponse(
