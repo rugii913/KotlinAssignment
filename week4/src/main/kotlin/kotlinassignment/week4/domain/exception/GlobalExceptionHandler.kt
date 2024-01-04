@@ -67,14 +67,10 @@ class GlobalExceptionHandler {
             .body(ErrorResponse(message = e.message))
     }
 
-    /*
-    // ToDoCardControllre mapping url에 억지로 "/"을 유지하면서, null이 들어올 경우 이렇게 처리하려 했음
-    // 하지만 "/"를 아예 빼기로 결정함
-    @ExceptionHandler(MissingPathVariableException::class)
-    fun handleBindException(e: MissingPathVariableException): ResponseEntity<ErrorResponse> {
+    @ExceptionHandler(StringLengthOutOfRangeException::class)
+    fun handlePasswordMismatchException(e: StringLengthOutOfRangeException): ResponseEntity<ErrorResponse> {
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
-            .body(ErrorResponse(message = "요청의 path variable(${e.variableName})은 필수값입니다."))
+            .body(ErrorResponse(message = e.message))
     }
-     */
 }

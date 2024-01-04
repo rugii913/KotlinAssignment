@@ -34,6 +34,11 @@ class ToDoCard(
     var isComplete: Boolean = false
 }
 
+const val TITLE_MIN_LENGTH: Long = 1
+const val TITLE_MAX_LENGTH: Long = 200
+const val DESCRIPTION_MIN_LENGTH: Long = 1
+const val DESCRIPTION_MAX_LENGTH: Long = 1_000
+
 fun ToDoCard.toResponse(): ToDoCardResponse {
     return ToDoCardResponse(
         id = this.id!!,
