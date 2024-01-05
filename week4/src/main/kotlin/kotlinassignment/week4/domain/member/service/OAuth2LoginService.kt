@@ -1,5 +1,6 @@
 package kotlinassignment.week4.domain.member.service
 
+import kotlinassignment.week4.domain.member.dto.LoginResponse
 import kotlinassignment.week4.infra.client.oauth2.OAuth2Client
 import kotlinassignment.week4.infra.client.oauth2.config.OAuth2ProviderPropertiesResolver
 import kotlinassignment.week4.util.JwtTokenManager
@@ -14,10 +15,18 @@ class OAuth2LoginService(
     private val jwtTokenManager: JwtTokenManager,
 ) {
 
-    fun login(oAuth2ProviderName: String, authorizationCode: String): String {
+    fun login(oAuth2ProviderName: String, authorizationCode: String): LoginResponse {
         return oAuth2Client.getAccessToken(oAuth2ProviderName, authorizationCode)
             .let { oAuth2Client.retrieveUserInfo(oAuth2ProviderName, accessToken = it) }
             .let { socialMemberService.registerIfAbsent(resolver.getOAuth2Provider(oAuth2ProviderName), userInfoResponse = it) }
-            .let { TODO("위에서 찾은 SocialMember를 바탕으로 resource owner에게 access token을 발행해야 한다.") }
+            .let {
+                LoginResponse(
+                    id = it.id!!,
+                    nickname = it.nickname,
+                    tokenType = "TODO",
+                    accessToken = jwtTokenManager.createAccessToken(it.idFromProvider),
+                    refreshToken = jwtTokenManager.createRefreshToken()
+                )
+            }
     }
 }

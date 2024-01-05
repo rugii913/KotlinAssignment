@@ -1,9 +1,9 @@
 package kotlinassignment.week4.domain.member.controller
 
 import jakarta.servlet.http.HttpServletResponse
+import kotlinassignment.week4.domain.member.dto.LoginResponse
 import kotlinassignment.week4.domain.member.service.OAuth2LoginService
 import kotlinassignment.week4.infra.client.oauth2.OAuth2Client
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestParam
@@ -31,7 +31,7 @@ class OAuth2MemberController(
     fun callback(
         @PathVariable oAuth2ProviderName: String,
         @RequestParam(name = "code") authorizationCode: String,
-    ): String {
+    ): LoginResponse {
         return oAuth2LoginService.login(oAuth2ProviderName, authorizationCode)
     }
 }
