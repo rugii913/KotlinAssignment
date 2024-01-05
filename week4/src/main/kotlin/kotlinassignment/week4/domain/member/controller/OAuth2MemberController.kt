@@ -15,8 +15,6 @@ class OAuth2MemberController(
     private val oAuth2LoginService: OAuth2LoginService,
     private val oAuth2Client: OAuth2Client,
 ) {
-    @Value("\${oauth2.name}")
-    val name: String? = null
 
     // 1. 로그인 페이지로 Redirect 해주는 API
     @GetMapping("/oauth2/login/{oAuth2ProviderName}")

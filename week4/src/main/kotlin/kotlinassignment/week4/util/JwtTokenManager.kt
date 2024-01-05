@@ -11,7 +11,7 @@ import kotlin.random.Random
 @Component
 class JwtTokenManager {
 
-    val secretKey: String = TODO() // TODO
+    val secretKey: String = "TODO()" // TODO
 
     fun createAccessToken(payload: String): String {
         return createToken(payload, ACCESS_TOKEN_EXPIRATION_LENGTH_IN_MILLISECONDS)
