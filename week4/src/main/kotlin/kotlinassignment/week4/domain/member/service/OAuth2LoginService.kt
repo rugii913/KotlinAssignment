@@ -2,6 +2,7 @@ package kotlinassignment.week4.domain.member.service
 
 import kotlinassignment.week4.infra.client.oauth2.OAuth2Client
 import kotlinassignment.week4.infra.client.oauth2.config.OAuth2ProviderPropertiesResolver
+import kotlinassignment.week4.util.JwtTokenManager
 import org.springframework.stereotype.Service
 
 /* 챌린지반 강의 코드 가져와서 수정 + https://velog.io/@max9106/OAuth4 참고 */
@@ -10,6 +11,7 @@ class OAuth2LoginService(
     private val oAuth2Client: OAuth2Client,
     private val resolver: OAuth2ProviderPropertiesResolver,
     private val socialMemberService: SocialMemberService,
+    private val jwtTokenManager: JwtTokenManager,
 ) {
 
     fun login(oAuth2ProviderName: String, authorizationCode: String): String {
