@@ -1,6 +1,5 @@
 package kotlinassignment.week4.infra.client.oauth2
 
-import kotlinassignment.week4.infra.client.oauth2.config.OAuth2Properties
 import kotlinassignment.week4.infra.client.oauth2.config.OAuth2Provider
 import kotlinassignment.week4.infra.client.oauth2.config.OAuth2ProviderPropertiesMapper
 import kotlinassignment.week4.infra.client.oauth2.dto.TokenResponse
@@ -19,7 +18,7 @@ class OAuth2Client(
 ) {
 
     fun generateLoginPageUrl(provider: OAuth2Provider): String {
-        return getPropertiesCorrespondingWith(provider)
+        return provider.getCorrespondingProperties(mapper)
             .let {
                 StringBuilder(it.authBaseUri)
                     .append("/oauth/authorize")
@@ -31,7 +30,7 @@ class OAuth2Client(
     }
 
     fun getAccessToken(provider: OAuth2Provider, authorizationCode: String): String {
-        val properties = getPropertiesCorrespondingWith(provider)
+        val properties = provider.getCorrespondingProperties(mapper)
 
         val requestData = mutableMapOf(
             "grant_type" to "authorization_code",
@@ -50,7 +49,7 @@ class OAuth2Client(
     }
 
     fun retrieveUserInfo(provider: OAuth2Provider, accessToken: String): UserInfoResponse {
-        return getPropertiesCorrespondingWith(provider)
+        return provider.getCorrespondingProperties(mapper)
             .let {
                 restClient.get()
                     .uri("${it.apiBaseUri}/v2/user/me")
@@ -59,9 +58,5 @@ class OAuth2Client(
                     .body<UserInfoResponse>()
                     ?: throw RuntimeException("UserInfo 조회 실패")
             }
-    }
-
-    private fun getPropertiesCorrespondingWith(provider: OAuth2Provider): OAuth2Properties {
-        return mapper.getOAuth2Properties(provider)
     }
 }
