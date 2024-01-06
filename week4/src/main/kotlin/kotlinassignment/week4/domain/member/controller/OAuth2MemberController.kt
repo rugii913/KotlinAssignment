@@ -41,13 +41,12 @@ class OAuth2MemberController(
     }
 
     // 2. authorization code를 받아서 사용자 인증을 처리(access token 발급 요청, 사용자 정보 요청, access token 발행 등)
-    @GetMapping("/oauth2/callback/{oAuth2ProviderName}") // redirect url
+    @GetMapping("/oauth2/callback/{oAuth2Provider}") // redirect url
     fun callback(
-        @PathVariable oAuth2ProviderName: String,
+        oAuth2Provider: OAuth2Provider,
         @RequestParam(name = "code") authorizationCode: String,
     ): ResponseEntity<LoginResponse> {
-        val properties = mapper.getOAuth2Properties(oAuth2ProviderName)
-        val oAuth2Provider = mapper.getOAuth2Provider(oAuth2ProviderName)
+        val properties = mapper.getOAuth2Properties(oAuth2Provider)
 
         return ResponseEntity
                 .status(HttpStatus.OK)
