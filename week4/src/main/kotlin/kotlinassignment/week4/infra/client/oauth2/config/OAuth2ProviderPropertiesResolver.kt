@@ -4,12 +4,17 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 
 @ConfigurationProperties("oauth2")
 class OAuth2ProviderPropertiesResolver(
-    val providerPropertiesMap: MutableMap<OAuth2Provider, OAuth2Properties>
+    private val providerPropertiesMap: MutableMap<OAuth2Provider, OAuth2Properties>
 ) {
 
     fun getOAuth2Properties(oAuth2ProviderName: String): OAuth2Properties {
         return getOAuth2Provider(oAuth2ProviderName)
             .let { this.providerPropertiesMap[it] }
+            ?: throw IllegalArgumentException("OAuth2Provider와 일치하는 OAuth2Properties를 찾을 수 없습니다.")
+    }
+
+    fun getOAuth2Properties(oAuth2Provider: OAuth2Provider): OAuth2Properties {
+        return this.providerPropertiesMap[oAuth2Provider]
             ?: throw IllegalArgumentException("OAuth2Provider와 일치하는 OAuth2Properties를 찾을 수 없습니다.")
     }
 

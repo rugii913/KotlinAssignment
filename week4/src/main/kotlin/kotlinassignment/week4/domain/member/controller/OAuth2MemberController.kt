@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletResponse
 import kotlinassignment.week4.domain.member.dto.LoginResponse
 import kotlinassignment.week4.domain.member.service.OAuth2LoginService
 import kotlinassignment.week4.infra.client.oauth2.OAuth2Client
+import kotlinassignment.week4.infra.client.oauth2.config.OAuth2Provider
 import kotlinassignment.week4.infra.client.oauth2.config.OAuth2ProviderPropertiesResolver
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
@@ -23,12 +24,14 @@ class OAuth2MemberController(
 ) {
 
     // 1. 로그인 페이지로 Redirect 해주는 API
-    @GetMapping("/oauth2/login/{oAuth2ProviderName}")
+    @GetMapping("/oauth2/login/{oAuth2Provider}")
     fun redirectLoginPage(
-        @PathVariable oAuth2ProviderName: String,
+        oAuth2Provider: OAuth2Provider,
         response: HttpServletResponse,
     ): ResponseEntity<Unit> {
-        val loginPageUrl = resolver.getOAuth2Properties(oAuth2ProviderName)
+/*        val loginPageUrl = resolver.getOAuth2Properties(oAuth2ProviderName)
+            .let { oAuth2Client.generateLoginPageUrl(it) }*/
+        val loginPageUrl = resolver.getOAuth2Properties(oAuth2Provider)
             .let { oAuth2Client.generateLoginPageUrl(it) }
 
         // response.sendRedirect(loginPageUrl) 왼쪽과 같은 HttpServletResponse가 아니라 ResponseEntity로도 redirect 가능 - https://shanepark.tistory.com/370
