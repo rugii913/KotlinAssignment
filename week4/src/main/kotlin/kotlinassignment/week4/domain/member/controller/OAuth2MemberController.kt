@@ -5,7 +5,7 @@ import kotlinassignment.week4.domain.member.dto.LoginResponse
 import kotlinassignment.week4.domain.member.service.OAuth2LoginService
 import kotlinassignment.week4.infra.client.oauth2.OAuth2Client
 import kotlinassignment.week4.infra.client.oauth2.config.OAuth2Provider
-import kotlinassignment.week4.infra.client.oauth2.config.OAuth2ProviderPropertiesResolver
+import kotlinassignment.week4.infra.client.oauth2.config.OAuth2ProviderPropertiesMapper
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -18,7 +18,7 @@ import java.net.URI
 /* 챌린지반 강의 코드 가져와서 수정 + https://velog.io/@max9106/OAuth4 참고 */
 @RestController
 class OAuth2MemberController(
-    private val resolver: OAuth2ProviderPropertiesResolver,
+    private val mapper: OAuth2ProviderPropertiesMapper,
     private val oAuth2LoginService: OAuth2LoginService,
     private val oAuth2Client: OAuth2Client,
 ) {
@@ -31,7 +31,7 @@ class OAuth2MemberController(
     ): ResponseEntity<Unit> {
 /*        val loginPageUrl = resolver.getOAuth2Properties(oAuth2ProviderName)
             .let { oAuth2Client.generateLoginPageUrl(it) }*/
-        val loginPageUrl = resolver.getOAuth2Properties(oAuth2Provider)
+        val loginPageUrl = mapper.getOAuth2Properties(oAuth2Provider)
             .let { oAuth2Client.generateLoginPageUrl(it) }
 
         // response.sendRedirect(loginPageUrl) 왼쪽과 같은 HttpServletResponse가 아니라 ResponseEntity로도 redirect 가능 - https://shanepark.tistory.com/370
@@ -46,8 +46,8 @@ class OAuth2MemberController(
         @PathVariable oAuth2ProviderName: String,
         @RequestParam(name = "code") authorizationCode: String,
     ): ResponseEntity<LoginResponse> {
-        val properties = resolver.getOAuth2Properties(oAuth2ProviderName)
-        val oAuth2Provider = resolver.getOAuth2Provider(oAuth2ProviderName)
+        val properties = mapper.getOAuth2Properties(oAuth2ProviderName)
+        val oAuth2Provider = mapper.getOAuth2Provider(oAuth2ProviderName)
 
         return ResponseEntity
                 .status(HttpStatus.OK)

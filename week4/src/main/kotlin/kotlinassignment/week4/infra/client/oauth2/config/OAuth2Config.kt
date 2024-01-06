@@ -6,9 +6,9 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
-@EnableConfigurationProperties(OAuth2ProviderPropertiesResolver::class)
+@EnableConfigurationProperties(OAuth2ProviderPropertiesMapper::class)
 class OAuth2Config(
-    private val oAuth2ProviderPropertiesResolver: OAuth2ProviderPropertiesResolver,
+    private val oAuth2ProviderPropertiesMapper: OAuth2ProviderPropertiesMapper,
     private val oAuth2HandlerMethodArgumentResolver: OAuth2HandlerMethodArgumentResolver,
 ) : WebMvcConfigurer {
 

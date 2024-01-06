@@ -3,7 +3,7 @@ package kotlinassignment.week4.infra.client.oauth2.config
 import org.springframework.boot.context.properties.ConfigurationProperties
 
 @ConfigurationProperties("oauth2")
-class OAuth2ProviderPropertiesResolver(
+class OAuth2ProviderPropertiesMapper(
     private val providerPropertiesMap: MutableMap<OAuth2Provider, OAuth2Properties>
 ) {
 
