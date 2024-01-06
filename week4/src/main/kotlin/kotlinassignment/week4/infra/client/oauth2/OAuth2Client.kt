@@ -1,6 +1,7 @@
 package kotlinassignment.week4.infra.client.oauth2
 
-import kotlinassignment.week4.infra.client.oauth2.config.OAuth2ProviderPropertiesResolver
+import kotlinassignment.week4.infra.client.oauth2.config.OAuth2Provider
+import kotlinassignment.week4.infra.client.oauth2.config.OAuth2ProviderPropertiesMapper
 import kotlinassignment.week4.infra.client.oauth2.dto.TokenResponse
 import kotlinassignment.week4.infra.client.oauth2.dto.UserInfoResponse
 import org.springframework.http.MediaType
@@ -13,24 +14,23 @@ import org.springframework.web.client.body
 @Component
 class OAuth2Client(
     private val restClient: RestClient,
-    private val resolver: OAuth2ProviderPropertiesResolver,
+    private val mapper: OAuth2ProviderPropertiesMapper,
 ) {
 
-    fun generateLoginPageUrl(oAuth2ProviderName: String): String {
-        val properties = resolver.getOAuth2Properties(oAuth2ProviderName)
-
-        val loginPageUrl = StringBuilder(properties.authBaseUri)
-            .append("/oauth/authorize")
-            .append("?client_id=").append(properties.clientId)
-            .append("&redirect_uri=").append(properties.redirectUri)
-            .append("&response_type=").append("code")
-            .toString()
-
-        return loginPageUrl
+    fun generateLoginPageUrl(provider: OAuth2Provider): String {
+        return provider.getCorrespondingProperties(mapper)
+            .let {
+                StringBuilder(it.authBaseUri)
+                    .append("/oauth/authorize")
+                    .append("?client_id=").append(it.clientId)
+                    .append("&redirect_uri=").append(it.redirectUri)
+                    .append("&response_type=").append("code")
+                    .toString()
+            }
     }
 
-    fun getAccessToken(oAuth2ProviderName: String, authorizationCode: String): String {
-        val properties = resolver.getOAuth2Properties(oAuth2ProviderName)
+    fun getAccessToken(provider: OAuth2Provider, authorizationCode: String): String {
+        val properties = provider.getCorrespondingProperties(mapper)
 
         val requestData = mutableMapOf(
             "grant_type" to "authorization_code",
@@ -48,14 +48,15 @@ class OAuth2Client(
             ?: throw RuntimeException("AccessToken 조회 실패")
     }
 
-    fun retrieveUserInfo(oAuth2ProviderName: String, accessToken: String): UserInfoResponse {
-        val properties = resolver.getOAuth2Properties(oAuth2ProviderName)
-
-        return restClient.get()
-            .uri("${properties.apiBaseUri}/v2/user/me")
-            .header("Authorization", "Bearer $accessToken")
-            .retrieve()
-            .body<UserInfoResponse>()
-            ?: throw RuntimeException("UserInfo 조회 실패")
+    fun retrieveUserInfo(provider: OAuth2Provider, accessToken: String): UserInfoResponse {
+        return provider.getCorrespondingProperties(mapper)
+            .let {
+                restClient.get()
+                    .uri("${it.apiBaseUri}/v2/user/me")
+                    .header("Authorization", "Bearer $accessToken")
+                    .retrieve()
+                    .body<UserInfoResponse>()
+                    ?: throw RuntimeException("UserInfo 조회 실패")
+            }
     }
 }
