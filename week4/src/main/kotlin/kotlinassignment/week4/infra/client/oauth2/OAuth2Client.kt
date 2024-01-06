@@ -1,6 +1,6 @@
 package kotlinassignment.week4.infra.client.oauth2
 
-import kotlinassignment.week4.infra.client.oauth2.config.OAuth2ProviderPropertiesResolver
+import kotlinassignment.week4.infra.client.oauth2.config.OAuth2Properties
 import kotlinassignment.week4.infra.client.oauth2.dto.TokenResponse
 import kotlinassignment.week4.infra.client.oauth2.dto.UserInfoResponse
 import org.springframework.http.MediaType
@@ -13,25 +13,18 @@ import org.springframework.web.client.body
 @Component
 class OAuth2Client(
     private val restClient: RestClient,
-    private val resolver: OAuth2ProviderPropertiesResolver,
 ) {
 
-    fun generateLoginPageUrl(oAuth2ProviderName: String): String {
-        val properties = resolver.getOAuth2Properties(oAuth2ProviderName)
-
-        val loginPageUrl = StringBuilder(properties.authBaseUri)
+    fun generateLoginPageUrl(properties: OAuth2Properties): String {
+        return StringBuilder(properties.authBaseUri)
             .append("/oauth/authorize")
             .append("?client_id=").append(properties.clientId)
             .append("&redirect_uri=").append(properties.redirectUri)
             .append("&response_type=").append("code")
             .toString()
-
-        return loginPageUrl
     }
 
-    fun getAccessToken(oAuth2ProviderName: String, authorizationCode: String): String {
-        val properties = resolver.getOAuth2Properties(oAuth2ProviderName)
-
+    fun getAccessToken(properties: OAuth2Properties, authorizationCode: String): String {
         val requestData = mutableMapOf(
             "grant_type" to "authorization_code",
             "client_id" to properties.clientId,
@@ -48,9 +41,7 @@ class OAuth2Client(
             ?: throw RuntimeException("AccessToken 조회 실패")
     }
 
-    fun retrieveUserInfo(oAuth2ProviderName: String, accessToken: String): UserInfoResponse {
-        val properties = resolver.getOAuth2Properties(oAuth2ProviderName)
-
+    fun retrieveUserInfo(properties: OAuth2Properties, accessToken: String): UserInfoResponse {
         return restClient.get()
             .uri("${properties.apiBaseUri}/v2/user/me")
             .header("Authorization", "Bearer $accessToken")
