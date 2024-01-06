@@ -1,6 +1,8 @@
 package kotlinassignment.week4.infra.client.oauth2
 
 import kotlinassignment.week4.infra.client.oauth2.config.OAuth2Properties
+import kotlinassignment.week4.infra.client.oauth2.config.OAuth2Provider
+import kotlinassignment.week4.infra.client.oauth2.config.OAuth2ProviderPropertiesMapper
 import kotlinassignment.week4.infra.client.oauth2.dto.TokenResponse
 import kotlinassignment.week4.infra.client.oauth2.dto.UserInfoResponse
 import org.springframework.http.MediaType
@@ -13,18 +15,24 @@ import org.springframework.web.client.body
 @Component
 class OAuth2Client(
     private val restClient: RestClient,
+    private val mapper: OAuth2ProviderPropertiesMapper,
 ) {
 
-    fun generateLoginPageUrl(properties: OAuth2Properties): String {
-        return StringBuilder(properties.authBaseUri)
-            .append("/oauth/authorize")
-            .append("?client_id=").append(properties.clientId)
-            .append("&redirect_uri=").append(properties.redirectUri)
-            .append("&response_type=").append("code")
-            .toString()
+    fun generateLoginPageUrl(provider: OAuth2Provider): String {
+        return getPropertiesCorrespondingWith(provider)
+            .let {
+                StringBuilder(it.authBaseUri)
+                    .append("/oauth/authorize")
+                    .append("?client_id=").append(it.clientId)
+                    .append("&redirect_uri=").append(it.redirectUri)
+                    .append("&response_type=").append("code")
+                    .toString()
+            }
     }
 
-    fun getAccessToken(properties: OAuth2Properties, authorizationCode: String): String {
+    fun getAccessToken(provider: OAuth2Provider, authorizationCode: String): String {
+        val properties = getPropertiesCorrespondingWith(provider)
+
         val requestData = mutableMapOf(
             "grant_type" to "authorization_code",
             "client_id" to properties.clientId,
@@ -41,12 +49,19 @@ class OAuth2Client(
             ?: throw RuntimeException("AccessToken 조회 실패")
     }
 
-    fun retrieveUserInfo(properties: OAuth2Properties, accessToken: String): UserInfoResponse {
-        return restClient.get()
-            .uri("${properties.apiBaseUri}/v2/user/me")
-            .header("Authorization", "Bearer $accessToken")
-            .retrieve()
-            .body<UserInfoResponse>()
-            ?: throw RuntimeException("UserInfo 조회 실패")
+    fun retrieveUserInfo(provider: OAuth2Provider, accessToken: String): UserInfoResponse {
+        return getPropertiesCorrespondingWith(provider)
+            .let {
+                restClient.get()
+                    .uri("${it.apiBaseUri}/v2/user/me")
+                    .header("Authorization", "Bearer $accessToken")
+                    .retrieve()
+                    .body<UserInfoResponse>()
+                    ?: throw RuntimeException("UserInfo 조회 실패")
+            }
+    }
+
+    private fun getPropertiesCorrespondingWith(provider: OAuth2Provider): OAuth2Properties {
+        return mapper.getOAuth2Properties(provider)
     }
 }

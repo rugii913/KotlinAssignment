@@ -5,7 +5,6 @@ import kotlinassignment.week4.domain.member.dto.LoginResponse
 import kotlinassignment.week4.domain.member.service.OAuth2LoginService
 import kotlinassignment.week4.infra.client.oauth2.OAuth2Client
 import kotlinassignment.week4.infra.client.oauth2.config.OAuth2Provider
-import kotlinassignment.week4.infra.client.oauth2.config.OAuth2ProviderPropertiesMapper
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -17,7 +16,6 @@ import java.net.URI
 /* 챌린지반 강의 코드 가져와서 수정 + https://velog.io/@max9106/OAuth4 참고 */
 @RestController
 class OAuth2MemberController(
-    private val mapper: OAuth2ProviderPropertiesMapper,
     private val oAuth2LoginService: OAuth2LoginService,
     private val oAuth2Client: OAuth2Client,
 ) {
@@ -28,8 +26,7 @@ class OAuth2MemberController(
         oAuth2Provider: OAuth2Provider,
         response: HttpServletResponse,
     ): ResponseEntity<Unit> {
-        val loginPageUrl = mapper.getOAuth2Properties(oAuth2Provider)
-            .let { oAuth2Client.generateLoginPageUrl(it) }
+        val loginPageUrl = oAuth2Client.generateLoginPageUrl(oAuth2Provider)
 
         // response.sendRedirect(loginPageUrl) 왼쪽과 같은 HttpServletResponse가 아니라 ResponseEntity로도 redirect 가능 - https://shanepark.tistory.com/370
         val headers = HttpHeaders().apply { this.location = URI.create(loginPageUrl) }
@@ -40,13 +37,11 @@ class OAuth2MemberController(
     // 2. authorization code를 받아서 사용자 인증을 처리(access token 발급 요청, 사용자 정보 요청, access token 발행 등)
     @GetMapping("/oauth2/callback/{oAuth2Provider}") // redirect url
     fun callback(
-        oAuth2Provider: OAuth2Provider,
+        provider: OAuth2Provider,
         @RequestParam(name = "code") authorizationCode: String,
     ): ResponseEntity<LoginResponse> {
-        val properties = mapper.getOAuth2Properties(oAuth2Provider)
-
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(oAuth2LoginService.login(properties, authorizationCode))
+                .body(oAuth2LoginService.login(provider, authorizationCode))
     }
 }
