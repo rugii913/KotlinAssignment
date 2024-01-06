@@ -14,7 +14,7 @@ class OAuth2ProviderPropertiesResolver(
     }
 
     fun getOAuth2Provider(oAuth2ProviderName: String): OAuth2Provider {
-        if (oAuth2ProviderName !in OAuth2Provider.entries.map { it.uriPostfix }) {
+        if (oAuth2ProviderName !in OAuth2Provider.entries.map { it.uriSegment }) {
             throw IllegalArgumentException("요청 URI에 해당하는 OAuth2Provider를 찾을 수 없습니다.")
         }
         return OAuth2Provider.valueOf(oAuth2ProviderName.uppercase())
