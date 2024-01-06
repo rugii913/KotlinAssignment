@@ -3,7 +3,6 @@ package kotlinassignment.week4.domain.member.service
 import kotlinassignment.week4.domain.member.dto.LoginResponse
 import kotlinassignment.week4.infra.client.oauth2.OAuth2Client
 import kotlinassignment.week4.infra.client.oauth2.config.OAuth2Properties
-import kotlinassignment.week4.infra.client.oauth2.config.OAuth2Provider
 import kotlinassignment.week4.util.JwtTokenManager
 import org.springframework.stereotype.Service
 
@@ -15,10 +14,10 @@ class OAuth2LoginService(
     private val jwtTokenManager: JwtTokenManager,
 ) {
 
-    fun login(properties: OAuth2Properties, oAuth2Provider: OAuth2Provider, authorizationCode: String): LoginResponse {
+    fun login(properties: OAuth2Properties, authorizationCode: String): LoginResponse {
         return oAuth2Client.getAccessToken(properties, authorizationCode)
             .let { oAuth2Client.retrieveUserInfo(properties, accessToken = it) }
-            .let { socialMemberService.registerIfAbsent(oAuth2Provider, userInfoResponse = it) }
+            .let { socialMemberService.registerIfAbsent(properties.oAuth2Provider, userInfoResponse = it) }
             .let {
                 LoginResponse(
                     id = it.id!!,

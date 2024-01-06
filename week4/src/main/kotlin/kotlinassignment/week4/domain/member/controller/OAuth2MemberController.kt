@@ -10,7 +10,6 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.net.URI
@@ -29,8 +28,6 @@ class OAuth2MemberController(
         oAuth2Provider: OAuth2Provider,
         response: HttpServletResponse,
     ): ResponseEntity<Unit> {
-/*        val loginPageUrl = resolver.getOAuth2Properties(oAuth2ProviderName)
-            .let { oAuth2Client.generateLoginPageUrl(it) }*/
         val loginPageUrl = mapper.getOAuth2Properties(oAuth2Provider)
             .let { oAuth2Client.generateLoginPageUrl(it) }
 
@@ -50,6 +47,6 @@ class OAuth2MemberController(
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(oAuth2LoginService.login(properties, oAuth2Provider, authorizationCode))
+                .body(oAuth2LoginService.login(properties, authorizationCode))
     }
 }
