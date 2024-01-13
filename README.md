@@ -4,25 +4,28 @@
 - 주특기 숙련 개인 과제: week4 모듈
 
 ## 주특기 숙련 개인 과제 - to do 앱 백엔드 서버 만들기
-### TODO
-- 요구사항 정리
-- 유스케이스 다이어그램(Use Case Diagram) 작성
-- ERD(Entity Relationship Diagram) 작성
-- API 명세 작성
-- 구현
-  - Spring Boot 기반 REST API 구현
-  - Entity 사이 연관관계를 이해하며 할 일, 댓글 구현
-  - 할 일을 완료 처리하며 상태 관리
+### event storming <span>$\color{#dd6565}\-\ 2024.1.3. 변경$</span>
+<img src="week4/documents/to-do-app-event-storming-v3.png" alt="to-do-application event storming" width="512"/>
 
-#### 요구사항 <span>$\color{#dd6565}\-\ TODO$</span>
+### step1 ~ step3 요구사항 <span>$\color{#dd6565}\-\ 2024.1.3. 변경$</span>
+- 할 일 카드 목록 조회(작성일 기준 정렬, 작성자 필터), 할 일 카드 단건 조회, 할 일 카드 작성, 할 일 카드 수정, 할 일 카드 삭제, 할 일 카드 완료
+- 댓글 조회, 댓글 작성, 댓글 수정, 댓글 삭제
 
-#### Use Case Diagram <span>$\color{#dd6565}\-\ TODO$</span>
+<img src="week4/documents/to-do-app-requirements-specification-v3.png" width="512" alt="to-do-application requirements specification"/>
 
-#### Entity Relationship Diagram <span>$\color{#dd6565}\-\ TODO$</span>
+### usecase diagram <span>$\color{#dd6565}\-\ 2023.12.29. 변경$</span>
+<img src="week4/documents/to-do-app-usecase-diagram-v2.png" alt="to-do-application usecase diagram" width="512"/>
 
-#### API 명세 <span>$\color{#dd6565}\-\ TODO$</span>
+### API 명세 <span>$\color{#dd6565}\-\ 2024.1.3. 변경$</span>
+<img src="week4/documents/to-do-app-api-specification-v3.png" alt="to-do-application api-specification" width="512"/>
 
-#### API 및 비즈니스 로직 구현 → week4 모듈 코드 <span>$\color{#dd6565}\-\ TODO$</span>
+### entity relationship diagram <span>$\color{#dd6565}\-\ 2023.12.30. 변경$</span>
+<img src="week4/documents/to-do-app-erd-v2.png" alt="to-do-application erd" width="512"/>
+
+### API 및 비즈니스 로직 구현 → week4 모듈 코드
+- 2023.12.29. step1 구현
+  - [PR](https://github.com/rugii913/KotlinAssignment/pulls?q=to-do-app+is%3Apr+is%3Aclosed) 및
+[프로젝트](https://github.com/users/rugii913/projects/8) 참고 
 
 ---
 
