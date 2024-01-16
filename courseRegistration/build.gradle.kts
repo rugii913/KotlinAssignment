@@ -58,6 +58,13 @@ dependencies {
 
     // AOP
     implementation("org.springframework.boot:spring-boot-starter-aop")
+
+    // Spring Security
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    // JWT 발급 및 검증 - 널리 쓰이고, 최신 스펙 대부분 지원하는 jjwt 사용
+    implementation("io.jsonwebtoken:jjwt-api:0.12.3")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.3")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.3")
 }
 
 tasks.withType<KotlinCompile> {
