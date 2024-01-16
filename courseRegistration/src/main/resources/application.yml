@@ -17,3 +17,5 @@ logging:
         orm:
           jdbc:
             bind: trace #sql ? binding parameter까지 전부 확인하기
+    springframework: # Security 적용 후 바뀐 부분들을 체크하기 위한 로거 
+      security: debug
