@@ -1,3 +1,5 @@
+// 참고 링크 https://blog.sapzil.org/2022/03/04/gradle-convention-plugins/
+
 plugins {
     id("kotlinassignment.kotlin-common-conventions")
 
