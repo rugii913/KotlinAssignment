@@ -22,6 +22,7 @@ import com.teamsparta.courseregistration.domain.lecture.model.Lecture
 import com.teamsparta.courseregistration.domain.lecture.model.toResponse
 import com.teamsparta.courseregistration.domain.lecture.repository.LectureRepository
 import com.teamsparta.courseregistration.domain.user.repository.UserRepository
+import com.teamsparta.courseregistration.infra.aop.StopWatch
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -34,6 +35,7 @@ class CourseServiceImpl(
     private val userRepository: UserRepository,
 ) : CourseService {
 
+    @StopWatch
     override fun getAllCourseList(): List<CourseResponse> {
         return courseRepository.findAll().map { it.toResponse() }
     }
