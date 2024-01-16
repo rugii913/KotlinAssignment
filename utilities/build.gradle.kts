@@ -5,7 +5,3 @@
 plugins {
     id("kotlinassignment.kotlin-library-conventions")
 }
-
-dependencies {
-    api(project(":list"))
-}
