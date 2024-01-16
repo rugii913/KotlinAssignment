@@ -10,12 +10,14 @@ import com.teamsparta.courseregistration.domain.user.model.UserRole
 import com.teamsparta.courseregistration.domain.user.model.toResponse
 import com.teamsparta.courseregistration.domain.user.repository.UserRepository
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class UserServiceImpl(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val passwordEncoder: PasswordEncoder,
 ) : UserService {
 
     @Transactional
@@ -27,7 +29,7 @@ class UserServiceImpl(
         return userRepository.save(
             User(
                 email = request.email,
-                password = request.password,
+                password = passwordEncoder.encode(request.password),
                 profile = Profile(
                     nickname = request.nickname
                 ),
