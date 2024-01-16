@@ -23,6 +23,7 @@ import com.teamsparta.courseregistration.domain.lecture.model.toResponse
 import com.teamsparta.courseregistration.domain.lecture.repository.LectureRepository
 import com.teamsparta.courseregistration.domain.user.repository.UserRepository
 import com.teamsparta.courseregistration.infra.aop.StopWatch
+import com.teamsparta.courseregistration.infra.aop.loggingStopWatch
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -79,10 +80,12 @@ class CourseServiceImpl(
     }
 
     override fun getLecture(courseId: Long, lectureId: Long): LectureResponse {
-        val lecture = lectureRepository.findByCourseIdAndId(courseId, lectureId)
-            ?: throw ModelNotFoundException("Lecture", lectureId)
+        return loggingStopWatch {
+            val lecture = lectureRepository.findByCourseIdAndId(courseId, lectureId)
+                ?: throw ModelNotFoundException("Lecture", lectureId)
 
-        return lecture.toResponse()
+            return@loggingStopWatch lecture.toResponse()
+        }
     }
 
     @Transactional
