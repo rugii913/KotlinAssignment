@@ -1,9 +1,12 @@
 package com.teamsparta.courseregistration.infra.security.jwt
 
+import com.teamsparta.courseregistration.infra.security.UserPrincipal
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.HttpHeaders
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 
@@ -29,13 +32,27 @@ class JwtAuthenticationFilter(private val jwtPlugin: JwtPlugin): OncePerRequestF
                     val userId = it.payload.subject.toLong()
                     val role = it.payload.get("role", String::class.java)
                     val email = it.payload.get("email", String::class.java)
-                    
-                    // TODO: Authentication 구현체 만들어서 SecurityContext에 저장
-                    //  - 이 때 principal에는 식별 정보들 넣을 것, credentials는 현재 민감 정보를 담는 용도로 사용하고 있지 않으므로 아무 것도 담지 않을 것
+
+                    val principal = UserPrincipal(
+                        id = userId,
+                        email = email,
+                        roles = setOf(role),
+                    )
+
+                    // 인증이 완료 됐으므로 Authentication 객체(AbstractAuthenticationToken 사용) 만들어서 context에 세팅할 것
+                    // 일단 Authentication 구현체 생성
+                    val authentication = JwtAuthenticationToken(
+                        principal = principal,
+                        details = WebAuthenticationDetailsSource().buildDetails(request), // request로부터 상세 정보들을 로깅용으로 넣어줌
+                    )
+
+                    // Authentication 객체를 SecurityContextHolder에 세팅 = SecurityContext에 저장하는 것 
+                    SecurityContextHolder.getContext().authentication = authentication 
                 }
+                // .onFailure {  } 실무라면 이 부분까지 작성해야 맞다. failure 이유 - 만료, 이상한 JWT, ... 등 경우에 따른 오류 처리
         }
 
-        // FilterChain 계속 진행
+        // FilterChain 계속 진행 - filterChain.doFilter(~) 하면 알아서 다음 필터로 흐름이 넘어감
         filterChain.doFilter(request, response)
     }
 
