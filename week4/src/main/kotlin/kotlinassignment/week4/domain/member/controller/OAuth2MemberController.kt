@@ -1,7 +1,7 @@
 package kotlinassignment.week4.domain.member.controller
 
 import jakarta.servlet.http.HttpServletResponse
-import kotlinassignment.week4.domain.member.dto.LoginResponse
+import kotlinassignment.week4.domain.member.dto.OAuth2MemberLoginResponse
 import kotlinassignment.week4.domain.member.service.OAuth2LoginService
 import kotlinassignment.week4.infra.client.oauth2.OAuth2Client
 import kotlinassignment.week4.infra.client.oauth2.config.OAuth2Provider
@@ -39,7 +39,7 @@ class OAuth2MemberController(
     fun callback(
         provider: OAuth2Provider,
         @RequestParam(name = "code") authorizationCode: String,
-    ): ResponseEntity<LoginResponse> {
+    ): ResponseEntity<OAuth2MemberLoginResponse> {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(oAuth2LoginService.login(provider, authorizationCode))
