@@ -56,6 +56,13 @@ dependencies {
     // spring data jpa
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
+    // spring security
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    // jjwt(json web token)
+    implementation("io.jsonwebtoken:jjwt-api:0.12.3")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.3")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.3")
+
     // H2 database
      implementation("com.h2database:h2")
 
@@ -71,11 +78,6 @@ dependencies {
     // queryDSL
     implementation("com.querydsl:querydsl-jpa:$queryDslVersion:jakarta")
     kapt("com.querydsl:querydsl-apt:$queryDslVersion:jakarta")
-
-    // jjwt(json web token)
-    implementation("io.jsonwebtoken:jjwt-api:0.12.3")
-    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.3")
-    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.3")
 }
 
 tasks.withType<KotlinCompile> {
