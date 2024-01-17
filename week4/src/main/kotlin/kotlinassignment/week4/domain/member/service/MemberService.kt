@@ -3,12 +3,14 @@ package kotlinassignment.week4.domain.member.service
 import kotlinassignment.week4.domain.member.dto.MemberSignUpRequest
 import kotlinassignment.week4.domain.member.model.Member
 import kotlinassignment.week4.domain.member.repository.MemberRepository
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class MemberService(
-    private val memberRepository: MemberRepository
+    private val memberRepository: MemberRepository,
+    private val passwordEncoder: PasswordEncoder,
 ) {
 
     @Transactional
@@ -20,7 +22,7 @@ class MemberService(
         memberRepository.save(
             Member(
                 email = request.email,
-                password = request.password,
+                password = passwordEncoder.encode(request.password),
             )
         )
     }
