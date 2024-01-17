@@ -15,6 +15,14 @@ class CourseController(
     private val courseService: CourseService
 ) {
 
+    @GetMapping("/search")
+    @PreAuthorize("hasRole('TUTOR') or hasRole('STUDENT')")
+    fun searchCourseList(@RequestParam(value = "title") title: String): ResponseEntity<List<CourseResponse>> {
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(courseService.searchCourseList(title))
+    }
+
     @PreAuthorize("hasRole('TUTOR') or hasRole('STUDENT')") // (cf.) @Secured를 사용할 경우 ROLE_ prefix를 붙여야하지만, @PreAuthorize를 사용하는 경우 알아서 붙여서 해결해준다.
     @GetMapping
     fun getCourses(): ResponseEntity<List<CourseResponse>> {
