@@ -12,6 +12,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity // Http 기반 통신 시 보안 기능 관련
 class SecurityConfig(
     private val jwtAuthenticationFilter: JwtAuthenticationFilter,
+    private val authenticationEntryPoint: CustomAuthenticationEntryPoint,
 ) {
 
     @Bean
@@ -32,6 +33,9 @@ class SecurityConfig(
             }
             // 기존 UsernamePasswordAuthenticationFilter가 존재하던 자리에 JwtAuthenticationFilter 적용
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
+            .exceptionHandling {
+                it.authenticationEntryPoint(authenticationEntryPoint)
+            }
             .build()
         /*
         (???)
