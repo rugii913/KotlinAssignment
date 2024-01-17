@@ -6,11 +6,11 @@ import com.teamsparta.courseregistration.infra.querydsl.QueryDslSupport
 import org.springframework.stereotype.Repository
 
 @Repository
-class QueryDslCourseRepository: QueryDslSupport() {
+class CourseRepositoryImpl: QueryDslSupport(), CustomCourseRepository {
 
     private val course = QCourse.course
 
-    fun searchCourseListByTitle(title: String): List<Course>? {
+    override fun searchCourseListByTitle(title: String): List<Course>? {
         return queryFactory.selectFrom(course)
             .where(course.title.containsIgnoreCase(title))
             .fetch()

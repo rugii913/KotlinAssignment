@@ -7,7 +7,7 @@ import com.teamsparta.courseregistration.domain.course.model.Course
 import com.teamsparta.courseregistration.domain.course.model.CourseStatus
 import com.teamsparta.courseregistration.domain.course.model.toResponse
 import com.teamsparta.courseregistration.domain.course.repository.CourseRepository
-import com.teamsparta.courseregistration.domain.course.repository.QueryDslCourseRepository
+import com.teamsparta.courseregistration.domain.course.repository.CourseRepositoryImpl
 import com.teamsparta.courseregistration.domain.couseapplication.dto.ApplyCourseRequest
 import com.teamsparta.courseregistration.domain.couseapplication.dto.CourseApplicationResponse
 import com.teamsparta.courseregistration.domain.couseapplication.dto.UpdateApplicationStatusRequest
@@ -32,7 +32,6 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class CourseServiceImpl(
     private val courseRepository: CourseRepository,
-    private val queryDslCourseRepository: QueryDslCourseRepository,
     private val lectureRepository: LectureRepository,
     private val courseApplicationRepository: CourseApplicationRepository,
     private val userRepository: UserRepository,
@@ -44,7 +43,7 @@ class CourseServiceImpl(
     }
 
     override fun searchCourseList(title: String): List<CourseResponse>? {
-        return queryDslCourseRepository.searchCourseListByTitle(title)?.map { it.toResponse() }
+        return courseRepository.searchCourseListByTitle(title)?.map { it.toResponse() }
     }
 
     override fun getCourseById(courseId: Long): CourseResponse {
