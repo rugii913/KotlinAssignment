@@ -9,7 +9,7 @@ import kotlin.random.Random
 
 /* 참고 ***https://velog.io/@max9106/OAuth4, https://velog.io/@blacklandbird/JWT%EB%A1%9C-TOKEN%EB%B0%9C%EA%B8%89%ED%95%98%EA%B8%B0, https://velog.io/@sophia5460/Spring-Boot-OAuth-2.0-JWT */
 @Component
-class JwtTokenManager {
+class JwtTokenManager { // TODO: 강의자료 참고하면서 리팩토링할 것 - 패키지 및 새로 작성할 코드와 겹치는 부분 정리하여 합치기
 
     val secretKey: String = "TODO()" // TODO
 
