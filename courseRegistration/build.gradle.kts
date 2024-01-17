@@ -6,6 +6,7 @@ plugins {
     kotlin("jvm") version "1.9.21"
     kotlin("plugin.spring") version "1.9.21"
     kotlin("plugin.noarg") version "1.9.21"
+    kotlin("kapt") version "1.9.21" // @Entity 같은 어노테이션이 붙은 것을 분석해서 Java로 된 QueryDSL에 알려주는 역할
 }
 
 group = "com.teamsparta"
@@ -37,6 +38,8 @@ repositories {
     mavenCentral()
 }
 
+val queryDslVersion = "5.0.0"
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -65,6 +68,10 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-api:0.12.3")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.3")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.3")
+
+    // Kotlin Annotation Processing Tool
+    implementation("com.querydsl:querydsl-jpa:$queryDslVersion:jakarta")
+    kapt("com.querydsl:querydsl-apt:$queryDslVersion:jakarta")
 }
 
 tasks.withType<KotlinCompile> {
