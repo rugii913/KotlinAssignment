@@ -41,4 +41,10 @@ class JwtUtil(
             .signWith(key)
             .compact()
     }
+
+    fun validateToken(jwt: String): Result<Jws<Claims>> {
+        return kotlin.runCatching {
+            Jwts.parser().verifyWith(key).build().parseSignedClaims(jwt) // key를 이용해 서명을 검증하고, 만료시간을 체크
+        }
+    }
 }
