@@ -7,21 +7,36 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector
 
 @Configuration
 @EnableWebSecurity
 class SecurityConfig {
 
     @Bean
-    fun filterChain(httpSecurity: HttpSecurity): SecurityFilterChain {
+    fun filterChain(httpSecurity: HttpSecurity, introspector: HandlerMappingIntrospector): SecurityFilterChain {
         return httpSecurity
             .httpBasic { it.disable() }
             .formLogin { it.disable() }
+            .csrf { it.disable() }
+            .headers { it.frameOptions { frameOptionsConfig -> frameOptionsConfig.sameOrigin() } }
+            .authorizeHttpRequests {
+                it.requestMatchers(
+                    "/login",
+                    "/signup",
+                    "/swagger-ui/**",
+                    "/v3/api-docs/**",
+                    "/h2-console/**",
+                ).permitAll()
+                    .requestMatchers( // https://colabear754.tistory.com/170 - Spring Security 사용하면서 H2 콘솔 사용 - TODO 정확한 원리 알아보기
+                        MvcRequestMatcher(introspector, "/**").apply { setServletPath("/h2-console") }
+                    ).permitAll()
+                    .anyRequest().authenticated()
+            }
             .build()
     }
 
     @Bean
-    fun passwordEncoder(): PasswordEncoder { // 예시 자료와는 다르게 우선 같은 config에 넣어둠, 분리 필요할 경우 분리
-        return BCryptPasswordEncoder()
-    }
+    fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder() // 예시 자료와는 다르게 우선 같은 config에 넣어둠, 분리 필요할 경우 분리
 }
