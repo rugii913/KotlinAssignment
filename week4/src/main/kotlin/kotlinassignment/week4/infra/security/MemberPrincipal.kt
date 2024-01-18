@@ -1,6 +1,6 @@
 package kotlinassignment.week4.infra.security
 
-data class UserPrincipal(
+data class MemberPrincipal(
     val id: Long,
     val email: String,
 )

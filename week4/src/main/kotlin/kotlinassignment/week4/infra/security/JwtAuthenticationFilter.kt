@@ -32,7 +32,7 @@ class JwtAuthenticationFilter(private val jwtUtil: JwtUtil) : OncePerRequestFilt
 
                     // 검증 성공한 경우 Authentication 타입 객체 만들어서 SecurityContext에 저장
                     JwtAuthenticationToken(
-                        UserPrincipal(id = userId, email = email),
+                        MemberPrincipal(id = userId, email = email),
                         WebAuthenticationDetailsSource().buildDetails(request),
                     )
                         .also { authentication -> SecurityContextHolder.getContext().authentication = authentication }

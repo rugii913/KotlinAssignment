@@ -3,13 +3,11 @@ package kotlinassignment.week4.domain.toDoCard.service
 import kotlinassignment.week4.domain.comment.model.toResponse
 import kotlinassignment.week4.domain.comment.repository.CommentRepository
 import kotlinassignment.week4.domain.exception.ModelNotFoundException
-import kotlinassignment.week4.domain.exception.StringLengthOutOfRangeException
 import kotlinassignment.week4.domain.member.repository.MemberRepository
-import kotlinassignment.week4.domain.member.service.MemberService
 import kotlinassignment.week4.domain.toDoCard.dto.*
 import kotlinassignment.week4.domain.toDoCard.model.*
 import kotlinassignment.week4.domain.toDoCard.repository.ToDoCardRepository
-import kotlinassignment.week4.infra.security.UserPrincipal
+import kotlinassignment.week4.infra.security.MemberPrincipal
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -45,10 +43,10 @@ class ToDoCardService(
     @Transactional
     fun createToDoCard(
         request: ToDoCardCreateRequest,
-        userPrincipal: UserPrincipal,
+        memberPrincipal: MemberPrincipal,
     ): ToDoCardResponse {
 
-        val member = memberRepository.findByIdOrNull(userPrincipal.id) ?: throw ModelNotFoundException("Member", userPrincipal.id)
+        val member = memberRepository.findByIdOrNull(memberPrincipal.id) ?: throw ModelNotFoundException("Member", memberPrincipal.id)
 
         return ToDoCard(
             title = request.title,
