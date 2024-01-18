@@ -1,5 +1,7 @@
 package kotlinassignment.week4.domain.member.controller
 
+import kotlinassignment.week4.domain.member.dto.MemberLoginRequest
+import kotlinassignment.week4.domain.member.dto.MemberLoginResponse
 import kotlinassignment.week4.domain.member.dto.MemberSignUpRequest
 import kotlinassignment.week4.domain.member.service.MemberService
 import org.springframework.http.HttpStatus
@@ -12,6 +14,13 @@ import org.springframework.web.bind.annotation.RestController
 class MemberController(
     private val memberService: MemberService
 ) {
+
+    @PostMapping("/login")
+    fun login(@RequestBody request: MemberLoginRequest): ResponseEntity<MemberLoginResponse> {
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(memberService.login(request))
+    }
 
     @PostMapping("/signup")
     fun signUp(@RequestBody request: MemberSignUpRequest): ResponseEntity<Unit> {
