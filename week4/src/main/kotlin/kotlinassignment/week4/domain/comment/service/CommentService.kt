@@ -9,7 +9,7 @@ import kotlinassignment.week4.domain.comment.model.updateFrom
 import kotlinassignment.week4.domain.comment.repository.CommentRepository
 import kotlinassignment.week4.domain.exception.IncorrectRelatedEntityIdException
 import kotlinassignment.week4.domain.exception.ModelNotFoundException
-import kotlinassignment.week4.domain.exception.PasswordMismatchException
+import kotlinassignment.week4.domain.exception.UnauthorizedAccessException
 import kotlinassignment.week4.domain.member.repository.MemberRepository
 import kotlinassignment.week4.domain.toDoCard.repository.ToDoCardRepository
 import kotlinassignment.week4.infra.security.MemberPrincipal
@@ -44,39 +44,32 @@ class CommentService(
         request: CommentUpdateRequest,
         memberPrincipal: MemberPrincipal
     ): CommentResponse {
-        // 해당 commentId 존재 여부만 먼저 확인 후, 존재하지 않는 경우 예외 처리, 존재하는 경우 비밀번호 검사 후 entity 가져옴
-        // - select를 두 번 이상 하게 되나, 각 경우에 따라 다른 방식으로 예외처리하기 위해 이렇게 구현하고자 했음
-        if (!commentRepository.existsById(commentId)) throw ModelNotFoundException("Comment", commentId)
-        val targetComment = getCommentIfUserNameAndPasswordMatches(commentId, TODO(), TODO())
+        val targetComment = commentRepository.findByIdOrNull(commentId) ?: throw ModelNotFoundException("Comment", commentId)
 
-        if (targetComment.toDoCard.id != toDoCardId) { // Comment의 toDoCard 참조 FetchType.Lazy 지정하지 않을 경우 불필요하게 ToDoCard select 쿼리가 한 번 더 나감
-            throw IncorrectRelatedEntityIdException("Comment", commentId, "ToDoCard", toDoCardId)
-        }
-
-        targetComment.updateFrom(request)
-        commentRepository.save(targetComment)
-
-        return targetComment.toResponse()
+        return targetComment
+            .also { if (it.toDoCard.id != toDoCardId) throw IncorrectRelatedEntityIdException("Comment", commentId, "ToDoCard", toDoCardId) } // Comment의 toDoCard 참조 FetchType.Lazy 지정하지 않을 경우 불필요하게 ToDoCard select 쿼리가 한 번 더 나감
+            .also { if (it.member.id != memberPrincipal.id) throw UnauthorizedAccessException() }
+            .also { it.updateFrom(request) }
+            .let { commentRepository.save(it).toResponse() }
     }
 
     @Transactional
     fun deleteComment(toDoCardId: Long, commentId: Long, memberPrincipal: MemberPrincipal): Unit {
-        // 해당 commentId 존재 여부만 먼저 확인 후, 존재하지 않는 경우 예외 처리, 존재하는 경우 비밀번호 검사 후 entity 가져옴
-        // - select를 두 번 이상 하게 되나, 각 경우에 따라 다른 방식으로 예외처리하기 위해 이렇게 구현하고자 했음
-        if (!commentRepository.existsById(commentId)) throw ModelNotFoundException("Comment", commentId)
-        val targetComment = getCommentIfUserNameAndPasswordMatches(commentId, TODO(), TODO())
+        val targetComment = commentRepository.findByIdOrNull(commentId) ?: throw ModelNotFoundException("Comment", commentId)
 
-        if (targetComment.toDoCard.id != toDoCardId) { // Comment의 toDoCard 참조 FetchType.Lazy 지정하지 않을 경우 불필요하게 ToDoCard select 쿼리가 한 번 더 나감
-            throw IncorrectRelatedEntityIdException("Comment", commentId, "ToDoCard", toDoCardId)
-        }
-
-        commentRepository.deleteById(commentId)
+        targetComment
+            .also { if (it.toDoCard.id != toDoCardId) throw IncorrectRelatedEntityIdException("Comment", commentId, "ToDoCard", toDoCardId) }
+            .also { if (it.member.id != memberPrincipal.id) throw UnauthorizedAccessException() }
+            .let { commentRepository.delete(it) }
     }
 
+    /*
+    // comment entity 정책 변경으로 필요 없어진 메서드
     private fun getCommentIfUserNameAndPasswordMatches(commentId: Long, userNameRequested: String, passwordRequested: String): Comment {
         // ?? propagation = PROPAGATION.REQUIRED로 될까? 이렇게 따로 추출한 메서드는 transaction 처리 어떻게 되는지 알아보기
         // 암호화 될 password는 서버까지 끌고 오지 않고, DB 서버 내에서 비교 후 일치하면 처리되도록 할 것
         return commentRepository.findByIdAndUserNameAndPassword(commentId, userNameRequested, passwordRequested)
             ?: throw PasswordMismatchException("Comment", commentId)
     }
+     */
 }
