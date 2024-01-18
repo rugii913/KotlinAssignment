@@ -6,7 +6,7 @@ data class ToDoCardResponse(
     val id: Long,
     val title: String,
     val description: String?,
-    val userName: String,
+    val memberEmail: String,
     val createdDateTime: LocalDateTime,
     val isComplete: Boolean,
 )

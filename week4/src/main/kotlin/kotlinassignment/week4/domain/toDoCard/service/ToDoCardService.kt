@@ -4,9 +4,12 @@ import kotlinassignment.week4.domain.comment.model.toResponse
 import kotlinassignment.week4.domain.comment.repository.CommentRepository
 import kotlinassignment.week4.domain.exception.ModelNotFoundException
 import kotlinassignment.week4.domain.exception.StringLengthOutOfRangeException
+import kotlinassignment.week4.domain.member.repository.MemberRepository
+import kotlinassignment.week4.domain.member.service.MemberService
 import kotlinassignment.week4.domain.toDoCard.dto.*
 import kotlinassignment.week4.domain.toDoCard.model.*
 import kotlinassignment.week4.domain.toDoCard.repository.ToDoCardRepository
+import kotlinassignment.week4.infra.security.UserPrincipal
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -16,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional
 class ToDoCardService(
     private val toDoCardRepository: ToDoCardRepository,
     private val commentRepository: CommentRepository,
+    private val memberRepository: MemberRepository,
 ) {
 
     fun getAllToDoCards(userName: String?, sortOrder: String): List<ToDoCardResponse> {
@@ -39,16 +43,19 @@ class ToDoCardService(
     }
 
     @Transactional
-    fun createToDoCard(request: ToDoCardCreateRequest): ToDoCardResponse {
+    fun createToDoCard(
+        request: ToDoCardCreateRequest,
+        userPrincipal: UserPrincipal,
+    ): ToDoCardResponse {
 
-        val toDoCard = ToDoCard(
+        val member = memberRepository.findByIdOrNull(userPrincipal.id) ?: throw ModelNotFoundException("Member", userPrincipal.id)
+
+        return ToDoCard(
             title = request.title,
             description = request.description,
-            userName = request.userName,
+            member = member,
             createdDateTime = request.createdDateTime,
-        )
-
-        return toDoCardRepository.save(toDoCard).toResponse()
+        ).let { toDoCardRepository.save(it).toResponse() }
     }
 
     @Transactional

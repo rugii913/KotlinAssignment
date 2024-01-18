@@ -3,9 +3,11 @@ package kotlinassignment.week4.domain.toDoCard.controller
 import jakarta.validation.Valid
 import kotlinassignment.week4.domain.toDoCard.dto.*
 import kotlinassignment.week4.domain.toDoCard.service.ToDoCardService
+import kotlinassignment.week4.infra.security.UserPrincipal
 import kotlinassignment.week4.util.SortOrder
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 
@@ -42,8 +44,11 @@ class ToDoCardController(
     }
 
     @PostMapping
-    fun createToDoCard(@Valid @RequestBody request: ToDoCardCreateRequest): ResponseEntity<ToDoCardResponse> {
-        val toDoCardResponse = toDoCardService.createToDoCard(request)
+    fun createToDoCard(
+        @Valid @RequestBody request: ToDoCardCreateRequest,
+        @AuthenticationPrincipal userPrincipal: UserPrincipal,
+    ): ResponseEntity<ToDoCardResponse> {
+        val toDoCardResponse = toDoCardService.createToDoCard(request, userPrincipal)
 
         return ResponseEntity
             .status(HttpStatus.CREATED)
@@ -53,7 +58,7 @@ class ToDoCardController(
     @PutMapping("/{toDoCardId}")
     fun updateToDoCard(
         @PathVariable toDoCardId: Long,
-        @Valid @RequestBody request: ToDoCardUpdateRequest
+        @Valid @RequestBody request: ToDoCardUpdateRequest,
     ): ResponseEntity<ToDoCardResponse> {
         val toDoCardResponse = toDoCardService.updateToDoCard(toDoCardId, request)
 
@@ -63,7 +68,9 @@ class ToDoCardController(
     }
 
     @DeleteMapping("/{toDoCardId}")
-    fun deleteToDoCard(@PathVariable toDoCardId: Long): ResponseEntity<Unit> {
+    fun deleteToDoCard(
+        @PathVariable toDoCardId: Long,
+    ): ResponseEntity<Unit> {
         toDoCardService.deleteToDoCard(toDoCardId)
 
         return ResponseEntity
@@ -74,7 +81,7 @@ class ToDoCardController(
     @PatchMapping("/{toDoCardId}")
     fun completeToDoCard(
         @PathVariable toDoCardId: Long,
-        @Valid @RequestBody request: ToDoCardIsCompletePatchRequest
+        @Valid @RequestBody request: ToDoCardIsCompletePatchRequest,
     ): ResponseEntity<ToDoCardResponse> {
         val toDoCardResponse = toDoCardService.completeToDoCard(toDoCardId, request)
 

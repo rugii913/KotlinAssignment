@@ -5,6 +5,7 @@ import kotlinassignment.week4.domain.comment.dto.CommentResponse
 import kotlinassignment.week4.domain.comment.model.Comment
 import kotlinassignment.week4.domain.comment.model.toResponse
 import kotlinassignment.week4.domain.exception.StringLengthOutOfRangeException
+import kotlinassignment.week4.domain.member.model.Member
 import kotlinassignment.week4.domain.toDoCard.dto.ToDoCardResponse
 import kotlinassignment.week4.domain.toDoCard.dto.ToDoCardResponseWithComments
 import java.time.LocalDateTime
@@ -14,8 +15,8 @@ class ToDoCard(
     title: String,
     description: String,
 
-    @Column(nullable = false)
-    val userName: String,
+    @ManyToOne(fetch = FetchType.LAZY)
+    val member: Member,
 
     @Column(nullable = false)
     val createdDateTime: LocalDateTime,
@@ -60,7 +61,7 @@ fun ToDoCard.toResponse(): ToDoCardResponse {
         id = this.id!!,
         title = this.title,
         description = this.description,
-        userName = this.userName,
+        memberEmail = this.member.email,
         createdDateTime = this.createdDateTime,
         isComplete = this.isComplete,
     )
@@ -76,7 +77,7 @@ fun ToDoCard.toResponseWithComments(): ToDoCardResponseWithComments {
         id = this.id!!,
         title = this.title,
         description = this.description,
-        userName = this.userName,
+        memberEmail = this.member.email,
         createdDateTime = this.createdDateTime,
         comments = this.comments.map { it.toResponse() }.sortedByDescending { it.createdDateTime },
         isComplete = this.isComplete,
@@ -88,7 +89,7 @@ fun ToDoCard.toResponseWithComments(comments: List<CommentResponse>): ToDoCardRe
         id = this.id!!,
         title = this.title,
         description = this.description,
-        userName = this.userName,
+        memberEmail = this.member.email,
         createdDateTime = this.createdDateTime,
         comments = comments,
         isComplete = this.isComplete,
