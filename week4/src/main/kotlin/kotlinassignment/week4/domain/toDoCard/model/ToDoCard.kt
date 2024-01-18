@@ -96,6 +96,9 @@ fun ToDoCard.toResponseWithComments(comments: List<CommentResponse>): ToDoCardRe
     )
 }
 
+/*
+// CommentService에서 createComment() 할 때 더티 체킹 사용하지 않게 되면서 주석 처리
 fun ToDoCard.addComment(comment: Comment) {
     this.comments.add(comment)
 }
+ */

@@ -4,15 +4,15 @@ import kotlinassignment.week4.domain.comment.dto.CommentCreateRequest
 import kotlinassignment.week4.domain.comment.dto.CommentResponse
 import kotlinassignment.week4.domain.comment.dto.CommentUpdateRequest
 import kotlinassignment.week4.domain.comment.model.Comment
-import kotlinassignment.week4.domain.comment.model.fromRequestToComment
 import kotlinassignment.week4.domain.comment.model.toResponse
 import kotlinassignment.week4.domain.comment.model.updateFrom
 import kotlinassignment.week4.domain.comment.repository.CommentRepository
 import kotlinassignment.week4.domain.exception.IncorrectRelatedEntityIdException
 import kotlinassignment.week4.domain.exception.ModelNotFoundException
 import kotlinassignment.week4.domain.exception.PasswordMismatchException
-import kotlinassignment.week4.domain.toDoCard.model.addComment
+import kotlinassignment.week4.domain.member.repository.MemberRepository
 import kotlinassignment.week4.domain.toDoCard.repository.ToDoCardRepository
+import kotlinassignment.week4.infra.security.MemberPrincipal
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -21,22 +21,29 @@ import org.springframework.transaction.annotation.Transactional
 class CommentService(
     private val toDoCardIdRepository: ToDoCardRepository,
     private val commentRepository: CommentRepository,
+    private val memberRepository: MemberRepository,
 ) {
 
     @Transactional
-    fun createComment(toDoCardId: Long, request: CommentCreateRequest): CommentResponse {
-        val targetToDoCard =
-            toDoCardIdRepository.findByIdOrNull(toDoCardId) ?: throw ModelNotFoundException("ToDoCard", toDoCardId)
+    fun createComment(toDoCardId: Long, request: CommentCreateRequest, memberPrincipal: MemberPrincipal): CommentResponse {
+        val targetToDoCard = toDoCardIdRepository.findByIdOrNull(toDoCardId) ?: throw ModelNotFoundException("ToDoCard", toDoCardId)
+        val member = memberRepository.findByIdOrNull(memberPrincipal.id) ?:throw ModelNotFoundException("Member", memberPrincipal.id)
 
-        val comment = fromRequestToComment(request, targetToDoCard)
-        targetToDoCard.addComment(comment)
-        toDoCardIdRepository.save(targetToDoCard)
-
-        return comment.toResponse()
+        return Comment(
+            content = request.content,
+            member = member,
+            createdDateTime = request.createdDateTime,
+            toDoCard = targetToDoCard,
+        ).let { commentRepository.save(it).toResponse() }
     }
 
     @Transactional
-    fun updateComment(toDoCardId: Long, commentId: Long, request: CommentUpdateRequest): CommentResponse {
+    fun updateComment(
+        toDoCardId: Long,
+        commentId: Long,
+        request: CommentUpdateRequest,
+        memberPrincipal: MemberPrincipal
+    ): CommentResponse {
         // 해당 commentId 존재 여부만 먼저 확인 후, 존재하지 않는 경우 예외 처리, 존재하는 경우 비밀번호 검사 후 entity 가져옴
         // - select를 두 번 이상 하게 되나, 각 경우에 따라 다른 방식으로 예외처리하기 위해 이렇게 구현하고자 했음
         if (!commentRepository.existsById(commentId)) throw ModelNotFoundException("Comment", commentId)
@@ -53,7 +60,7 @@ class CommentService(
     }
 
     @Transactional
-    fun deleteComment(toDoCardId: Long, commentId: Long): Unit {
+    fun deleteComment(toDoCardId: Long, commentId: Long, memberPrincipal: MemberPrincipal): Unit {
         // 해당 commentId 존재 여부만 먼저 확인 후, 존재하지 않는 경우 예외 처리, 존재하는 경우 비밀번호 검사 후 entity 가져옴
         // - select를 두 번 이상 하게 되나, 각 경우에 따라 다른 방식으로 예외처리하기 위해 이렇게 구현하고자 했음
         if (!commentRepository.existsById(commentId)) throw ModelNotFoundException("Comment", commentId)
