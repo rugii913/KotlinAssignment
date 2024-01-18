@@ -59,8 +59,9 @@ class ToDoCardController(
     fun updateToDoCard(
         @PathVariable toDoCardId: Long,
         @Valid @RequestBody request: ToDoCardUpdateRequest,
+        @AuthenticationPrincipal memberPrincipal: MemberPrincipal,
     ): ResponseEntity<ToDoCardResponse> {
-        val toDoCardResponse = toDoCardService.updateToDoCard(toDoCardId, request)
+        val toDoCardResponse = toDoCardService.updateToDoCard(toDoCardId, request, memberPrincipal)
 
         return ResponseEntity
             .status(HttpStatus.OK)
@@ -70,8 +71,9 @@ class ToDoCardController(
     @DeleteMapping("/{toDoCardId}")
     fun deleteToDoCard(
         @PathVariable toDoCardId: Long,
+        @AuthenticationPrincipal memberPrincipal: MemberPrincipal,
     ): ResponseEntity<Unit> {
-        toDoCardService.deleteToDoCard(toDoCardId)
+        toDoCardService.deleteToDoCard(toDoCardId, memberPrincipal)
 
         return ResponseEntity
             .status(HttpStatus.NO_CONTENT)
@@ -82,8 +84,9 @@ class ToDoCardController(
     fun completeToDoCard(
         @PathVariable toDoCardId: Long,
         @Valid @RequestBody request: ToDoCardIsCompletePatchRequest,
+        @AuthenticationPrincipal memberPrincipal: MemberPrincipal,
     ): ResponseEntity<ToDoCardResponse> {
-        val toDoCardResponse = toDoCardService.completeToDoCard(toDoCardId, request)
+        val toDoCardResponse = toDoCardService.completeToDoCard(toDoCardId, request, memberPrincipal)
 
         return ResponseEntity
             .status(HttpStatus.OK)

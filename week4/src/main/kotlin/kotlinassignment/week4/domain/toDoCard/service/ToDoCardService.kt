@@ -3,6 +3,7 @@ package kotlinassignment.week4.domain.toDoCard.service
 import kotlinassignment.week4.domain.comment.model.toResponse
 import kotlinassignment.week4.domain.comment.repository.CommentRepository
 import kotlinassignment.week4.domain.exception.ModelNotFoundException
+import kotlinassignment.week4.domain.exception.UnauthorizedAccessException
 import kotlinassignment.week4.domain.member.repository.MemberRepository
 import kotlinassignment.week4.domain.toDoCard.dto.*
 import kotlinassignment.week4.domain.toDoCard.model.*
@@ -57,11 +58,12 @@ class ToDoCardService(
     }
 
     @Transactional
-    fun updateToDoCard(toDoCardId: Long?, request: ToDoCardUpdateRequest): ToDoCardResponse {
-        val toDoCard = toDoCardRepository.findByIdOrNull(toDoCardId) ?: throw ModelNotFoundException("ToDoCard", toDoCardId!!)
+    fun updateToDoCard(toDoCardId: Long?, request: ToDoCardUpdateRequest, memberPrincipal: MemberPrincipal): ToDoCardResponse {
+        val toDoCard = toDoCardRepository.findByIdOrNull(toDoCardId)
+            ?.also { if (it.member.id != memberPrincipal.id) throw UnauthorizedAccessException() }
+            ?: throw ModelNotFoundException("ToDoCard", toDoCardId!!)
 
-        // (해결?) request에 속성 추가, 정책상 변경 가능한 속성 변경 등 발생했을 때, 여기에서도 알 수 있도록 컴파일 에러를 내는 식으로 작성하려면 어떻게 해야 하는지?
-        // -> 이런 이유 때문에 굳이 구조 분해 선언 사용했던 듯하다.
+        // (해결?) request에 속성 추가, 정책상 변경 가능한 속성 변경 등 발생했을 때, 여기에서도 알 수 있도록 컴파일 에러를 내는 식으로 작성하려면 어떻게 해야 하는지? -> 이런 이유 때문에 굳이 구조 분해 선언 사용했던 듯하다.
         val (title: String?, description: String?) = request
         toDoCard.title = title
         toDoCard.description = description
@@ -70,16 +72,20 @@ class ToDoCardService(
     }
 
     @Transactional
-    fun deleteToDoCard(toDoCardId: Long?): Unit {
+    fun deleteToDoCard(toDoCardId: Long?, memberPrincipal: MemberPrincipal): Unit {
         // 이 부분이 있어도 select query는 한 번만 나간다. 없는 id로 delete 시도하는 경우 확실한 에러 메시지를 주기 위함
-        val toDoCard = toDoCardRepository.findByIdOrNull(toDoCardId) ?: throw ModelNotFoundException("ToDoCard", toDoCardId!!)
+        val toDoCard = toDoCardRepository.findByIdOrNull(toDoCardId)
+            ?.also { if (it.member.id != memberPrincipal.id) throw UnauthorizedAccessException() }
+            ?: throw ModelNotFoundException("ToDoCard", toDoCardId!!)
 
         return toDoCardRepository.delete(toDoCard)
     }
 
     @Transactional
-    fun completeToDoCard(toDoCardId: Long?, request: ToDoCardIsCompletePatchRequest): ToDoCardResponse {
-        val toDoCard = toDoCardRepository.findByIdOrNull(toDoCardId) ?: throw ModelNotFoundException("ToDoCard", toDoCardId!!)
+    fun completeToDoCard(toDoCardId: Long?, request: ToDoCardIsCompletePatchRequest, memberPrincipal: MemberPrincipal): ToDoCardResponse {
+        val toDoCard = toDoCardRepository.findByIdOrNull(toDoCardId)
+            ?.also { if (it.member.id != memberPrincipal.id) throw UnauthorizedAccessException() }
+            ?: throw ModelNotFoundException("ToDoCard", toDoCardId!!)
         toDoCard.isComplete = request.isComplete
 
         return toDoCard.toResponse()
