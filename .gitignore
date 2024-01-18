@@ -7,5 +7,8 @@ build
 ### 실행 환경
 envs-constants.yml
 
+### jwt 발급 관련
+application-jwt.yml
+
 ### IntelliJ로 DB에 연결하면서 생성된 설정 정보인 듯하다.
 .idea/dataSources.xml

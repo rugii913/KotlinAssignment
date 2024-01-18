@@ -1,7 +1,7 @@
 spring:
   profiles:
     group:
-      local: oauth
+      local: oauth, jwt
       # cf. include는 on-profile과 공존할 수 없음 InactiveConfigDataAccessException - https://multifrontgarden.tistory.com/277
       # profile별로 include가 달라야 한다면 spring.profiles.group 속성으로 묶어서 사용
   jpa:
