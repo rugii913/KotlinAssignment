@@ -6,6 +6,7 @@ import kotlinassignment.week4.domain.member.dto.MemberSignUpRequest
 import kotlinassignment.week4.domain.member.exception.InvalidCredentialException
 import kotlinassignment.week4.domain.member.model.Member
 import kotlinassignment.week4.domain.member.repository.MemberRepository
+import kotlinassignment.week4.infra.jwt.JwtUtil
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional
 class MemberService(
     private val memberRepository: MemberRepository,
     private val passwordEncoder: PasswordEncoder,
+    private val jwtUtil: JwtUtil,
 ) {
 
     fun login(request: MemberLoginRequest): MemberLoginResponse {
@@ -23,7 +25,7 @@ class MemberService(
             throw InvalidCredentialException()
         }
 
-        return MemberLoginResponse(TODO())
+        return MemberLoginResponse(accessToken = jwtUtil.generateAccessToken(user.id.toString(), user.email))
     }
 
     @Transactional
