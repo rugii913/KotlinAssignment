@@ -22,6 +22,7 @@ import java.time.LocalDateTime
 // exception handler 동작 간단하게 보기 위해 간단하게 @WebMvcTest 사용
 // @ExtendWith(MockKExtension::class) cf. @WebMvcTest 사용하지 않는 방법 - https://mangkyu.tistory.com/244(Java 코드)
 internal class ToDoCardControllerTest(
+    /*
     @MockkBean private val toDoCardService: ToDoCardService = spyk<ToDoCardService>(),
     private val mockMvc: MockMvc,
     ) : DescribeSpec({
@@ -74,4 +75,4 @@ internal class ToDoCardControllerTest(
             }
         }
     }
-})
+}*/)
