@@ -3,9 +3,11 @@ package kotlinassignment.week4.domain.toDoCard.controller
 import jakarta.validation.Valid
 import kotlinassignment.week4.domain.toDoCard.dto.*
 import kotlinassignment.week4.domain.toDoCard.service.ToDoCardService
+import kotlinassignment.week4.infra.security.MemberPrincipal
 import kotlinassignment.week4.util.SortOrder
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 
@@ -42,8 +44,11 @@ class ToDoCardController(
     }
 
     @PostMapping
-    fun createToDoCard(@Valid @RequestBody request: ToDoCardCreateRequest): ResponseEntity<ToDoCardResponse> {
-        val toDoCardResponse = toDoCardService.createToDoCard(request)
+    fun createToDoCard(
+        @Valid @RequestBody request: ToDoCardCreateRequest,
+        @AuthenticationPrincipal memberPrincipal: MemberPrincipal,
+    ): ResponseEntity<ToDoCardResponse> {
+        val toDoCardResponse = toDoCardService.createToDoCard(request, memberPrincipal)
 
         return ResponseEntity
             .status(HttpStatus.CREATED)
@@ -53,9 +58,10 @@ class ToDoCardController(
     @PutMapping("/{toDoCardId}")
     fun updateToDoCard(
         @PathVariable toDoCardId: Long,
-        @Valid @RequestBody request: ToDoCardUpdateRequest
+        @Valid @RequestBody request: ToDoCardUpdateRequest,
+        @AuthenticationPrincipal memberPrincipal: MemberPrincipal,
     ): ResponseEntity<ToDoCardResponse> {
-        val toDoCardResponse = toDoCardService.updateToDoCard(toDoCardId, request)
+        val toDoCardResponse = toDoCardService.updateToDoCard(toDoCardId, request, memberPrincipal)
 
         return ResponseEntity
             .status(HttpStatus.OK)
@@ -63,8 +69,11 @@ class ToDoCardController(
     }
 
     @DeleteMapping("/{toDoCardId}")
-    fun deleteToDoCard(@PathVariable toDoCardId: Long): ResponseEntity<Unit> {
-        toDoCardService.deleteToDoCard(toDoCardId)
+    fun deleteToDoCard(
+        @PathVariable toDoCardId: Long,
+        @AuthenticationPrincipal memberPrincipal: MemberPrincipal,
+    ): ResponseEntity<Unit> {
+        toDoCardService.deleteToDoCard(toDoCardId, memberPrincipal)
 
         return ResponseEntity
             .status(HttpStatus.NO_CONTENT)
@@ -74,9 +83,10 @@ class ToDoCardController(
     @PatchMapping("/{toDoCardId}")
     fun completeToDoCard(
         @PathVariable toDoCardId: Long,
-        @Valid @RequestBody request: ToDoCardIsCompletePatchRequest
+        @Valid @RequestBody request: ToDoCardIsCompletePatchRequest,
+        @AuthenticationPrincipal memberPrincipal: MemberPrincipal,
     ): ResponseEntity<ToDoCardResponse> {
-        val toDoCardResponse = toDoCardService.completeToDoCard(toDoCardId, request)
+        val toDoCardResponse = toDoCardService.completeToDoCard(toDoCardId, request, memberPrincipal)
 
         return ResponseEntity
             .status(HttpStatus.OK)

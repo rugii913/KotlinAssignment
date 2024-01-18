@@ -6,7 +6,7 @@ data class ToDoCardResponse(
     val id: Long,
     val title: String,
     val description: String?,
-    val userName: String,
+    val memberEmail: String, // TODO nickname 등으로 수정 필요 - entity까지 수정 필요해짐
     val createdDateTime: LocalDateTime,
     val isComplete: Boolean,
 )

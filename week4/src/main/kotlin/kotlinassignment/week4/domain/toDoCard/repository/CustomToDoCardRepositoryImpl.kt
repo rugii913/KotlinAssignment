@@ -15,7 +15,7 @@ class CustomToDoCardRepositoryImpl : CustomToDoCardRepository, QueryDslSupport()
         sortOrder: String,
     ): List<ToDoCard> {
         return queryFactory.selectFrom(toDoCard)
-            .let { if (userName != null) it.where(toDoCard.userName.eq(userName)) else it }
+            .let { if (userName != null) it.where(toDoCard.member.email.eq(userName)) else it } // TODO 컴파일 에러 방지용 임시 저장
             .orderBy(
                 when (sortOrder) {
                     "ASC" -> toDoCard.createdDateTime.asc()
