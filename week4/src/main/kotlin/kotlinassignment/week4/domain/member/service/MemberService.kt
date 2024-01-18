@@ -3,6 +3,7 @@ package kotlinassignment.week4.domain.member.service
 import kotlinassignment.week4.domain.member.dto.MemberLoginRequest
 import kotlinassignment.week4.domain.member.dto.MemberLoginResponse
 import kotlinassignment.week4.domain.member.dto.MemberSignUpRequest
+import kotlinassignment.week4.domain.member.exception.InvalidCredentialException
 import kotlinassignment.week4.domain.member.model.Member
 import kotlinassignment.week4.domain.member.repository.MemberRepository
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -16,6 +17,12 @@ class MemberService(
 ) {
 
     fun login(request: MemberLoginRequest): MemberLoginResponse {
+        val user = memberRepository.findByEmail(request.email) ?: throw InvalidCredentialException()
+
+        if (!passwordEncoder.matches(request.password, user.password)) {
+            throw InvalidCredentialException()
+        }
+
         return MemberLoginResponse(TODO())
     }
 
