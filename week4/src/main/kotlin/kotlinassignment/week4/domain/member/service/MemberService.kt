@@ -1,5 +1,7 @@
 package kotlinassignment.week4.domain.member.service
 
+import kotlinassignment.week4.domain.member.dto.MemberLoginRequest
+import kotlinassignment.week4.domain.member.dto.MemberLoginResponse
 import kotlinassignment.week4.domain.member.dto.MemberSignUpRequest
 import kotlinassignment.week4.domain.member.model.Member
 import kotlinassignment.week4.domain.member.repository.MemberRepository
@@ -12,6 +14,10 @@ class MemberService(
     private val memberRepository: MemberRepository,
     private val passwordEncoder: PasswordEncoder,
 ) {
+
+    fun login(request: MemberLoginRequest): MemberLoginResponse {
+        return MemberLoginResponse(TODO())
+    }
 
     @Transactional
     fun signUp(request: MemberSignUpRequest): Unit {
