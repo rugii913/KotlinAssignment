@@ -38,6 +38,7 @@ class MemberService(
             Member(
                 email = request.email,
                 password = passwordEncoder.encode(request.password),
+                nickname = request.nickname,
             )
         )
     }

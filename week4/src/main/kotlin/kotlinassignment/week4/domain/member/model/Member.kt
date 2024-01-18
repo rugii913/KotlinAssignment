@@ -6,7 +6,8 @@ import jakarta.persistence.*
 @Table(name = "member")
 class Member(
     val email: String,
-    val password: String,
+    var password: String,
+    var nickname: String,
 ) {
 
     @Id
