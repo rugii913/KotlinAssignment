@@ -7,6 +7,7 @@ import com.teamsparta.courseregistration.domain.course.model.Course
 import com.teamsparta.courseregistration.domain.course.model.CourseStatus
 import com.teamsparta.courseregistration.domain.course.model.toResponse
 import com.teamsparta.courseregistration.domain.course.repository.CourseRepository
+import com.teamsparta.courseregistration.domain.course.repository.CourseRepositoryImpl
 import com.teamsparta.courseregistration.domain.couseapplication.dto.ApplyCourseRequest
 import com.teamsparta.courseregistration.domain.couseapplication.dto.CourseApplicationResponse
 import com.teamsparta.courseregistration.domain.couseapplication.dto.UpdateApplicationStatusRequest
@@ -22,6 +23,8 @@ import com.teamsparta.courseregistration.domain.lecture.model.Lecture
 import com.teamsparta.courseregistration.domain.lecture.model.toResponse
 import com.teamsparta.courseregistration.domain.lecture.repository.LectureRepository
 import com.teamsparta.courseregistration.domain.user.repository.UserRepository
+import com.teamsparta.courseregistration.infra.aop.StopWatch
+import com.teamsparta.courseregistration.infra.aop.loggingStopWatch
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -34,8 +37,13 @@ class CourseServiceImpl(
     private val userRepository: UserRepository,
 ) : CourseService {
 
+    @StopWatch
     override fun getAllCourseList(): List<CourseResponse> {
         return courseRepository.findAll().map { it.toResponse() }
+    }
+
+    override fun searchCourseList(title: String): List<CourseResponse>? {
+        return courseRepository.searchCourseListByTitle(title)?.map { it.toResponse() }
     }
 
     override fun getCourseById(courseId: Long): CourseResponse {
@@ -77,10 +85,12 @@ class CourseServiceImpl(
     }
 
     override fun getLecture(courseId: Long, lectureId: Long): LectureResponse {
-        val lecture = lectureRepository.findByCourseIdAndId(courseId, lectureId)
-            ?: throw ModelNotFoundException("Lecture", lectureId)
+        return loggingStopWatch {
+            val lecture = lectureRepository.findByCourseIdAndId(courseId, lectureId)
+                ?: throw ModelNotFoundException("Lecture", lectureId)
 
-        return lecture.toResponse()
+            return@loggingStopWatch lecture.toResponse()
+        }
     }
 
     @Transactional

@@ -6,6 +6,7 @@ import com.teamsparta.courseregistration.domain.lecture.dto.LectureResponse
 import com.teamsparta.courseregistration.domain.lecture.dto.UpdateLectureRequest
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 @RequestMapping("/courses/{courseId}/lectures")
@@ -14,6 +15,7 @@ class LectureController(
     private val courseService: CourseService
 ) {
 
+    @PreAuthorize("hasRole('TUTOR') or hasRole('STUDENT')")
     @GetMapping
     fun getLectureList(@PathVariable courseId: Long): ResponseEntity<List<LectureResponse>> {
         return ResponseEntity
@@ -21,6 +23,7 @@ class LectureController(
             .body(courseService.getLectureList(courseId))
     }
 
+    @PreAuthorize("hasRole('TUTOR') or hasRole('STUDENT')")
     @GetMapping("/{lectureId}")
     fun getLecture(@PathVariable courseId: Long, @PathVariable lectureId: Long): ResponseEntity<LectureResponse> {
         return ResponseEntity
@@ -28,6 +31,7 @@ class LectureController(
             .body(courseService.getLecture(courseId, lectureId))
     }
 
+    @PreAuthorize("hasRole('TUTOR')")
     @PostMapping
     fun addLecture(
         @PathVariable courseId: Long,
@@ -38,6 +42,7 @@ class LectureController(
             .body(courseService.addLecture(courseId, addLectureRequest))
     }
 
+    @PreAuthorize("hasRole('TUTOR')")
     @PutMapping("/{lectureId}")
     fun updateLecture(
         @PathVariable courseId: Long,
@@ -49,6 +54,7 @@ class LectureController(
             .body(courseService.updateLecture(courseId, lectureId, updateLectureRequest))
     }
 
+    @PreAuthorize("hasRole('TUTOR')")
     @DeleteMapping("/{lectureId}")
     fun removeLecture(
         @PathVariable courseId: Long,

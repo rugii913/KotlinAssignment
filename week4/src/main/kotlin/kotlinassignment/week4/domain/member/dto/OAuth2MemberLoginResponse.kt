@@ -1,6 +1,6 @@
 package kotlinassignment.week4.domain.member.dto
 
-data class LoginResponse(
+data class OAuth2MemberLoginResponse(
     val id: Long,
     val nickname: String,
     val tokenType: String,

@@ -8,7 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface CommentRepository : JpaRepository<Comment, Long> {
 
-    fun findByIdAndUserNameAndPassword(id: Long, userName: String, password: String): Comment?
-
     fun findByToDoCardOrderByCreatedDateTimeDesc(toDoCard: ToDoCard, pageable: Pageable): Page<Comment>
 }

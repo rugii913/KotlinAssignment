@@ -1,8 +1,6 @@
 package com.teamsparta.courseregistration.domain.user.controller
 
-import com.teamsparta.courseregistration.domain.user.dto.SignUpRequest
-import com.teamsparta.courseregistration.domain.user.dto.UpdateUserProfileRequest
-import com.teamsparta.courseregistration.domain.user.dto.UserResponse
+import com.teamsparta.courseregistration.domain.user.dto.*
 import com.teamsparta.courseregistration.domain.user.service.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -16,6 +14,14 @@ import org.springframework.web.bind.annotation.RestController
 class UserController(
     private val userService: UserService
 ) {
+
+    @PostMapping("/login")
+    fun login(@RequestBody loginRequest: LoginRequest): ResponseEntity<LoginResponse> {
+        // email 존재하는지 확인, password 일치 확인, role 일치 확인 - 성공하면 토큰 발급 - 이 로직을 서비스에서 타도록 구현할 것
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(userService.login(loginRequest))
+    }
 
     @PostMapping("/signup")
     fun signUp(@RequestBody signUpRequest: SignUpRequest): ResponseEntity<UserResponse> {

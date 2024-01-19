@@ -1,6 +1,6 @@
 package kotlinassignment.week4.domain.member.service
 
-import kotlinassignment.week4.domain.member.dto.LoginResponse
+import kotlinassignment.week4.domain.member.dto.OAuth2MemberLoginResponse
 import kotlinassignment.week4.infra.client.oauth2.OAuth2Client
 import kotlinassignment.week4.infra.client.oauth2.config.OAuth2Provider
 import kotlinassignment.week4.util.JwtTokenManager
@@ -14,12 +14,12 @@ class OAuth2LoginService(
     private val jwtTokenManager: JwtTokenManager,
 ) {
 
-    fun login(provider: OAuth2Provider, authorizationCode: String): LoginResponse {
+    fun login(provider: OAuth2Provider, authorizationCode: String): OAuth2MemberLoginResponse {
         return oAuth2Client.getAccessToken(provider, authorizationCode)
             .let { oAuth2Client.retrieveUserInfo(provider, accessToken = it) }
             .let { socialMemberService.registerIfAbsent(provider, userInfoResponse = it) }
             .let {
-                LoginResponse(
+                OAuth2MemberLoginResponse(
                     id = it.id!!,
                     nickname = it.nickname,
                     tokenType = "TODO",
