@@ -9,6 +9,7 @@ import com.querydsl.core.types.dsl.PathBuilder
 import com.teamsparta.courseregistration.domain.course.model.Course
 import com.teamsparta.courseregistration.domain.course.model.CourseStatus
 import com.teamsparta.courseregistration.domain.course.model.QCourse
+import com.teamsparta.courseregistration.domain.lecture.model.QLecture
 import com.teamsparta.courseregistration.infra.querydsl.QueryDslSupport
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
@@ -27,7 +28,37 @@ class CourseRepositoryImpl: QueryDslSupport(), CustomCourseRepository {
     }
 
     override fun findByPageableAndStatus(pageable: Pageable, courseStatus: CourseStatus?): Page<Course> {
-        return findByPageableAndStatusV2(pageable, courseStatus) // 리팩토링 과정을 보여주기 위해 이렇게 구성함
+        return findByPageableAndStatusV3(pageable, courseStatus) // 리팩토링 과정을 보여주기 위해 이렇게 구성함
+    }
+
+    private fun findByPageableAndStatusV3(pageable: Pageable, courseStatus: CourseStatus?): Page<Course> {
+        val whereClause = BooleanBuilder()
+        courseStatus?.let { whereClause.and(course.status.eq(courseStatus)) }
+
+        val totalCount = queryFactory.select(course.count()).from(course).where(whereClause).fetchOne() ?: 0L
+
+        val lecture = QLecture.lecture
+
+        val contents = queryFactory.selectFrom(course)
+            .leftJoin(course.lectures, lecture).fetchJoin()
+            // fetchJoin() 없이 leftJoin()만 있으면 여전히 N + 1 문제 발생함
+            //  - join을 하고서 course 데이터만 갖고온다. - course에게 lectures는 어쨌든 fetchType이 LAZY이므로,
+            // fetchJoin()을 명시하게 되면 연관관계에 있는 엔티티를 persistence context로 끌고 온다.
+            .where(whereClause)
+            .offset(pageable.offset)
+            .limit(pageable.pageSize.toLong())
+            .orderBy(*getOrderSpecifierV2(pageable, course))
+            .fetch()
+
+        return PageImpl(contents, pageable, totalCount)
+        // 그런데 문제는 fetchJoin()을 사용하게 되면 offset, limit을 무시한다. (null로 나감)
+        // 그리고 경고 메시지 - "firstResult/maxResults specified with collection fetch; applying in memory"
+        //  - join된 데이터를 전부 가져온 다음에 app 내에서 페이징 처리를 한다.
+        //  → ***OneToMany 관계일 때 페이징을 하면서 fetchJoin()까지 하는 것은 매우매우매우 위험하다.***
+        //  → 그게 아니더라도 웬만하면 OneToMany에서는 fetchJoin을 지양할 것
+        // 게다가 만약 CourseApplication까지 fetchJoin() 시도한다면??
+        //  - OneToMany에서 두 개 이상 fetchJoin 시도하면 hibernate는 아예 예외를 내고 막아버린다. (MultipleBagFetchException)
+        //  (cf.) ManyToOne에서는 둘 이상 fetchJoin도 가능하다.
     }
 
     private fun findByPageableAndStatusV2(pageable: Pageable, courseStatus: CourseStatus?): Page<Course> {
