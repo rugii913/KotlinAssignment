@@ -41,13 +41,11 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="testRunner" value="PLATFORM" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/week4" />
-        <option name="gradleHome" value="$PROJECT_DIR$/../../Gradle/gradle-8.5" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/week4and8" />
         <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/week4" />
+            <option value="$PROJECT_DIR$/week4and8" />
           </set>
         </option>
       </GradleProjectSettings>

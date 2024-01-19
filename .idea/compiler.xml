@@ -7,7 +7,7 @@
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-configuration-processor/3.2.1/9d6ac9a2fa98598d1a38e9f06d6f0aab250cae2f/spring-boot-configuration-processor-3.2.1.jar" />
         </processorPath>
-        <module name="KotlinAssignment.courseRegistration.main" />
+        <module name="week4and8.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="17" />
