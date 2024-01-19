@@ -3,8 +3,10 @@ package kotlinassignment.week4and8.infra.security
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import kotlinassignment.week4and8.domain.member.exception.InvalidCredentialException
 import kotlinassignment.week4and8.infra.jwt.JwtUtil
 import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpStatus
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
 import org.springframework.stereotype.Component

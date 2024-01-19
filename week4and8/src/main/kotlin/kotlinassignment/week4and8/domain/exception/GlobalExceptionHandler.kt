@@ -2,6 +2,7 @@ package kotlinassignment.week4and8.domain.exception
 
 import jakarta.validation.ConstraintViolationException
 import kotlinassignment.week4and8.domain.exception.dto.ErrorResponse
+import kotlinassignment.week4and8.domain.member.exception.InvalidCredentialException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
@@ -71,6 +72,20 @@ class GlobalExceptionHandler {
     fun handlePasswordMismatchException(e: StringLengthOutOfRangeException): ResponseEntity<ErrorResponse> {
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
+            .body(ErrorResponse(message = e.message))
+    }
+
+    @ExceptionHandler(InvalidCredentialException::class)
+    fun handleInvalidCredentialException(e: InvalidCredentialException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity
+            .status(HttpStatus.UNAUTHORIZED)
+            .body(ErrorResponse(message = e.message))
+    }
+
+    @ExceptionHandler(UnauthorizedAccessException::class)
+    fun handleUnauthorizedAccessException(e: UnauthorizedAccessException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity
+            .status(HttpStatus.FORBIDDEN)
             .body(ErrorResponse(message = e.message))
     }
 }
