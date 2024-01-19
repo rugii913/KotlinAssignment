@@ -4,7 +4,7 @@ import jakarta.validation.Valid
 import kotlinassignment.week4and8.domain.toDoCard.dto.*
 import kotlinassignment.week4and8.domain.toDoCard.service.ToDoCardService
 import kotlinassignment.week4and8.infra.security.MemberPrincipal
-import kotlinassignment.week4and8.util.SortOrder
+import kotlinassignment.week4and8.infra.util.SortOrder
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
