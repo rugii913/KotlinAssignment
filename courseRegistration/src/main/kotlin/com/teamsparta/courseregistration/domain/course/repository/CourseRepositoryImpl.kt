@@ -28,7 +28,26 @@ class CourseRepositoryImpl: QueryDslSupport(), CustomCourseRepository {
     }
 
     override fun findByPageableAndStatus(pageable: Pageable, courseStatus: CourseStatus?): Page<Course> {
-        return findByPageableAndStatusV3(pageable, courseStatus) // 리팩토링 과정을 보여주기 위해 이렇게 구성함
+        return findByPageableAndStatusV4(pageable, courseStatus) // 리팩토링 과정을 보여주기 위해 이렇게 구성함
+    }
+
+    private fun findByPageableAndStatusV4(pageable: Pageable, courseStatus: CourseStatus?): Page<Course> {
+        val whereClause = BooleanBuilder()
+        courseStatus?.let { whereClause.and(course.status.eq(courseStatus)) }
+
+        val totalCount = queryFactory.select(course.count()).from(course).where(whereClause).fetchOne() ?: 0L
+
+        val lecture = QLecture.lecture
+
+        val contents = queryFactory.selectFrom(course)
+            .where(whereClause)
+            .offset(pageable.offset)
+            .limit(pageable.pageSize.toLong())
+            .orderBy(*getOrderSpecifierV2(pageable, course))
+            .leftJoin(course.lectures, lecture) // fetchJoin()을 사용하지 않는 대신 in 쿼리 사용 - hibernate의 default_batch_fetch_size 설정
+            .fetch()
+
+        return PageImpl(contents, pageable, totalCount)
     }
 
     private fun findByPageableAndStatusV3(pageable: Pageable, courseStatus: CourseStatus?): Page<Course> {
