@@ -9,12 +9,15 @@ import com.teamsparta.courseregistration.domain.couseapplication.dto.UpdateAppli
 import com.teamsparta.courseregistration.domain.lecture.dto.AddLectureRequest
 import com.teamsparta.courseregistration.domain.lecture.dto.LectureResponse
 import com.teamsparta.courseregistration.domain.lecture.dto.UpdateLectureRequest
-import com.teamsparta.courseregistration.infra.aop.StopWatch
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 
 interface CourseService {
 
     // @StopWatch // (cf.) 여기에 달아놓으면 작동하지 않음
     fun getAllCourseList(): List<CourseResponse>
+
+    fun getPaginatedCourseList(pageable: Pageable, status: String?): Page<CourseResponse>
 
     fun searchCourseList(title: String): List<CourseResponse>?
 

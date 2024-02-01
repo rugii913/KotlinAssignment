@@ -4,6 +4,9 @@ import com.teamsparta.courseregistration.domain.course.dto.CourseResponse
 import com.teamsparta.courseregistration.domain.course.dto.CreateCourseRequest
 import com.teamsparta.courseregistration.domain.course.dto.UpdateCourseRequest
 import com.teamsparta.courseregistration.domain.course.service.CourseService
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
@@ -25,10 +28,16 @@ class CourseController(
 
     @PreAuthorize("hasRole('TUTOR') or hasRole('STUDENT')") // (cf.) @Secured를 사용할 경우 ROLE_ prefix를 붙여야하지만, @PreAuthorize를 사용하는 경우 알아서 붙여서 해결해준다.
     @GetMapping
-    fun getCourses(): ResponseEntity<List<CourseResponse>> {
+    fun getCourses(
+        @PageableDefault(
+            size = 15,
+            sort = ["id"]
+        ) pageable: Pageable,
+        @RequestParam(value = "status", required = false) status: String?
+    ): ResponseEntity<Page<CourseResponse>> {
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(courseService.getAllCourseList())
+            .body(courseService.getPaginatedCourseList(pageable, status))
     }
 
     @PreAuthorize("hasRole('TUTOR') or hasRole('STUDENT')")

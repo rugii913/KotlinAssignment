@@ -25,6 +25,8 @@ import com.teamsparta.courseregistration.domain.lecture.repository.LectureReposi
 import com.teamsparta.courseregistration.domain.user.repository.UserRepository
 import com.teamsparta.courseregistration.infra.aop.StopWatch
 import com.teamsparta.courseregistration.infra.aop.loggingStopWatch
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -40,6 +42,18 @@ class CourseServiceImpl(
     @StopWatch
     override fun getAllCourseList(): List<CourseResponse> {
         return courseRepository.findAll().map { it.toResponse() }
+    }
+
+    override fun getPaginatedCourseList(pageable: Pageable, status: String?): Page<CourseResponse> {
+        val courseStatus = when (status) {
+            "OPEN" -> CourseStatus.OPEN
+            "CLOSED" -> CourseStatus.CLOSED
+            null -> null
+            else -> throw IllegalArgumentException("The status is invalid")
+        }
+
+        // Page에 map() 메서드가 따로 구현되어 있음 - Page의 content인 U 타입에 대해 바로 map이 적용된다. Kotlin의 map()을 사용한 것이 아님
+        return courseRepository.findByPageableAndStatus(pageable, courseStatus).map { it.toResponse() }
     }
 
     override fun searchCourseList(title: String): List<CourseResponse>? {

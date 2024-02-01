@@ -3,6 +3,7 @@ package com.teamsparta.courseregistration.domain.course.model
 import com.teamsparta.courseregistration.domain.course.dto.CourseResponse
 import com.teamsparta.courseregistration.domain.couseapplication.model.CourseApplication
 import com.teamsparta.courseregistration.domain.lecture.model.Lecture
+import com.teamsparta.courseregistration.domain.lecture.model.toResponse
 import jakarta.persistence.*
 
 @Entity
@@ -71,6 +72,7 @@ fun Course.toResponse(): CourseResponse {
         description = description,
         status = status.name,
         maxApplicants = maxApplicants,
-        numApplicants = numApplicants
+        numApplicants = numApplicants,
+        lectures = lectures.map { it.toResponse() },
     )
 }
