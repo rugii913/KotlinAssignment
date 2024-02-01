@@ -5,7 +5,7 @@ import com.teamsparta.courseregistration.domain.user.dto.UserResponse
 import jakarta.persistence.*
 
 @Entity
-@Table(name = "app_user")
+@Table(name = "course_app_user")
 class User(
     @Column(name = "email")
     val email: String,
