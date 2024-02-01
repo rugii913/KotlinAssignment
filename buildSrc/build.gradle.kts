@@ -18,4 +18,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-gradle-plugin:3.2.1")
     implementation("io.spring.gradle:dependency-management-plugin:1.1.4")
     implementation("org.jetbrains.kotlin:kotlin-allopen:1.9.21")
+    implementation("org.jetbrains.kotlin:kotlin-noarg:1.9.21")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.21") // kapt https://plugins.gradle.org/plugin/org.jetbrains.kotlin.kapt/1.9.21
 }
