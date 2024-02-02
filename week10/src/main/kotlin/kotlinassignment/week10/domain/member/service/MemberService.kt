@@ -31,7 +31,7 @@ class MemberService(
     @Transactional
     fun signUp(request: MemberSignUpRequest): Unit {
         if (memberRepository.existsByEmail(request.email)) {
-            throw IllegalStateException("Email is already in use")
+            throw IllegalStateException("Email is already in use") // TODO 예외 공통화 처리
         }
 
         memberRepository.save(
