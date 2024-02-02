@@ -1,4 +1,4 @@
-package kotlinassignment.week4and8.infra.security
+package kotlinassignment.week10.infra.security
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -44,7 +44,7 @@ class SecurityConfig(
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java) // TODO 예외 처리
             .exceptionHandling {
                 it.authenticationEntryPoint(authenticationEntryPoint)
-                it.accessDeniedHandler(accessDeniedHandler)
+                // it.accessDeniedHandler(accessDeniedHandler)
             }
             .build()
     }
