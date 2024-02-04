@@ -1,5 +1,7 @@
 package kotlinassignment.week10.domain.exception
 
+import java.io.Serial
+
 data class IncorrectRelatedEntityIdException(
     val modelName1: String,
     val id1: Long,
@@ -7,4 +9,10 @@ data class IncorrectRelatedEntityIdException(
     val id2: Long,
     ) : RuntimeException(
     "$modelName1(id = $id1)과 $modelName2(id = $id2)는 서로 관련 없는 모델입니다."
-)
+) {
+
+    companion object {
+        @Serial
+        private const val serialVersionUID: Long = -4328451865638599402L
+    }
+}
