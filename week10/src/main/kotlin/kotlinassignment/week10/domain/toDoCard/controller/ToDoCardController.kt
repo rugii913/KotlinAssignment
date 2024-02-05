@@ -4,7 +4,9 @@ import jakarta.validation.Valid
 import kotlinassignment.week10.domain.toDoCard.dto.*
 import kotlinassignment.week10.domain.toDoCard.service.ToDoCardService
 import kotlinassignment.week10.infra.security.MemberPrincipal
-import kotlinassignment.week10.infra.util.SortOrder
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -26,8 +28,11 @@ class ToDoCardController(
     fun getToDoCardList(
         @RequestParam(required = false) title: String?,
         @RequestParam(required = false) memberNickname: String?,
-        @RequestParam(required = false, name = "sort", defaultValue = "DESC") sortOrder: SortOrder,
+        @RequestParam(required = false, defaultValue = "0") page: Int,
+        @RequestParam(required = false, name = "sort", defaultValue = "DESC") sortOrder: Sort.Direction,
     ): ResponseEntity<List<ToDoCardResponse>> {
+        val pageable: Pageable = PageRequest.of(page, TO_DO_CARD_PAGE_SIZE, sortOrder, TO_DO_CARD_SORT_PROPERTY)
+
         val toDoCardResponsesList = toDoCardService.getToDoCardList(title, memberNickname, sortOrder.name)
 
         return ResponseEntity
@@ -92,5 +97,10 @@ class ToDoCardController(
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(toDoCardResponse)
+    }
+
+    companion object {
+        private const val TO_DO_CARD_PAGE_SIZE = 5
+        private const val TO_DO_CARD_SORT_PROPERTY = "createdDateTime"
     }
 }
