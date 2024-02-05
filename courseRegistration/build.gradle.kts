@@ -39,13 +39,14 @@ repositories {
 }
 
 val queryDslVersion = "5.0.0"
+val kotestVersion = "5.5.5"
+val mockkVersion = "1.13.8"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
 
     // springdoc-openapi (참고 https://springdoc.org) - Swagger 사용하기 위함, localhost:8080/swagger-ui/index.html
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
@@ -72,6 +73,13 @@ dependencies {
     // Kotlin Annotation Processing Tool
     implementation("com.querydsl:querydsl-jpa:$queryDslVersion:jakarta")
     kapt("com.querydsl:querydsl-apt:$queryDslVersion:jakarta")
+
+    // 테스트 관련
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
+    testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
+    testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.3") // kotest-extensions-spring과 kotest의 호환성 문제로 추가할 때 버전 잘 따져야함
+    testImplementation("io.mockk:mockk:$mockkVersion")
 }
 
 tasks.withType<KotlinCompile> {
