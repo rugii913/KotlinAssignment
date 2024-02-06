@@ -3,12 +3,8 @@ package kotlinassignment.week10.domain.toDoCard.service
 import kotlinassignment.week10.domain.exception.ModelNotFoundException
 import kotlinassignment.week10.domain.exception.UnauthorizedAccessException
 import kotlinassignment.week10.domain.member.repository.MemberRepository
-import kotlinassignment.week10.domain.toDoCard.dto.ToDoCardCreateRequest
-import kotlinassignment.week10.domain.toDoCard.dto.ToDoCardIsCompletePatchRequest
-import kotlinassignment.week10.domain.toDoCard.dto.ToDoCardResponse
-import kotlinassignment.week10.domain.toDoCard.dto.ToDoCardUpdateRequest
+import kotlinassignment.week10.domain.toDoCard.dto.*
 import kotlinassignment.week10.domain.toDoCard.model.ToDoCard
-import kotlinassignment.week10.domain.toDoCard.model.toResponse
 import kotlinassignment.week10.domain.toDoCard.repository.ToDoCardRepository
 import kotlinassignment.week10.infra.aop.EvaluateExecutionTime
 import kotlinassignment.week10.infra.security.MemberPrincipal
@@ -60,6 +56,7 @@ class ToDoCardServiceImpl(
             member = member,
             createdDateTime = request.createdDateTime,
         ).let { toDoCardRepository.save(it).toResponse() }
+
     }
 
     @Transactional

@@ -1,11 +1,7 @@
 package kotlinassignment.week10.domain.comment.service
 
-import kotlinassignment.week10.domain.comment.dto.CommentCreateRequest
-import kotlinassignment.week10.domain.comment.dto.CommentResponse
-import kotlinassignment.week10.domain.comment.dto.CommentUpdateRequest
+import kotlinassignment.week10.domain.comment.dto.*
 import kotlinassignment.week10.domain.comment.model.Comment
-import kotlinassignment.week10.domain.comment.model.toResponse
-import kotlinassignment.week10.domain.comment.model.updateFrom
 import kotlinassignment.week10.domain.comment.repository.CommentRepository
 import kotlinassignment.week10.domain.exception.ModelNotFoundException
 import kotlinassignment.week10.domain.exception.UnauthorizedAccessException
