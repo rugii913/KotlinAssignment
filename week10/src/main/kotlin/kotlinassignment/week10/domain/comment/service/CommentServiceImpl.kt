@@ -26,7 +26,7 @@ class CommentServiceImpl(
 ) : CommentService {
 
     override fun getCommentList(toDoCardId: Long, pageable: Pageable): Page<CommentResponse> {
-        TODO()
+        return commentRepository.findByToDoCard_IdOrderByIdDesc(toDoCardId, pageable).map { it.toResponse() }
     }
 
     @Transactional
