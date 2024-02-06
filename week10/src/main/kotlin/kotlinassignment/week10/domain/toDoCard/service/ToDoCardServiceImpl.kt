@@ -72,17 +72,7 @@ class ToDoCardServiceImpl(
         toDoCard.title = title
         toDoCard.description = description
 
-        return toDoCardRepository.save(toDoCard).toResponse()
-    }
-
-    @Transactional
-    override fun deleteToDoCard(toDoCardId: Long, memberPrincipal: MemberPrincipal): Unit {
-        // 이 부분이 있어도 select query는 한 번만 나간다. 없는 id로 delete 시도하는 경우 확실한 에러 메시지를 주기 위함
-        val toDoCard = toDoCardRepository.findByIdOrNull(toDoCardId)
-            ?.also { if (it.member.id != memberPrincipal.id) throw UnauthorizedAccessException() }
-            ?: throw ModelNotFoundException("ToDoCard", toDoCardId)
-
-        return toDoCardRepository.delete(toDoCard)
+        return toDoCard.toResponse()
     }
 
     @Transactional
@@ -93,5 +83,15 @@ class ToDoCardServiceImpl(
         toDoCard.isComplete = request.isComplete
 
         return toDoCard.toResponse()
+    }
+
+    @Transactional
+    override fun deleteToDoCard(toDoCardId: Long, memberPrincipal: MemberPrincipal): Unit {
+        // 이 부분이 있어도 select query는 한 번만 나간다. 없는 id로 delete 시도하는 경우 확실한 에러 메시지를 주기 위함
+        val toDoCard = toDoCardRepository.findByIdOrNull(toDoCardId)
+            ?.also { if (it.member.id != memberPrincipal.id) throw UnauthorizedAccessException() }
+            ?: throw ModelNotFoundException("ToDoCard", toDoCardId)
+
+        return toDoCardRepository.delete(toDoCard)
     }
 }

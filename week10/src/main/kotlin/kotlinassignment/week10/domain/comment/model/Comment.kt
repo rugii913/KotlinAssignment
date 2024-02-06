@@ -38,6 +38,7 @@ fun Comment.toResponse(): CommentResponse {
     )
 }
 
-fun Comment.updateFrom(request: CommentUpdateRequest) {
+fun Comment.updateFrom(request: CommentUpdateRequest): Comment {
     this.content = request.content
+    return this
 }

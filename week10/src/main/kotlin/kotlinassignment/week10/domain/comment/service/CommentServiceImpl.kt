@@ -52,10 +52,9 @@ class CommentServiceImpl(
         val targetComment =
             commentRepository.findByIdAndToDoCard_Id(commentId, toDoCardId) ?: throw ModelNotFoundException("Comment", commentId)
 
-        return targetComment
-            .also { if (it.member.id != memberPrincipal.id) throw UnauthorizedAccessException() }
-            .also { it.updateFrom(request) }
-            .let { commentRepository.save(it).toResponse() }
+        if (targetComment.member.id != memberPrincipal.id) throw UnauthorizedAccessException()
+
+        return targetComment.updateFrom(request).toResponse()
     }
 
     @Transactional
