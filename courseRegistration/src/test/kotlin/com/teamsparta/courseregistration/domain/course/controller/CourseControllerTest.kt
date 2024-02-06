@@ -34,6 +34,15 @@ class CourseControllerTest @Autowired constructor(
 ) : DescribeSpec({
     extension(SpringExtension)
 
+    beforeSpec {
+        // 강의와 다르게 추가한 부분
+        // mocking의 every가 어떻게 동작하는지 모르겠다.
+        // 일단 실제로 repository까지 모두 수행한 뒤에 빠져나올 때만 값을 바꿔치기하는 것 같다.
+        courseRepository.save(
+            Course("abc", null, CourseStatus.OPEN)
+        )
+    }
+
     afterContainer {
         clearAllMocks() // 컨테이너 기반으로 세팅을 했다면, 다른 컨테이너 실행될 때는 세팅된 mock을 지워준다.
     }
