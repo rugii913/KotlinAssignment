@@ -2,6 +2,16 @@
 - 프로그래밍 기초 개인 과제: week2 모듈
 - 프로그래밍 심화 개인 과제: week3 모듈
 - 주특기 숙련 및 심화 개인 과제: week4and8 모듈
+- ***주특기 플러스 개인 과제: week10 모듈***
+  - **주특기 숙련 및 심화 개인 과제(할 일 카드) 프로젝트 바탕으로 코드 개선 과제 등 진행** 
+
+---
+
+<details markdown="1">
+  <summary>
+    <h2>(지난 과제 README) 주특기 숙련 및 심화 개인 과제</h2>
+  </summary>
+  <div>
 
 ## 주특기 숙련 개인 과제 - to do 앱 백엔드 서버 만들기
 ### event storming <span>$\color{#dd6565}\-\ 2024.1.3. 변경$</span>
@@ -26,6 +36,9 @@
 - 2023.12.29. step1 구현
   - [PR](https://github.com/rugii913/KotlinAssignment/pulls?q=to-do-app+is%3Apr+is%3Aclosed) 및
 [프로젝트](https://github.com/users/rugii913/projects/8) 참고 
+
+  </div>
+</details>
 
 ---
 
