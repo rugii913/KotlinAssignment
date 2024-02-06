@@ -1,7 +1,10 @@
 package kotlinassignment.week10.domain.toDoCard.controller
 
 import jakarta.validation.Valid
-import kotlinassignment.week10.domain.toDoCard.dto.*
+import kotlinassignment.week10.domain.toDoCard.dto.ToDoCardCreateRequest
+import kotlinassignment.week10.domain.toDoCard.dto.ToDoCardIsCompletePatchRequest
+import kotlinassignment.week10.domain.toDoCard.dto.ToDoCardResponse
+import kotlinassignment.week10.domain.toDoCard.dto.ToDoCardUpdateRequest
 import kotlinassignment.week10.domain.toDoCard.service.ToDoCardService
 import kotlinassignment.week10.infra.security.MemberPrincipal
 import org.springframework.data.domain.Page
@@ -42,12 +45,12 @@ class ToDoCardController(
     }
 
     @GetMapping("/{toDoCardId}")
-    fun getToDoCard(@PathVariable toDoCardId: Long): ResponseEntity<ToDoCardResponseWithComments> {
-        val toDoCardResponseWithComments = toDoCardService.getToDoCardById(toDoCardId)
+    fun getToDoCard(@PathVariable toDoCardId: Long): ResponseEntity<ToDoCardResponse> {
+        val toDoCardResponse = toDoCardService.getToDoCardById(toDoCardId)
 
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(toDoCardResponseWithComments)
+            .body(toDoCardResponse)
     }
 
     @PostMapping
