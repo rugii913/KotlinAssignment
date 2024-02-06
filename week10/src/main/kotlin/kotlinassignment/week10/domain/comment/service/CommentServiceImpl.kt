@@ -46,7 +46,7 @@ class CommentServiceImpl(
     ): CommentResponse {
         val targetComment = commentRepository.findByIdAndToDoCard_Id(commentId, toDoCardId)
             ?: throw ModelNotFoundException("Comment", commentId)
-        check(targetComment.member.id != memberPrincipal.id) { throw UnauthorizedAccessException() }
+        check(targetComment.member.id == memberPrincipal.id) { throw UnauthorizedAccessException() }
 
         return targetComment.updateFrom(request).toResponse()
     }
@@ -55,7 +55,7 @@ class CommentServiceImpl(
     override fun deleteComment(toDoCardId: Long, commentId: Long, memberPrincipal: MemberPrincipal): Unit {
         val targetComment = commentRepository.findByIdAndToDoCard_Id(commentId, toDoCardId)
             ?: throw ModelNotFoundException("Comment", commentId)
-        check(targetComment.member.id != memberPrincipal.id) { throw UnauthorizedAccessException() }
+        check(targetComment.member.id == memberPrincipal.id) { throw UnauthorizedAccessException() }
 
         commentRepository.delete(targetComment)
     }
