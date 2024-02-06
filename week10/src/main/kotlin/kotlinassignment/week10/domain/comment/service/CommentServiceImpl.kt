@@ -49,21 +49,19 @@ class CommentServiceImpl(
         request: CommentUpdateRequest,
         memberPrincipal: MemberPrincipal
     ): CommentResponse {
-        val targetComment =
-            commentRepository.findByIdAndToDoCard_Id(commentId, toDoCardId) ?: throw ModelNotFoundException("Comment", commentId)
-
-        if (targetComment.member.id != memberPrincipal.id) throw UnauthorizedAccessException()
+        val targetComment = commentRepository.findByIdAndToDoCard_Id(commentId, toDoCardId)
+            ?: throw ModelNotFoundException("Comment", commentId)
+        check(targetComment.member.id != memberPrincipal.id) { throw UnauthorizedAccessException() }
 
         return targetComment.updateFrom(request).toResponse()
     }
 
     @Transactional
     override fun deleteComment(toDoCardId: Long, commentId: Long, memberPrincipal: MemberPrincipal): Unit {
-        val targetComment =
-            commentRepository.findByIdAndToDoCard_Id(commentId, toDoCardId) ?: throw ModelNotFoundException("Comment", commentId)
+        val targetComment = commentRepository.findByIdAndToDoCard_Id(commentId, toDoCardId)
+            ?: throw ModelNotFoundException("Comment", commentId)
+        check(targetComment.member.id != memberPrincipal.id) { throw UnauthorizedAccessException() }
 
-        targetComment
-            .also { if (it.member.id != memberPrincipal.id) throw UnauthorizedAccessException() }
-            .let { commentRepository.delete(it) }
+        commentRepository.delete(targetComment)
     }
 }

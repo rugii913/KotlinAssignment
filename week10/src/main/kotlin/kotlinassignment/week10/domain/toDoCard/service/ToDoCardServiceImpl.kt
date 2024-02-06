@@ -64,9 +64,8 @@ class ToDoCardServiceImpl(
 
     @Transactional
     override fun updateToDoCard(toDoCardId: Long, request: ToDoCardUpdateRequest, memberPrincipal: MemberPrincipal): ToDoCardResponse {
-        val toDoCard = toDoCardRepository.findByIdOrNull(toDoCardId)
-            ?.also { if (it.member.id != memberPrincipal.id) throw UnauthorizedAccessException() }
-            ?: throw ModelNotFoundException("ToDoCard", toDoCardId)
+        val toDoCard = toDoCardRepository.findByIdOrNull(toDoCardId) ?: throw ModelNotFoundException("ToDoCard", toDoCardId)
+        check(toDoCard.member.id != memberPrincipal.id) { throw UnauthorizedAccessException() }
 
         val (title: String?, description: String?) = request
         toDoCard.title = title
@@ -77,9 +76,9 @@ class ToDoCardServiceImpl(
 
     @Transactional
     override fun completeToDoCard(toDoCardId: Long, request: ToDoCardIsCompletePatchRequest, memberPrincipal: MemberPrincipal): ToDoCardResponse {
-        val toDoCard = toDoCardRepository.findByIdOrNull(toDoCardId)
-            ?.also { if (it.member.id != memberPrincipal.id) throw UnauthorizedAccessException() }
-            ?: throw ModelNotFoundException("ToDoCard", toDoCardId)
+        val toDoCard = toDoCardRepository.findByIdOrNull(toDoCardId) ?: throw ModelNotFoundException("ToDoCard", toDoCardId)
+        check(toDoCard.member.id != memberPrincipal.id) { throw UnauthorizedAccessException() }
+
         toDoCard.isComplete = request.isComplete
 
         return toDoCard.toResponse()
@@ -88,9 +87,8 @@ class ToDoCardServiceImpl(
     @Transactional
     override fun deleteToDoCard(toDoCardId: Long, memberPrincipal: MemberPrincipal): Unit {
         // 이 부분이 있어도 select query는 한 번만 나간다. 없는 id로 delete 시도하는 경우 확실한 에러 메시지를 주기 위함
-        val toDoCard = toDoCardRepository.findByIdOrNull(toDoCardId)
-            ?.also { if (it.member.id != memberPrincipal.id) throw UnauthorizedAccessException() }
-            ?: throw ModelNotFoundException("ToDoCard", toDoCardId)
+        val toDoCard = toDoCardRepository.findByIdOrNull(toDoCardId) ?: throw ModelNotFoundException("ToDoCard", toDoCardId)
+        check(toDoCard.member.id != memberPrincipal.id) { throw UnauthorizedAccessException() }
 
         return toDoCardRepository.delete(toDoCard)
     }
