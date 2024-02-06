@@ -1,17 +1,18 @@
 package kotlinassignment.week10.domain.toDoCard.service
 
-import kotlinassignment.week10.domain.comment.model.toResponse
-import kotlinassignment.week10.domain.comment.repository.CommentRepository
 import kotlinassignment.week10.domain.exception.ModelNotFoundException
 import kotlinassignment.week10.domain.exception.UnauthorizedAccessException
 import kotlinassignment.week10.domain.member.repository.MemberRepository
-import kotlinassignment.week10.domain.toDoCard.dto.*
-import kotlinassignment.week10.domain.toDoCard.model.*
+import kotlinassignment.week10.domain.toDoCard.dto.ToDoCardCreateRequest
+import kotlinassignment.week10.domain.toDoCard.dto.ToDoCardIsCompletePatchRequest
+import kotlinassignment.week10.domain.toDoCard.dto.ToDoCardResponse
+import kotlinassignment.week10.domain.toDoCard.dto.ToDoCardUpdateRequest
+import kotlinassignment.week10.domain.toDoCard.model.ToDoCard
+import kotlinassignment.week10.domain.toDoCard.model.toResponse
 import kotlinassignment.week10.domain.toDoCard.repository.ToDoCardRepository
 import kotlinassignment.week10.infra.aop.EvaluateExecutionTime
 import kotlinassignment.week10.infra.security.MemberPrincipal
 import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -20,13 +21,12 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class ToDoCardServiceImpl(
     private val toDoCardRepository: ToDoCardRepository,
-    private val commentRepository: CommentRepository,
     private val memberRepository: MemberRepository,
 ): ToDoCardService {
 
     override fun getToDoCardList(title: String?, memberNickname: String?, pageable: Pageable): Page<ToDoCardResponse> {
         return toDoCardRepository
-            .findAllFilteringByTitleOrUserNameWithSortOrder(title, memberNickname, pageable)
+            .findAllFilteringByTitleOrUserName(title, memberNickname, pageable)
             .map(ToDoCard::toResponse)
     }
 
