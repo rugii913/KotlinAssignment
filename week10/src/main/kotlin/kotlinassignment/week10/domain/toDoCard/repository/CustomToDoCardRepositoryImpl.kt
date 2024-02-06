@@ -4,6 +4,9 @@ import com.querydsl.core.types.dsl.BooleanExpression
 import kotlinassignment.week10.domain.toDoCard.model.QToDoCard
 import kotlinassignment.week10.domain.toDoCard.model.ToDoCard
 import kotlinassignment.week10.infra.querydsl.QueryDslSupport
+import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort.Direction.ASC
+import org.springframework.data.domain.Sort.Direction.DESC
 
 // @Repository // 이것마저 붙이지 않아도 동작함... https://docs.spring.io/spring-data/jpa/reference/repositories/custom-implementations.html
 class CustomToDoCardRepositoryImpl : CustomToDoCardRepository, QueryDslSupport() {
@@ -14,16 +17,16 @@ class CustomToDoCardRepositoryImpl : CustomToDoCardRepository, QueryDslSupport()
     override fun findAllFilteringByTitleOrUserNameWithSortOrder(
         title: String?,
         memberNickname: String?,
-        sortOrder: String,
+        pageable: Pageable,
     ): List<ToDoCard> {
         return queryFactory.selectFrom(toDoCard)
             .where(titleContains(title))
             .where(memberNicknameEq(memberNickname))
             .orderBy(
-                when (sortOrder) {
-                    "ASC" -> toDoCard.createdDateTime.asc()
-                    "DESC" -> toDoCard.createdDateTime.desc()
-                    else -> toDoCard.createdDateTime.desc()
+                when (pageable.sort.first()?.direction) {
+                    DESC -> toDoCard.createdDateTime.desc()
+                    ASC -> toDoCard.createdDateTime.asc()
+                    null -> toDoCard.createdDateTime.desc()
                 }
             ).fetch()
     }

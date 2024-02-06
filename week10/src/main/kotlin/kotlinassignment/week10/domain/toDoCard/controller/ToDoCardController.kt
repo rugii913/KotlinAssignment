@@ -33,7 +33,7 @@ class ToDoCardController(
     ): ResponseEntity<List<ToDoCardResponse>> {
         val pageable: Pageable = PageRequest.of(page, TO_DO_CARD_PAGE_SIZE, sortOrder, TO_DO_CARD_SORT_PROPERTY)
 
-        val toDoCardResponsesList = toDoCardService.getToDoCardList(title, memberNickname, sortOrder.name)
+        val toDoCardResponsesList = toDoCardService.getToDoCardList(title, memberNickname, pageable)
 
         return ResponseEntity
             .status(HttpStatus.OK)

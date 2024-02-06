@@ -2,6 +2,7 @@ package kotlinassignment.week10.domain.toDoCard.service
 
 import kotlinassignment.week10.domain.toDoCard.dto.*
 import kotlinassignment.week10.infra.security.MemberPrincipal
+import org.springframework.data.domain.Pageable
 
 interface ToDoCardService {
 
@@ -10,7 +11,7 @@ interface ToDoCardService {
      * @param sortOrder (type: String) ToDoCard 조회 시 정렬할 방향
      * @return (type: List<ToDoCardResponse>) 조회한 ToDoCard List를 반환
      */
-    fun getToDoCardList(title: String?, memberNickname: String?, sortOrder: String): List<ToDoCardResponse>
+    fun getToDoCardList(title: String?, memberNickname: String?, pageable: Pageable): List<ToDoCardResponse>
 
     /**
      * @param toDoCardId (type: Long) 조회할 ToDoCard의 id
