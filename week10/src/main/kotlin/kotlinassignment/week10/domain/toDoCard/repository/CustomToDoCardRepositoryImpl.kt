@@ -1,9 +1,12 @@
 package kotlinassignment.week10.domain.toDoCard.repository
 
+import com.querydsl.core.BooleanBuilder
 import com.querydsl.core.types.dsl.BooleanExpression
 import kotlinassignment.week10.domain.toDoCard.model.QToDoCard
 import kotlinassignment.week10.domain.toDoCard.model.ToDoCard
 import kotlinassignment.week10.infra.querydsl.QueryDslSupport
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort.Direction.ASC
 import org.springframework.data.domain.Sort.Direction.DESC
@@ -18,10 +21,14 @@ class CustomToDoCardRepositoryImpl : CustomToDoCardRepository, QueryDslSupport()
         title: String?,
         memberNickname: String?,
         pageable: Pageable,
-    ): List<ToDoCard> {
-        return queryFactory.selectFrom(toDoCard)
-            .where(titleContains(title))
-            .where(memberNicknameEq(memberNickname))
+    ): Page<ToDoCard> {
+
+        val whereClause = BooleanBuilder().and(titleContains(title)).and(memberNicknameEq(memberNickname))
+
+        val totalCount = queryFactory.select(toDoCard.count()).from(toDoCard).where(whereClause).fetchOne() ?: 0L
+
+        val queryResult = queryFactory.selectFrom(toDoCard)
+            .where(whereClause)
             .orderBy(
                 when (pageable.sort.first()?.direction) {
                     DESC -> toDoCard.createdDateTime.desc()
@@ -29,6 +36,8 @@ class CustomToDoCardRepositoryImpl : CustomToDoCardRepository, QueryDslSupport()
                     null -> toDoCard.createdDateTime.desc()
                 }
             ).fetch()
+
+        return PageImpl(queryResult, pageable, totalCount)
     }
 
     private fun titleContains(title: String?): BooleanExpression? {

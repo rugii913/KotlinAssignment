@@ -10,6 +10,7 @@ import kotlinassignment.week10.domain.toDoCard.model.*
 import kotlinassignment.week10.domain.toDoCard.repository.ToDoCardRepository
 import kotlinassignment.week10.infra.aop.EvaluateExecutionTime
 import kotlinassignment.week10.infra.security.MemberPrincipal
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
@@ -23,7 +24,7 @@ class ToDoCardServiceImpl(
     private val memberRepository: MemberRepository,
 ): ToDoCardService {
 
-    override fun getToDoCardList(title: String?, memberNickname: String?, pageable: Pageable): List<ToDoCardResponse> {
+    override fun getToDoCardList(title: String?, memberNickname: String?, pageable: Pageable): Page<ToDoCardResponse> {
         return toDoCardRepository
             .findAllFilteringByTitleOrUserNameWithSortOrder(title, memberNickname, pageable)
             .map(ToDoCard::toResponse)
