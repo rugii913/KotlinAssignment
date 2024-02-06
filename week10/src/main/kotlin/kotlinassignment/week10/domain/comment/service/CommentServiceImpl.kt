@@ -33,7 +33,6 @@ class CommentServiceImpl(
         return Comment(
             content = request.content,
             member = member,
-            createdDateTime = request.createdDateTime,
             toDoCard = targetToDoCard,
         ).let { commentRepository.save(it).toResponse() }
     }

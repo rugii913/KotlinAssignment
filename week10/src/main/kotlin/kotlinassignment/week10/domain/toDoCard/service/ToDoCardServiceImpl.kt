@@ -54,7 +54,6 @@ class ToDoCardServiceImpl(
             title = request.title,
             description = request.description,
             member = member,
-            createdDateTime = request.createdDateTime,
         ).let { toDoCardRepository.save(it).toResponse() }
 
     }
