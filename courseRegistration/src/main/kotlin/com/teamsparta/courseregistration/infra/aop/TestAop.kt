@@ -10,9 +10,11 @@ import org.springframework.stereotype.Component
 class TestAop { // aspect를 작성 - pointcut과 advice 정보를 갖고 있는 하나의 객체가 된다 - 즉 부가기능이 모듈화
 
     @Around("execution(* com.teamsparta.courseregistration.domain.course.service.CourseService.getCourseById(..))")
-    fun thisIsAdvice(joinPoint: ProceedingJoinPoint) {
+    fun thisIsAdvice(joinPoint: ProceedingJoinPoint): Any {
         println("AOP START!!!")
-        joinPoint.proceed()
+        val result = joinPoint.proceed()
         println("AOP END!!!")
+
+        return result
     }
 }

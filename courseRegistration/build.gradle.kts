@@ -80,6 +80,7 @@ dependencies {
     testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
     testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.3") // kotest-extensions-spring과 kotest의 호환성 문제로 추가할 때 버전 잘 따져야함
     testImplementation("io.mockk:mockk:$mockkVersion")
+    testImplementation("com.h2database:h2")
 }
 
 tasks.withType<KotlinCompile> {
