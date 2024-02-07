@@ -1,6 +1,4 @@
 spring:
-  config:
-    import: classpath:envs-constants.yml
   jpa:
     properties:
       hibernate:
@@ -9,6 +7,10 @@ spring:
         highlight_sql: true #sql 색칠해서
         use_sql_comments: true #주석으로 부가정보 더 표시
         default_batch_fetch_size: 100 # @OneToMany N + 1 문제 관련 - 이 batch size까지 연관된 관계에 대해 in 쿼리 수행
+  datasource:
+    url:
+    username: sa
+    password:
 
 logging:
   level:
@@ -26,3 +28,22 @@ auth: # 커스텀 프로퍼티를 만든 것
     issuer: team.sparta.com
     secret: PO4c8z41Hia5gJG3oeuFJMRYBB4Ws4aZ
     accessTokenExpirationHour: 168
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: local
+    import: classpath:envs-constants.yml
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
