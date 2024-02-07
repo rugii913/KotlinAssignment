@@ -19,8 +19,12 @@ class CustomToDoCardRepositoryImpl : CustomToDoCardRepository, QueryDslSupport()
 
     override fun findAllFilteringByTitleOrUserName(
         title: String?,
+        category: String?,
+        tag: String?,
+        state: String?,
+        dayDuration: String?,
         memberNickname: String?,
-        pageable: Pageable,
+        pageable: Pageable
     ): Page<ToDoCard> {
 
         val whereClause = BooleanBuilder()
