@@ -1,7 +1,5 @@
 package kotlinassignment.week4and8.domain.toDoCard.controller
 
-import kotlinassignment.week4and8.infra.client.oauth2.config.OAuth2ProviderPropertiesMapper
-import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.TestPropertySource
@@ -10,7 +8,7 @@ import org.springframework.test.context.TestPropertySource
 // - https://www.baeldung.com/kotlin/spring-boot-testing
 // - https://www.baeldung.com/kotlin/mockk
 // - https://techblog.woowahan.com/5825
-@EnableConfigurationProperties(OAuth2ProviderPropertiesMapper::class)
+// @EnableConfigurationProperties(OAuth2ProviderPropertiesMapper::class)
 @TestPropertySource("classpath:application-oauth.yml")
 @ActiveProfiles("oauth")
 @WebMvcTest(controllers = [ToDoCardController::class])
