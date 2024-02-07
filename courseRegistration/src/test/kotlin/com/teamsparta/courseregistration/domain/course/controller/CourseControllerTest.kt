@@ -30,7 +30,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 class CourseControllerTest @Autowired constructor(
     private val mockMvc: MockMvc,
     private val jwtPlugin: JwtPlugin,
-    private val courseRepository: CourseRepository,
+    private val courseRepository: CourseRepository, // 여기도 강의 자료에 없는 부분 - 직접 save() 해서 자료를 넣어두기 위해 주입 받아옴
 ) : DescribeSpec({
     extension(SpringExtension)
 
@@ -40,7 +40,7 @@ class CourseControllerTest @Autowired constructor(
         // 일단 실제로 repository까지 모두 수행한 뒤에 빠져나올 때만 값을 바꿔치기하는 것 같다.
         courseRepository.save(
             Course("abc", null, CourseStatus.OPEN)
-        )
+        ) // --- 여기서 SQL문 한 번 나감
     }
 
     afterContainer {
@@ -75,7 +75,7 @@ class CourseControllerTest @Autowired constructor(
                         .header("Authorization", "Bearer $jwtToken")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
-                ).andReturn()
+                ).andReturn() // --- 여기서 SQL문 두 번 나감 - (추측) mocking한 service를 사용하는 것이 아니라 Spring 빈으로 뜬 service를 사용하는 듯함
                     // .andExpect(status().isOk) - Kotest스럽게 MockMvcResultMatchers.andExpect() 사용하지 않고 result 받은 후 shouldBe로 확인
 
                 result.response.status shouldBe 200
