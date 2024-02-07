@@ -21,6 +21,7 @@ class ToDoCardServiceImpl(
     private val memberRepository: MemberRepository,
 ): ToDoCardService {
 
+    @EvaluateExecutionTime
     override fun getToDoCardList(
         title: String?,
         category: String?,
