@@ -46,4 +46,4 @@ jobs:
           script_stop: true # Stop script after first failure 참고: https://github.com/appleboy/ssh-action
           script: \
             kill -9 $(ps -ef | grep java | head -n 1 | awk '{print $2}')
-            nohup java -jar *.jar 1> /dev/null 2>&1 &
+            nohup java -jar -Dspring.profiles.active=local *.jar 1> /dev/null 2>&1 & # https://velog.io/@dailylifecoding/Java-인자값-전달-시-유의사항
