@@ -76,6 +76,8 @@ dependencies {
     testImplementation("io.mockk:mockk:1.13.8")
     // SpringMockK(Ninja-Squad)
     testImplementation("com.ninja-squad:springmockk:4.0.2")
+    // spring-security-test
+    testImplementation("org.springframework.security:spring-security-test")
 
     // queryDSL
     implementation("com.querydsl:querydsl-jpa:$queryDslVersion:jakarta")

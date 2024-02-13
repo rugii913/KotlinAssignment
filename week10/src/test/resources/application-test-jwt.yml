@@ -1,0 +1,6 @@
+authentication:
+  member:
+    jwt:
+      issuer: test
+      secret: ABCDEabcde1234567890ABCDEabcde12
+      accessTokenExpirationHour: 1
