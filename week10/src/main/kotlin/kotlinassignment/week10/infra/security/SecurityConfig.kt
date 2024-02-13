@@ -37,6 +37,7 @@ class SecurityConfig(
                     "/swagger-ui/**",
                     "/v3/api-docs/**",
                     "/h2-console/**",
+                    "/images",
                 ).permitAll()
                     .requestMatchers( // https://colabear754.tistory.com/170 - Spring Security 사용하면서 H2 콘솔 사용 - TODO 정확한 원리 알아보기
                         MvcRequestMatcher(introspector, "/**").apply { setServletPath("/h2-console") }

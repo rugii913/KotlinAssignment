@@ -1,4 +1,4 @@
-const apiUrl = 'http://~'; // 백엔드 API 엔드포인트
+const apiUrl = `http://localhost:8080/images`; // 백엔드 API 엔드포인트
 
 function uploadImage() {
     const fileInput = document.getElementById('fileInput');
@@ -6,7 +6,7 @@ function uploadImage() {
 
     if (file) {
         const formData = new FormData();
-        formData.append('file', file);
+        formData.append('image', file);
 
         fetch(apiUrl, {
             method: 'POST',

@@ -37,6 +37,7 @@ spring:
   config:
     activate:
       on-profile: local # 환경 분리 참고 https://velog.io/@devholic/Spring-YAML-여러-개-쓰기
+    import: classpath:envs-constants.yml
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:test
