@@ -1,0 +1,49 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main # trigger - main 브랜치 push
+
+jobs:
+  deploy: # job 이름
+    runs-on: ubuntu-latest # Actions 베이스
+    steps:
+      - name: Checkout # Checkout 스텝
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17 # JDK 설치 스텝
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      - name: Grant execute permission for gradlew # gradlew 권한 설정
+        run: chmod +x ./gradlew
+
+      - name: gradlew bootJar # Gradle bootJar 태스크 실행
+        run: ./gradlew bootJar
+
+      - name: copy jar to server # bootJar 태스크로 생성된 jar 파일을 서버 인스턴스에 전송
+        uses: appleboy/scp-action@master # scp-action 플러그인
+        with:
+          host: ${{ secrets.SSH_HOST }} # 전송 호스트
+          username: ec2-user # 인스턴스의 username
+          key: ${{ secrets.SSH_KEY }} # 통신 시 인증 키
+          port: 22 # SSH 사용 포트
+          source: "./week10/build/libs/*.jar" # bootJar로 빌드된 이 파일을 전송할 것
+          target: "~" # Host에서 받을 경로
+          strip_components: 3 # 위 source에서 3개 디렉토리 경로 제거하고 전송
+
+      - name: SSH Commands # jar 파일 전송 후 실행할 스크립트
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.SSH_HOST }} # SSH 호스트
+          username: ec2-user
+          key: ${{ secrets.SSH_KEY }} # 통신 시 인증 키
+          port: 22 # SSH 사용 포트
+          script_stop: true # Stop script after first failure 참고: https://github.com/appleboy/ssh-action
+          script: \
+            kill -9 $(ps -ef | grep java | head -n 1 | awk '{print $2}')
+            nohup java -jar -Dspring.profiles.active=local *.jar 1> /dev/null 2>&1 & # https://velog.io/@dailylifecoding/Java-인자값-전달-시-유의사항

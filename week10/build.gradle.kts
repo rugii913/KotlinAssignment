@@ -83,6 +83,12 @@ dependencies {
     implementation("com.querydsl:querydsl-jpa:$queryDslVersion:jakarta")
     kapt("com.querydsl:querydsl-apt:$queryDslVersion:jakarta")
 
+    // aws
+    // implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE") // 이행적이며 취약한 종속성 에러 표시
+    // https://docs.awspring.io/spring-cloud-aws/docs/2.3.0/reference/html/index.html#basic-setup
+    implementation("io.awspring.cloud:spring-cloud-aws-starter:3.1.0")
+    implementation("com.amazonaws:aws-java-sdk-s3:1.12.656") // 추가 안 할 경우 S3 인터페이스 등 없음 // https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3
+
     // kotlin logging
     implementation("io.github.oshai:kotlin-logging-jvm:6.0.2")
 }
